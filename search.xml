@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>高斯消元解异或方程组</title>
-    <url>/2020/08/09/gauss-xor-equation/</url>
-    <content><![CDATA[<p>当时遇到了道题，分析之后解异或方程组就完事了。代码如下：</p>
-<span id="more"></span>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Gauss</span>(<span class="params">Row: <span class="built_in">int</span>, Column: <span class="built_in">int</span></span>):</span></span><br><span class="line">    row = <span class="number">0</span></span><br><span class="line">    col = <span class="number">0</span></span><br><span class="line">    max_r = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> row &amp;lt; Row <span class="keyword">and</span> col &amp;lt; Column:</span><br><span class="line">        max_r = row</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 找出当前列最大值</span></span><br><span class="line">            <span class="keyword">if</span> (Matrix[i][col]) &gt; (Matrix[max_r][col]):</span><br><span class="line">                max_r = i</span><br><span class="line">        <span class="keyword">if</span> Matrix[max_r][col] == <span class="number">0</span>:  <span class="comment"># 记录自由变元</span></span><br><span class="line">            row -= <span class="number">1</span></span><br><span class="line">            Free_x[Free_num] = col+<span class="number">1</span></span><br><span class="line">            Free_num += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> max_r != row:  <span class="comment"># 交换</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                tmp = Matrix[row][i]</span><br><span class="line">                Matrix[row][i] = Matrix[max_r][i]</span><br><span class="line">                Matrix[max_r][i] = tmp</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 消元</span></span><br><span class="line">            <span class="keyword">if</span> Matrix[i][col] != <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                    Matrix[i][j] ^= Matrix[row][j]</span><br><span class="line">        row += <span class="number">1</span></span><br><span class="line">        col += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row, Row):  <span class="comment"># 无解</span></span><br><span class="line">        <span class="keyword">if</span> Matrix[i][Column] != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> row &amp;lt; Column:  <span class="comment"># 无穷多解</span></span><br><span class="line">        <span class="keyword">return</span> Column-row</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 唯一解</span></span><br><span class="line">    i = Column-<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &gt;= <span class="number">0</span>:</span><br><span class="line">        X_Ans[i] = Matrix[i][Column]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, Column):</span><br><span class="line">            X_Ans[i] ^= Matrix[i][j] <span class="keyword">and</span> X_Ans[j]</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
+    <title>Synthesizer-V-设置全局缩放的方法</title>
+    <url>/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>众所周知，Synth V Studio在默认的 <code>NotoSansCJKjp-Regular</code> 字体下，界面渲染十分难受，用户看不清字，特别是高分屏，眼睛都快瞎了（），令人无比想念可以在设置内调整界面和字体缩放的第一代Synth V。</p>
+<p>解决办法目前有俩：</p>
+<ol>
+<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<em><strong>不过可能会有版权问题</strong></em>。``Synth V Studio` 每次升级后都要重新覆盖字体。</li>
+<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。<br> <img src="/image-20210406152541899.png" alt="image-20210406152541899"></li>
+</ol>
 ]]></content>
       <categories>
-        <category>学习</category>
+        <category>Miscellaneous</category>
       </categories>
       <tags>
-        <tag>CTF</tag>
-        <tag>python</tag>
+        <tag>Synth V</tag>
       </tags>
   </entry>
   <entry>
@@ -98,20 +98,20 @@
       </tags>
   </entry>
   <entry>
-    <title>Synthesizer-V-设置全局缩放的方法</title>
-    <url>/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>众所周知，Synth V Studio在默认的 <code>NotoSansCJKjp-Regular</code> 字体下，界面渲染十分难受，用户看不清字，特别是高分屏，眼睛都快瞎了（），令人无比想念可以在设置内调整界面和字体缩放的第一代Synth V。</p>
-<p>解决办法目前有俩：</p>
-<ol>
-<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<em><strong>不过可能会有版权问题</strong></em>。``Synth V Studio` 每次升级后都要重新覆盖字体。</li>
-<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。<br> <img src="Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/image-20210406152541899.png" alt="image-20210406152541899"></li>
-</ol>
+    <title>高斯消元解异或方程组</title>
+    <url>/2020/08/09/gauss-xor-equation/</url>
+    <content><![CDATA[<p>当时遇到了道题，分析之后解异或方程组就完事了。代码如下：</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Gauss</span>(<span class="params">Row: <span class="built_in">int</span>, Column: <span class="built_in">int</span></span>):</span></span><br><span class="line">    row = <span class="number">0</span></span><br><span class="line">    col = <span class="number">0</span></span><br><span class="line">    max_r = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> row &amp;lt; Row <span class="keyword">and</span> col &amp;lt; Column:</span><br><span class="line">        max_r = row</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 找出当前列最大值</span></span><br><span class="line">            <span class="keyword">if</span> (Matrix[i][col]) &gt; (Matrix[max_r][col]):</span><br><span class="line">                max_r = i</span><br><span class="line">        <span class="keyword">if</span> Matrix[max_r][col] == <span class="number">0</span>:  <span class="comment"># 记录自由变元</span></span><br><span class="line">            row -= <span class="number">1</span></span><br><span class="line">            Free_x[Free_num] = col+<span class="number">1</span></span><br><span class="line">            Free_num += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> max_r != row:  <span class="comment"># 交换</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                tmp = Matrix[row][i]</span><br><span class="line">                Matrix[row][i] = Matrix[max_r][i]</span><br><span class="line">                Matrix[max_r][i] = tmp</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 消元</span></span><br><span class="line">            <span class="keyword">if</span> Matrix[i][col] != <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                    Matrix[i][j] ^= Matrix[row][j]</span><br><span class="line">        row += <span class="number">1</span></span><br><span class="line">        col += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row, Row):  <span class="comment"># 无解</span></span><br><span class="line">        <span class="keyword">if</span> Matrix[i][Column] != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> row &amp;lt; Column:  <span class="comment"># 无穷多解</span></span><br><span class="line">        <span class="keyword">return</span> Column-row</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 唯一解</span></span><br><span class="line">    i = Column-<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &gt;= <span class="number">0</span>:</span><br><span class="line">        X_Ans[i] = Matrix[i][Column]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, Column):</span><br><span class="line">            X_Ans[i] ^= Matrix[i][j] <span class="keyword">and</span> X_Ans[j]</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>Miscellaneous</category>
+        <category>学习</category>
       </categories>
       <tags>
-        <tag>Synth V</tag>
+        <tag>CTF</tag>
+        <tag>python</tag>
       </tags>
   </entry>
 </search>
