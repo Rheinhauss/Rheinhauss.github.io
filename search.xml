@@ -195,4 +195,63 @@
         <tag>DNS, GitHub</tag>
       </tags>
   </entry>
+  <entry>
+    <title>cpp_vector_用迭代器初始化</title>
+    <url>/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
+    <content><![CDATA[<p>前几日突发奇想，既然可以用迭代器给vector初始化，那如果用一些奇奇怪怪的迭代器进行初始化会怎么样呢？话不多说，实验一下(环境为<code>gcc 9.3.0-17ubuntu1~20.04</code>)，代码如下。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要c++11</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec1&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec2&#123;<span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> a = &#123;vec2.<span class="built_in">end</span>(), vec1.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec3</span><span class="params">(a)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec4</span><span class="params">(vec1.end(), vec2.begin())</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec5</span><span class="params">(vec1.end(), vec1.begin())</span></span>;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec6&#123;vec1.<span class="built_in">end</span>(), vec2.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>是搞出来了两个迭代器作为元素的vector呢还是直接复制两个迭代器地址之间的内容？</p>
+<p>实验结果是：</p>
+<ul>
+<li><p><code>vec3</code>导致编译时报错  </p>
+  <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">没有与参数列表匹配的构造函数 <span class="string">&quot;std::vector&lt;_Tp, _Alloc&gt;::vector [其中 _Tp=int, _Alloc=std::allocator&lt;int&gt;]&quot;</span> 实例 -- 参数类型为:  (std::initializer_list&lt;__gnu_cxx::__normal_iterator&lt;<span class="keyword">int</span> *, std::vector&lt;<span class="keyword">int</span>, std::allocator&lt;<span class="keyword">int</span>&gt;&gt;&gt;&gt;)</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p><code>vec5</code>导致运行时报错  </p>
+  <figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">terminate called after throwing an<span class="built_in"> instance </span>of &#x27;std::length_error&#x27;</span><br><span class="line">  what():  cannot create std::vector larger than max_size()</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>注释掉<code>vec3</code>、<code>vec5</code>后，可发现其余vector内部存放的数据</p>
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413210624685.png" alt="image-20210413210624685" style="zoom:80%;"></li>
+</ul>
+<p>以上结果是为什么呢？</p>
+<p>首先介绍一下背景知识：</p>
+<ul>
+<li><p>C++11引入了新类型，叫做 <code>std::initializer_list</code>，即大括号初始化列表，用于列表初始化一个对象。<br>  当遇到以下情况时一个<code>initializer_list</code>被自动创建（copy自cppreference）：</p>
+<ul>
+<li>a <em>braced-init-list</em> is used to <a href="https://en.cppreference.com/w/cpp/language/list_initialization">list-initialize</a> an object, where the corresponding constructor accepts an <code>std::initializer_list</code> parameter</li>
+<li>a <em>braced-init-list</em> is used as the right operand of <a href="https://en.cppreference.com/w/cpp/language/operator_assignment#Builtin_direct_assignment">assignment</a> or as a <a href="https://en.cppreference.com/w/cpp/language/overload_resolution#Implicit_conversion_sequence_in_list-initialization">function call argument</a>, and the corresponding assignment operator/function accepts an <code>std::initializer_list</code> parameter</li>
+<li>a <em>braced-init-list</em> is bound to <a href="https://en.cppreference.com/w/cpp/language/auto"><code>auto</code></a>, including in a <a href="https://en.cppreference.com/w/cpp/language/range-for">ranged for loop</a></li>
+</ul>
+<p>  C++11允许构造函数和其他函数把初始化列表当做参数，使用方法如下</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myVector</span> &#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;T&gt; m_vec;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">myVector</span>(<span class="keyword">const</span> std::initializer_list&lt;T&gt;&amp; v) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i : v)</span><br><span class="line">            m_vec.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> index) &#123; <span class="keyword">return</span> m_vec[index]; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p> 背景知识介绍完了，那就来结合源码解释一下实验现象8。</p>
+<ul>
+<li><p><code>vec3</code>的编译时报错：<br>  <code>vec3</code>是<code>vector&lt;int&gt;</code>。接受大括号初始化列表作为参数的构造函数，需要的是内含<code>int</code>的初始化列表，而我们构造的<code>auto a = &#123;vec2.end(), vec1.begin()&#125;;</code>是内含<code>vector&lt;int&gt;::iterator</code>的初始化列表，所以报错<code>没有与参数列表匹配的构造函数</code>。<br>  如果把<code>vec3</code>一行改为<code>  vector&lt;vector&lt;int&gt;::iterator&gt; vec3(a);</code>则可以通过编译。</p>
+</li>
+<li><p>其余vec的现象的原因是一样的。跟踪代码运行阅读对应源码可知：</p>
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213612781.png" alt="image-20210413213612781" style="zoom:80%;">
+  
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213630796.png" alt="image-20210413213630796" style="zoom:80%;">
+  
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214627923.png" alt="image-20210413213630796" style="zoom:80%;">
+  
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213653848.png" alt="image-20210413213653848" style="zoom:80%;">
+  
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213707553.png" alt="image-20210413213707553" style="zoom:80%;">
+  
+  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214724940.png" alt="image-20210413213707553" style="zoom:80%;">
+  
+  如果给vector的构造函数传两个iterator作为参数，那么就从第一个iterator开始读内存做$n=distance(iterator_a, iterator_b)$次emplace到新的vector里。如果distance超过最大值（这里vec5的情况应该是负溢）则报错。如此一来就能解释vec456的奇妙行为了。当然vec4和vec6没有报错也是环境原因，可能换一个编译器或者系统就会导致那里出错。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
 </search>
