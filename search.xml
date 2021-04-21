@@ -257,12 +257,12 @@
   <entry>
     <title>UMLpre_01</title>
     <url>/2021/04/21/UMLpre-01/</url>
-    <content><![CDATA[<h2 id="一-项目前景和范围"><a href="#一-项目前景和范围" class="headerlink" title="一.   项目前景和范围"></a><strong>一.</strong>   <strong>项目前景和范围</strong></h2><h3 id="1-项目前景"><a href="#1-项目前景" class="headerlink" title="1. 项目前景"></a>1. 项目前景</h3><h4 id="l-在校生通过全面课程提醒来提升学习效率"><a href="#l-在校生通过全面课程提醒来提升学习效率" class="headerlink" title="l 在校生通过全面课程提醒来提升学习效率"></a>l <strong>在校生通过全面课程提醒来提升学习效率</strong></h4><p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目提供全校所有课程的基本信息，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
-<h3 id="2-项目范围"><a href="#2-项目范围" class="headerlink" title="2.   项目范围"></a>2.   项目范围</h3><h4 id="l-在校学生"><a href="#l-在校学生" class="headerlink" title="l 在校学生"></a>l <strong>在校学生</strong></h4><p>通过自身账号登录系统查看自己全部的课程内容及相应作业，</p>
+    <content><![CDATA[<h2 id="一-项目前景和范围"><a href="#一-项目前景和范围" class="headerlink" title="一.   项目前景和范围"></a><strong>一.</strong>   <strong>项目前景和范围</strong></h2><h3 id="1-项目前景"><a href="#1-项目前景" class="headerlink" title="1. 项目前景"></a>1. 项目前景</h3><h4 id="在校生通过全面课程提醒来提升学习效率"><a href="#在校生通过全面课程提醒来提升学习效率" class="headerlink" title="在校生通过全面课程提醒来提升学习效率"></a><strong>在校生通过全面课程提醒来提升学习效率</strong></h4><p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目提供全校所有课程的基本信息，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
+<h3 id="2-项目范围"><a href="#2-项目范围" class="headerlink" title="2. 项目范围"></a>2. 项目范围</h3><h4 id="在校学生"><a href="#在校学生" class="headerlink" title="在校学生"></a><strong>在校学生</strong></h4><p>通过自身账号登录系统查看自己全部的课程内容及相应作业，</p>
 <p>参与讨论区评价</p>
 <p>与教师互动</p>
-<h4 id="l-系统管理者"><a href="#l-系统管理者" class="headerlink" title="l 系统管理者"></a>l <strong>系统管理者</strong></h4><p>对程序进行更新</p>
-<h2 id="二-涉众分析"><a href="#二-涉众分析" class="headerlink" title="二.   涉众分析"></a><strong>二.</strong>   <strong>涉众分析</strong></h2><h3 id="1-涉众概要"><a href="#1-涉众概要" class="headerlink" title="1.   涉众概要"></a><strong>1.</strong>   <strong>涉众概要</strong></h3><table>
+<h4 id="系统管理者"><a href="#系统管理者" class="headerlink" title="系统管理者"></a><strong>系统管理者</strong></h4><p>对程序进行更新</p>
+<h2 id="二、-涉众分析"><a href="#二、-涉众分析" class="headerlink" title="二、  涉众分析"></a><strong>二、</strong>  <strong>涉众分析</strong></h2><h3 id="1-涉众概要"><a href="#1-涉众概要" class="headerlink" title="1. 涉众概要**"></a><strong>1.</strong> 涉众概要**</h3><table>
 <thead>
 <tr>
 <th><strong>涉众编号</strong></th>
@@ -275,16 +275,16 @@
 <td><strong>001</strong></td>
 <td>普通学生</td>
 <td>学生是使用该系统导入获取课程信息的主体</td>
-<td>1.     设置可按周显示的课表  2.     设置并获取课程提醒信息  3.     创建作业待办</td>
+<td>1.     设置可按周显示的课表  <br>2.     设置并获取课程提醒信息  <br>3.     创建作业待办</td>
 </tr>
 <tr>
 <td><strong>002</strong></td>
 <td>系统开发人员</td>
 <td>系统开发人员是对系统进行开发和维护的人员</td>
-<td>1.     开发课程提醒系统  2.     对程序进行更新</td>
+<td>1.     开发课程提醒系统  <br>2.     对程序进行更新</td>
 </tr>
 </tbody></table>
-<h3 id="2-涉众简档"><a href="#2-涉众简档" class="headerlink" title="2.   涉众简档"></a><strong>2.</strong>   <strong>涉众简档</strong></h3><h4 id="2-1-普通学生"><a href="#2-1-普通学生" class="headerlink" title="2.1      普通学生"></a><strong>2.1</strong>      <strong>普通学生</strong></h4><table>
+<h3 id="2-涉众简档"><a href="#2-涉众简档" class="headerlink" title="2. 涉众简档"></a><strong>2. 涉众简档</strong></h3><h4 id="2-1-普通学生"><a href="#2-1-普通学生" class="headerlink" title="2.1 普通学生"></a><strong>2.1</strong> <strong>普通学生</strong></h4><table>
 <thead>
 <tr>
 <th><strong>涉众</strong></th>
@@ -301,11 +301,11 @@
 </tr>
 <tr>
 <td><strong>职责</strong></td>
-<td><strong>1.</strong>      <strong>下载并使用该系统</strong>  <strong>2.</strong>      <strong>导入并修改可按周查看的课表</strong>  <strong>3.</strong>      <strong>获取课前提醒</strong>  <strong>4.</strong>      <strong>添加可备注的待办/作业,可设定提醒时间</strong></td>
+<td><strong>1.</strong>      <strong>下载并使用该系统</strong>  <br><strong>2.</strong>      <strong>导入并修改可按周查看的课表</strong>  <br><strong>3.</strong>      <strong>获取课前提醒</strong>  <br><strong>4.</strong>      <strong>添加可备注的待办/作业,可设定提醒时间</strong></td>
 </tr>
 <tr>
 <td><strong>成功标准</strong></td>
-<td><strong>1.</strong>      <strong>能及时获取课程提醒信息</strong>  <strong>2.</strong>      <strong>课表显示周数,课程名称,时间,教师,教室.</strong></td>
+<td><strong>1.</strong>      <strong>能及时获取课程提醒信息</strong>  <br><strong>2.</strong>      <strong>课表显示周数,课程名称,时间,教师,教室.</strong></td>
 </tr>
 <tr>
 <td><strong>参与</strong></td>
@@ -315,12 +315,8 @@
 <td><strong>可交付工作</strong></td>
 <td><strong>无</strong></td>
 </tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
-<h4 id="2-2-系统管理员"><a href="#2-2-系统管理员" class="headerlink" title="2.2      系统管理员"></a><strong>2.2</strong>      <strong>系统管理员</strong></h4><table>
+<h4 id="2-2-系统管理员"><a href="#2-2-系统管理员" class="headerlink" title="2.2 系统管理员"></a><strong>2.2</strong> <strong>系统管理员</strong></h4><table>
 <thead>
 <tr>
 <th><strong>涉众</strong></th>
@@ -352,31 +348,30 @@
 <td><strong>课程题型系统</strong></td>
 </tr>
 </tbody></table>
-<h2 id="三-硬数据采样"><a href="#三-硬数据采样" class="headerlink" title="三.   硬数据采样"></a><strong>三.</strong>   <strong>硬数据采样</strong></h2><h3 id="1-硬数据采样内容"><a href="#1-硬数据采样内容" class="headerlink" title="1.硬数据采样内容"></a><strong>1.硬数据采样内容</strong></h3><p><strong>采用调查问卷形式,问卷内容及结果如下</strong></p>
-<p><strong><img src="/2021/04/21/UMLpre-01/clip_image002.jpg" alt="img"></strong></p>
+<h2 id="三、-硬数据采样"><a href="#三、-硬数据采样" class="headerlink" title="三、 硬数据采样"></a><strong>三、 硬数据采样</strong></h2><h3 id="1-硬数据采样内容"><a href="#1-硬数据采样内容" class="headerlink" title="1. 硬数据采样内容"></a><strong>1. 硬数据采样内容</strong></h3><p><strong>采用调查问卷形式,问卷内容及结果如下</strong></p>
+<p><img src="/2021/04/21/UMLpre-01/clip_image002.jpg" alt="img"></p>
 <p><img src="/2021/04/21/UMLpre-01/clip_image004.jpg" alt="img"></p>
 <p><img src="/2021/04/21/UMLpre-01/clip_image006.jpg" alt="img"></p>
 <h3 id="2-硬数据采样结果分析"><a href="#2-硬数据采样结果分析" class="headerlink" title="2.硬数据采样结果分析"></a><strong>2.硬数据采样结果分析</strong></h3><ol>
-<li></li>
+<li>有效填写人次54，其中大部分为大一、大二学生</li>
 </ol>
 <p><img src="/2021/04/21/UMLpre-01/clip_image008.png" alt="img"></p>
-<p>有效填写人次54,其中大部分为大一.大二学生</p>
 <ol start="2">
-<li><img src="/2021/04/21/UMLpre-01/clip_image010.png" alt="img"></li>
+<li>有2/3的人偶尔在学习生活中错过ddl,对此程序的必要性做出了佐证</li>
 </ol>
-<p>有2/3的人偶尔在学习生活中错过ddl,对此程序的必要性做出了佐证</p>
+<p><img src="/2021/04/21/UMLpre-01/clip_image010.png" alt="img"></p>
 <ol start="3">
-<li>  <img src="/2021/04/21/UMLpre-01/clip_image012.png" alt="img"></li>
+<li>76%的人认为需要课程提醒,证明了本项目的可行性</li>
 </ol>
-<p>76%的人认为需要课程提醒,证明了本项目的可行性</p>
+<p><img src="/2021/04/21/UMLpre-01/clip_image012.png" alt="img"></p>
 <ol start="4">
-<li>  <img src="/2021/04/21/UMLpre-01/clip_image014.png" alt="img"></li>
+<li><strong>结果显示对于：移动设备上的文字通知，桌面设备上的弹窗或窗口，动设备上的铃声、震动，每天定时短信方式发送至手机 四种提醒方式选择人数相似，可以考虑让用户自行选择设置提醒方式</strong></li>
 </ol>
-<p><strong>结果显示对于：移动设备上的文字通知，桌面设备上的弹窗或窗口，动设备上的铃声、震动，每天定时短信方式发送至手机 四种提醒方式选择人数相似，可以考虑让用户自行选择设置提醒方式</strong></p>
+<p><img src="/2021/04/21/UMLpre-01/clip_image014.png" alt="img"></p>
 <ol start="5">
-<li>  <img src="/2021/04/21/UMLpre-01/clip_image016.png" alt="img"></li>
+<li><strong>对于 课程提醒时间 大多数人[85%]选择了每天定时提醒</strong></li>
 </ol>
-<p><strong>对于 课程提醒时间 大多数人[85%]选择了每天定时提醒</strong></p>
+<p><img src="/2021/04/21/UMLpre-01/clip_image016.png" alt="img"></p>
 ]]></content>
       <categories>
         <category>UML需求工程课程作业</category>
