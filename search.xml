@@ -380,4 +380,71 @@
         <tag>作业</tag>
       </tags>
   </entry>
+  <entry>
+    <title>UMLpre_01</title>
+    <url>/2021/05/19/UMLpre-02/</url>
+    <content><![CDATA[<p>这次主要是数据建模相关的结果。</p>
+<h2 id="ERD"><a href="#ERD" class="headerlink" title="ERD"></a>ERD</h2><h3 id="简单情况ERD建模"><a href="#简单情况ERD建模" class="headerlink" title="简单情况ERD建模"></a>简单情况ERD建模</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151540050.png" alt="image-20210519151540050"></p>
+<h3 id="根据硬表单的ERD建模"><a href="#根据硬表单的ERD建模" class="headerlink" title="根据硬表单的ERD建模"></a>根据硬表单的ERD建模</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151600681.png" alt="image-20210519151600681"></p>
+<h2 id="DFD"><a href="#DFD" class="headerlink" title="DFD"></a>DFD</h2><h3 id="上下文图"><a href="#上下文图" class="headerlink" title="上下文图"></a>上下文图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151632864.png" alt="image-20210519151632864"></p>
+<h3 id="0层图"><a href="#0层图" class="headerlink" title="0层图"></a>0层图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151643756.png" alt="image-20210519151643756"></p>
+<h3 id="1层图"><a href="#1层图" class="headerlink" title="1层图"></a>1层图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151653038.png" alt="image-20210519151653038"></p>
+<h2 id="微规格说明"><a href="#微规格说明" class="headerlink" title="微规格说明"></a><strong>微规格说明</strong></h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">OPEN</span> bitClassSchedule.app</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span></span><br><span class="line">CASE1 (<span class="keyword">without</span>-ClassTable-<span class="keyword">database</span>)</span><br><span class="line">4Action1: <span class="keyword">show</span> <span class="keyword">add</span> data <span class="keyword">View</span></span><br><span class="line">4Action2: <span class="keyword">get</span> the classSchedule <span class="keyword">Input</span>(.xls File)</span><br><span class="line">4Action3: <span class="keyword">create</span> the ClassTable <span class="keyword">database</span></span><br><span class="line">CASE2(ClassTable-Created)</span><br><span class="line">4Action1: <span class="keyword">show</span> the basic main <span class="keyword">Window</span></span><br><span class="line">4Action2: count <span class="type">date</span></span><br><span class="line">Action3: <span class="keyword">create</span> Button[本周课表] <span class="keyword">and</span> [我的作业待办]</span><br><span class="line">Action4: <span class="keyword">search</span> the <span class="keyword">DataBase</span> <span class="keyword">and</span> <span class="keyword">show</span> today’s <span class="keyword">class</span> information</span><br><span class="line">Action(OnClickButton[本周课表]): change <span class="keyword">View</span> <span class="keyword">to</span> bzkebiao</span><br><span class="line">4Action1: <span class="keyword">create</span> basic layout</span><br><span class="line">4Action2: count week</span><br><span class="line">Action3: <span class="keyword">search</span> the ClassTable.db <span class="keyword">database</span> <span class="keyword">and</span> <span class="keyword">create</span> the bzkebiao</span><br><span class="line">Action4: <span class="keyword">set</span> OnClickListener(show_class_information) <span class="keyword">on</span> <span class="keyword">all</span> the <span class="keyword">class</span> textview shown <span class="keyword">on</span> bzkebiao.xml</span><br><span class="line">Action(OnClickTextView[show_class_information]):</span><br><span class="line">4Action1: Alert <span class="keyword">View</span> class_inf_basic.xml</span><br><span class="line">Action2: <span class="keyword">Search</span> ClassTable.db, collect <span class="keyword">and</span> <span class="keyword">show</span> <span class="keyword">all</span> the Information <span class="keyword">or</span> the chosen <span class="keyword">class</span> </span><br><span class="line">4Action(OnClickButton[我的作业待办]):change <span class="keyword">View</span> <span class="keyword">to</span> daiban.xml</span><br><span class="line">44Action1: <span class="keyword">create</span> the basic layout(<span class="keyword">with</span> “<span class="keyword">add</span>”,”clear” button)</span><br><span class="line">Action2: <span class="keyword">database</span>(daiban.db) <span class="keyword">exists</span>? <span class="keyword">Read</span> daiban.db : <span class="keyword">create</span> daiban.<span class="keyword">database</span></span><br><span class="line">44Action3: sort <span class="keyword">all</span> the daiban_work <span class="keyword">by</span> <span class="type">time</span>, <span class="keyword">show</span></span><br><span class="line">44Action(OnClick “<span class="keyword">add</span>” Button):</span><br><span class="line">444Action1: Change <span class="keyword">to</span> <span class="keyword">View</span> add_daiban.xml</span><br><span class="line">444Action2: <span class="keyword">write</span> the daiban_work information</span><br><span class="line">444Action3: put daiban_work <span class="keyword">in</span> <span class="keyword">database</span></span><br><span class="line">44Action(OnClickButton[clear]):</span><br><span class="line">444Action1: remove daiban.db</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据字典"><a href="#数据字典" class="headerlink" title="数据字典"></a><strong>数据字典</strong></h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>课程信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>别名</td>
+<td></td>
+</tr>
+<tr>
+<td>使用的地点和方法</td>
+<td>保存课程信息(input)   <br>显示今日课程(output)  <br>展示本周课程信息(output)  <br>发送课程信息(input)  <br>显示课程详细信息(output)</td>
+</tr>
+<tr>
+<td>描述</td>
+<td>1.     <code>Classname = Text </code> <br>2.     <code>Zhouci = [”&#123;1~20&#125;-&#123;1~20&#125;周” or”&#123;1~20&#125;周” ]  例:1-8周| 12周</code>  <br>3.     <code>Kaishi =[第&#123;1-13&#125;节]</code>  <br>4.     <code>Jieshu=[第&#123;1-13&#125;节]</code>  <br>5.     <code>Teacher=text</code>  <br>6.     <code>教室 = text</code></td>
+</tr>
+<tr>
+<td>格式</td>
+<td><code>SQLite database Information  In table Class</code></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>待办</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>别名</td>
+<td>Daiban_work(in AddView.java and  MyTask.java)</td>
+</tr>
+<tr>
+<td>使用的地点和方法</td>
+<td>存储待办(input)<br>  显示待办(output)<br>  删除待办(input)<br>  查找待办(output)</td>
+</tr>
+<tr>
+<td>描述</td>
+<td>1.     <code>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min</code><br>  2.     <code>Inf= text</code><br>  3.     <code>Deadline=同Create_time</code><br>  4.     <code>Remind_time=同Create_time</code></td>
+</tr>
+<tr>
+<td>格式</td>
+<td><code>SQLite database Information  In table daiban.db</code></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>UML需求工程课程</category>
+      </categories>
+      <tags>
+        <tag>作业</tag>
+      </tags>
+  </entry>
 </search>
