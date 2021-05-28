@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"null.sakuya.world","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！项目地址：Rheinhauss&#x2F;SynthV_plugin_auto_loudness_by_vibrato 暂时只有覆盖原响度和叠加在原响度上的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。">
+  <meta name="description" content="一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！项目地址：Rheinhauss&#x2F;SynthV_plugin_auto_loudness_by_vibrato 暂时只有覆盖原响度和叠加在原响度上的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Synth-V根据颤音自动画响度插件">
 <meta property="og:url" content="https://null.sakuya.world/2021/04/06/Synth-V%E6%A0%B9%E6%8D%AE%E9%A2%A4%E9%9F%B3%E8%87%AA%E5%8A%A8%E7%94%BB%E5%93%8D%E5%BA%A6%E6%8F%92%E4%BB%B6/">
 <meta property="og:site_name" content="Mein Blog">
-<meta property="og:description" content="一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！项目地址：Rheinhauss&#x2F;SynthV_plugin_auto_loudness_by_vibrato 暂时只有覆盖原响度和叠加在原响度上的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。">
+<meta property="og:description" content="一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！项目地址：Rheinhauss&#x2F;SynthV_plugin_auto_loudness_by_vibrato 暂时只有覆盖原响度和叠加在原响度上的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-06T09:06:15.000Z">
 <meta property="article:modified_time" content="2021-04-06T09:06:15.000Z">
@@ -231,26 +231,23 @@
       
         <p>一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！<strong>项目地址</strong>：<a target="_blank" rel="noopener" href="https://github.com/Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato">Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato</a></p>
 <p>暂时只有<code>覆盖原响度</code>和<code>叠加在原响度上</code>的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>选取（可多选）你想让本插件处理的音符，点击<code>脚本 -&gt; tool -&gt; 根据颤音设置响度</code>，设置合适的参数，然后执行。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>不支持在音符内部有bpm改变的情况</p>
-<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>其实还挺简单的，Synth V颤音参数描述的就是一个正弦曲线，所以：</p>
-<ol>
-<li><p>遍历获取相应音符颤音参数</p>
-</li>
-<li><p> <code>Math.sin()；</code></p>
-</li>
-<li><p>写入</p>
-</li>
+<h3 id="用法">用法</h3>
+<p>选取（可多选）你想让本插件处理的音符，点击<code>脚本 -&gt; tool -&gt; 根据颤音设置响度</code>，设置合适的参数，然后执行。</p>
+<h3 id="注意">注意</h3>
+<p>不支持在音符内部有bpm改变的情况</p>
+<h3 id="小记">小记</h3>
+<p>其实还挺简单的，Synth V颤音参数描述的就是一个正弦曲线，所以：</p>
+<ol type="1">
+<li><p>遍历获取相应音符颤音参数</p></li>
+<li><p><code>Math.sin()；</code></p></li>
+<li><p>写入</p></li>
 </ol>
 <p>就完事了。</p>
 <p>麻烦的地方在于一点点文档里没有说明<em>（或者我没看到..）</em>的坑：</p>
 <ul>
-<li><p>音符如果没有设置相关参数，则获取出来是 <code>NaN</code> ，所以要形如 <code>if (isNaN(n.attr.tF0VbrStart)) n.attr.tF0VbrStart = attrDefault.tF0VbrStart;</code> 来fallback到音轨的默认参数上；</p>
-</li>
-<li><p>音轨如果没有设置默认参数，则获取出来是 <code>undefined</code> ，所以要形如 <code>if (attrDefault.tF0VbrStart === undefined) attrDefault.tF0VbrStart = 0.250;</code> 检查一下；</p>
-</li>
-<li><p>文档里没说一些重要的对象怎么获得<em>（或者我没看到..）</em>，所以要么找官方示例要么自己摸索。</p>
-</li>
+<li><p>音符如果没有设置相关参数，则获取出来是 <code>NaN</code> ，所以要形如 <code>if (isNaN(n.attr.tF0VbrStart)) n.attr.tF0VbrStart = attrDefault.tF0VbrStart;</code> 来fallback到音轨的默认参数上；</p></li>
+<li><p>音轨如果没有设置默认参数，则获取出来是 <code>undefined</code> ，所以要形如 <code>if (attrDefault.tF0VbrStart === undefined) attrDefault.tF0VbrStart = 0.250;</code> 检查一下；</p></li>
+<li><p>文档里没说一些重要的对象怎么获得<em>（或者我没看到..）</em>，所以要么找官方示例要么自己摸索。</p></li>
 </ul>
 
     </div>

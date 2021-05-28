@@ -1,13 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>GitHub-Pages自定义域名原理</title>
+    <url>/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p>[toc]</p>
+<h2 id="github-pages-用法">GitHub Pages 用法</h2>
+<p>GitHub Pages <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site">提供了自定义域名的功能</a>，可以通过如下操作来配置：</p>
+<ol type="1">
+<li><p>在相应repo的设置里找到 Custom Domain 进行设置。 <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407164637971.png" alt="image-20210407164637971" style="zoom:67%;"></p></li>
+<li><p>在自己的DNS提供商处设置CNAME记录，例如把 <code>null.sakuya.world</code> 指向 <code>rheinhauss.github.io</code> 。</p></li>
+</ol>
+<p>更详细的信息请参阅 GitHub 相关文档。</p>
+<h2 id="原理">原理</h2>
+<p>自然我们要研究一下是怎么实现的（看上去就是普普通通的 CNAME ）。</p>
+<p>假设两种情况：</p>
+<ol type="1">
+<li><p>只在DNS提供商那里设置CNAME，如图 <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407165622647.png" alt="image-20210407165622647"></p>
+<p>此时访问 <code>test.null.sakuya.world</code> 返回的是GitHub的404页面 <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407165907442.png" alt="image-20210407165907442" style="zoom:67%;"></p></li>
+<li><p>只在GitHub的repo设置里配置Custom Domain，访问该自定义网址，有 <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407170201369.png" alt="image-20210407170201369" style="zoom:80%;"></p></li>
+</ol>
+<p>这是为什么呢？于是尝试 <code>dig</code> 和抓包来分析发生了什么。</p>
+<p>我使用的是BIND工具包里的dig。</p>
+<p>执行 <code>dig +trace null.sakuya.world</code> ，得到结果</p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; +trace null.sakuya.world</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      f.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      l.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      k.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      e.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      b.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      m.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      d.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      c.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      j.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      g.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      a.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      h.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      i.root-servers.net.</span><br><span class="line">;; Received<span class="number"> 267 </span>bytes from 10.0.0.13<span class="comment">#53(10.0.0.13) in 5 ms</span></span><br><span class="line">// 获取根服务器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.gamma.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.alpha.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.delta.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.beta.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      DS     <span class="number"> 32434 </span>8<span class="number"> 1 </span>1596E70AD9CA4E41EC20414EC7DE740257786677</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      DS     <span class="number"> 32434 </span>8<span class="number"> 2 </span>18643A414DCC7EE02580E7A21793A0F63F5393C400DE9CA004465755 BF7CFF05</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      RRSIG   DS<span class="number"> 8 </span>1<span class="number"> 86400 </span>20210419170000<span class="number"> 20210406160000 </span>14631 . ZK3ZM0VBTHPGMhdmX4W9LW/2e+TrC/afrnCzCc14X9U+h/OILV28EX1L dRY1zqGCZZpvnb5qsiaYIiDDdOurhgESTDwOO7XQGs8Hx9XFxc9dEFV+ FF0Ynx4WiZV+pZMxCf4L5H1aUaOWPGyuZHxTGyUdYECnrbivivzfjUD2 9VL3eUeLEOONPV7H83shzPybhxh9NjDCSYfljYgRzt48TrlUUAJE2z39 wtWHEyOraCk4e9XobaFmwNTuUFvqTFuf/+4zDGLkNnxpNaQofn5dFM9t EMI7jG0MqZw6nKMy5jv8BR7Y7+of4ZXJhCK9Dic5IVlZ62K+j/z5Urgr SUNG/A==</span><br><span class="line">;; Received<span class="number"> 741 </span>bytes from 2001:7fe::53<span class="comment">#53(i.root-servers.net) in 31 ms</span></span><br><span class="line">// 从根服务器获取顶级域名记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns3.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns5.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns2.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns4.he.net.</span><br><span class="line">domi2ilach7iekt0e4kfuv9gfj62vr0u.world.<span class="number"> 86400 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 1 </span>7CD0CF42 DOUN8CS85QFN98IORLO2HVUF2L5F696S NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">domi2ilach7iekt0e4kfuv9gfj62vr0u.world.<span class="number"> 86400 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 86400 </span>20210507082438<span class="number"> 20210407072438 </span>19704 world. Zhf5SHBslCcz9c1ywuoqo8jLKnxtHU2zgpb7SpHsES3IrKLLCa2cxNDN 2DGh2Dcdjx9nR+j0yGI5DSawLE9QTEZC0TKC/cn4BWXPbkyHEaA6KpDm cTPuKRdWvRD99zG8AJIF+MhC4mpZIPDeaVVK5udtwqn2rA+B6tc7LNbk thSpYeFg6NAbuie7p+O0UUga+6EVb+nesp0lbiWejOdEXw==</span><br><span class="line">5lp930j1svf536kt4a909i566itlnoa8.world.<span class="number"> 86400 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 1 </span>7CD0CF42 5MEH8F935EFLDLTPKHCTE9LRBA958KVS NS DS RRSIG</span><br><span class="line">5lp930j1svf536kt4a909i566itlnoa8.world.<span class="number"> 86400 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 86400 </span>20210506165014<span class="number"> 20210406162719 </span>19704 world. m1rvU0mRNT7PdV80wp1F8oW3mYl0LUYyZxxNYPBtHjhvy1//2SATsyzD Z+/LUVBbfiWW6cJP4Ey8bhOwExB+faZF3qbKL7/bUpFe5Sy/BZXJiFKw DgFeYAYTPY9WtTWNpxnEvqm6g0N83yLj7EpUuOex87uBkrJZ+cIR4a0K RklrxgZRA2NuHfWvdAdTY/ach21k8kkba/Ao0dJjmn2ZPQ==</span><br><span class="line">;; Received<span class="number"> 690 </span>bytes from 2001:dcd:1::7<span class="comment">#53(demand.alpha.aridns.net.au) in 29 ms</span></span><br><span class="line">//从上条获取的 demand.xxxx.aridns.net.au 获取二级域名记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">null.sakuya.world.     <span class="number"> 86400 </span>  IN      CNAME   rheinhauss.github.io.</span><br><span class="line">;; Received<span class="number"> 80 </span>bytes from 2001:470:200::2<span class="comment">#53(ns2.he.net) in 72 ms</span></span><br></pre></td></tr></table></figure>
+<p>最终是CNAME到 <code>rheinhauss.github.io</code> ，于是继续 <code>dig +trace rheinhauss.github.io</code> ，得到</p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; +trace rheinhauss.github.io</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      i.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      d.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      g.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      e.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      k.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      l.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      a.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      b.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      h.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      c.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      f.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      m.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      j.root-servers.net.</span><br><span class="line">;; Received<span class="number"> 267 </span>bytes from 10.0.0.13<span class="comment">#53(10.0.0.13) in 6 ms</span></span><br><span class="line"></span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      a2.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      b0.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      c0.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      a0.nic.io.</span><br><span class="line">io.                    <span class="number"> 86400 </span>  IN      DS     <span class="number"> 57355 </span>8<span class="number"> 2 </span>95A57C3BAB7849DBCDDF7C72ADA71A88146B141110318CA5BE672057 E865C3E2</span><br><span class="line">io.                    <span class="number"> 86400 </span>  IN      RRSIG   DS<span class="number"> 8 </span>1<span class="number"> 86400 </span>20210419170000<span class="number"> 20210406160000 </span>14631 . LesMUo9DIF7nZqdiU1/I8zkBc2tH/eGmSngiWhaWTdHc6GhiXYmuMOY3 PGaGLE0dp99x1sQSvs5lRuYIqH5XGRYvvtzQjibGN12X4MqdzqAqsNEN MUdDE60ACi7qlGck87c4a66yeFsgShi/3mC95E2JnsZMWiHNcdgN0vrS zpBMDSvDYtE+VtwHOydLztjym6oZrmNEbIWYQ9ZExLZWaB5DehvZpXcC xSheLgKdYM/r1OBEuyqRZhwzXn7gwu6nmwKRQQuCK2pDV4ZEwjuZphlW nZL7wdKSAlfh2HIyT6pCvuOnwn8Hv7JPUWzciNBS7sWHOTcSTpD7Offc jqCDEQ==</span><br><span class="line">;; Received<span class="number"> 660 </span>bytes from 2001:500:1::53<span class="comment">#53(h.root-servers.net) in 21 ms</span></span><br><span class="line"></span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns2.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      ns-692.awsdns-22.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns3.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      ns-1622.awsdns-10.co.uk.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns1.p05.nsone.net.</span><br><span class="line">0d790076pp5pfktg2hrthj5bj6ckckcb.io.<span class="number"> 900 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 10 </span>332539EE7F95C32A 0D7BD4G2J0SLS1QJ0OVHK6NSRI6V9MIK NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">0d790076pp5pfktg2hrthj5bj6ckckcb.io.<span class="number"> 900 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 900 </span>20210428091714<span class="number"> 20210407081714 </span>31080 io. WNkdcw4u54lGQaemuSd4RWHn2KMvrXDroN+hP0OrRKd6UlmyCfTVO2tm sLUnVdAdollhmKiq6BNYwkZ1dO+B1It8b7NSUY94d4wmxfC/4ePScXyp wmM0aQXOxQHskWksUmtym1793RKTJFxOOZWoB1epWattt4+eW8o+Ne79 zeo=</span><br><span class="line">0jecjt17pqtnq6cj627kpnf4n06hphai.io.<span class="number"> 900 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 10 </span>332539EE7F95C32A 0JES1F5OD9SG1E4CCRGBS865PMBUV4PC NS DS RRSIG</span><br><span class="line">0jecjt17pqtnq6cj627kpnf4n06hphai.io.<span class="number"> 900 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 900 </span>20210422151640<span class="number"> 20210401141640 </span>31080 io. jCQEKBD8H79jGL2KZqtCm9YC2ptX2j9v9ZON2IbkNgCEsd3s08tITkPT krnxJ9ksiZLqHzMR86ejBAtIEFpheQIFJG7n6CzYOlGUsC3dc5NPYlp1 jVzr/bifk9Cft2gcl/A726Eg1QjpLGIC3BqJMryKyt9Kh7ymip9o4oOR 7Ts=</span><br><span class="line">;; Received<span class="number"> 686 </span>bytes from 2a01:8840:9e::17<span class="comment">#53(a0.nic.io) in 94 ms</span></span><br><span class="line"></span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.108.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.109.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.111.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.110.153</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns1.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns2.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns3.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns4.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-1339.awsdns-39.org.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-1622.awsdns-10.co.uk.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-393.awsdns-49.com.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-692.awsdns-22.net.</span><br><span class="line">;; Received<span class="number"> 339 </span>bytes from 2600:9000:5302:b400::1<span class="comment">#53(ns-692.awsdns-22.net) in 39 ms</span></span><br></pre></td></tr></table></figure>
+<p>可知，最终解析得到的是四个A记录。</p>
+<p>对于只在GitHub的repo设置里配置Custom Domain的情况，在第一步就会失败；对于只在DNS提供商那里设置CNAME的情况，这两步都能顺利执行得到四个A记录。但是直接访问此ip是无法访问我们的 Github Pages 的。原因在于请求头里的 <code>Host</code> 字段。</p>
+<p>我们知道，不同的域名通过A记录或者CNAME方式可以连接都同一个IP下，同一个IP也可以设置多个不同站点，那我访问不同的域名都转发到同一IP，怎么区分这些不同的站点呢，就是用的Host字段。Host字段就是"originally requested domain"，相当于我们在地址栏里输入的域名。</p>
+<p>访问 <code>null.sakuya.world</code> 时 Fiddler 抓包可发现</p>
+<figure>
+<img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407173303458.png" alt="image-20210407173303458"><figcaption aria-hidden="true">image-20210407173303458</figcaption>
+</figure>
+<p>因此我们可以得知，当 Github Pages 接受到的 HTTP 请求中， Host 字段的内容在CNAME文件里有描述时，返回对应仓库中的内容。</p>
+<h2 id="后记">后记</h2>
+<p>Github pages 的文档中有一段话</p>
+<blockquote>
+<p><strong>Warning:</strong> We strongly recommend not using wildcard DNS records, such as <code>*.example.com</code>. A wildcard DNS record will allow anyone to host a site at one of your subdomains.</p>
+</blockquote>
+<p>即不要用 <code>*.example.com</code> 的 CNAME 用于 Github pages服务。原因就是任何人都可以在Github pages利用你的子域名。如果 xxx.example.com 已被用于现有的 github pages 服务，那么添加 Custom Domain 时会有提示；如果还没有占用，则可以添加</p>
+<p><img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407175359804.png" alt="image-20210407175359804" style="zoom:80%;"></p>
+<p>此时如果DNS记录里含有 <code>*.example.com</code> 的CNAME记录，那么就可以用这个子域名成功访问pages。</p>
+<p>有人可能会好奇，不是CNAME到 <code>rheinhauss.github.io</code> 吗？这个是我自己的pages服务呀？原因在于，<code>*.github.io</code>，或者说整个pages服务最终就解析到那几个ip，效果是一样的。</p>
+<p>语无伦次，请见谅。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+        <tag>DNS</tag>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Synth-V根据颤音自动画响度插件</title>
+    <url>/2021/04/06/Synth-V%E6%A0%B9%E6%8D%AE%E9%A2%A4%E9%9F%B3%E8%87%AA%E5%8A%A8%E7%94%BB%E5%93%8D%E5%BA%A6%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<p>一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！<strong>项目地址</strong>：<a href="https://github.com/Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato">Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato</a></p>
+<p>暂时只有<code>覆盖原响度</code>和<code>叠加在原响度上</code>的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。</p>
+<h3 id="用法">用法</h3>
+<p>选取（可多选）你想让本插件处理的音符，点击<code>脚本 -&gt; tool -&gt; 根据颤音设置响度</code>，设置合适的参数，然后执行。</p>
+<h3 id="注意">注意</h3>
+<p>不支持在音符内部有bpm改变的情况</p>
+<h3 id="小记">小记</h3>
+<p>其实还挺简单的，Synth V颤音参数描述的就是一个正弦曲线，所以：</p>
+<ol type="1">
+<li><p>遍历获取相应音符颤音参数</p></li>
+<li><p><code>Math.sin()；</code></p></li>
+<li><p>写入</p></li>
+</ol>
+<p>就完事了。</p>
+<p>麻烦的地方在于一点点文档里没有说明<em>（或者我没看到..）</em>的坑：</p>
+<ul>
+<li><p>音符如果没有设置相关参数，则获取出来是 <code>NaN</code> ，所以要形如 <code>if (isNaN(n.attr.tF0VbrStart)) n.attr.tF0VbrStart = attrDefault.tF0VbrStart;</code> 来fallback到音轨的默认参数上；</p></li>
+<li><p>音轨如果没有设置默认参数，则获取出来是 <code>undefined</code> ，所以要形如 <code>if (attrDefault.tF0VbrStart === undefined) attrDefault.tF0VbrStart = 0.250;</code> 检查一下；</p></li>
+<li><p>文档里没说一些重要的对象怎么获得<em>（或者我没看到..）</em>，所以要么找官方示例要么自己摸索。</p></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Synth V</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Synthesizer-V-设置全局缩放的方法</title>
     <url>/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>众所周知，Synth V Studio在默认的 <code>NotoSansCJKjp-Regular</code> 字体下，界面渲染十分难受，用户看不清字，特别是高分屏，眼睛都快瞎了（），令人无比想念可以在设置内调整界面和字体缩放的第一代Synth V。</p>
 <p>解决办法目前有俩：</p>
-<ol>
-<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<em><strong>不过可能会有版权问题</strong></em>。``Synth V Studio` 每次升级后都要重新覆盖字体。</li>
-<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。<br> <img src="/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/image-20210406152541899.png" alt="image-20210406152541899"></li>
+<ol type="1">
+<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<strong><em>不过可能会有版权问题</em></strong>。`<code>Synth V Studio</code> 每次升级后都要重新覆盖字体。</li>
+<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。 <img src="/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/image-20210406152541899.png" alt="image-20210406152541899"></li>
 </ol>
 ]]></content>
       <categories>
@@ -18,60 +96,384 @@
       </tags>
   </entry>
   <entry>
+    <title>UMLpre_01</title>
+    <url>/2021/04/21/UMLpre-01/</url>
+    <content><![CDATA[<h2 id="一.-项目前景和范围"><strong>一.</strong> <strong>项目前景和范围</strong></h2>
+<h3 id="项目前景">1. 项目前景</h3>
+<h4 id="在校生通过全面课程提醒来提升学习效率"><strong>在校生通过全面课程提醒来提升学习效率</strong></h4>
+<p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目提供全校所有课程的基本信息，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
+<h3 id="项目范围">2. 项目范围</h3>
+<h4 id="在校学生"><strong>在校学生</strong></h4>
+<p>通过自身账号登录系统查看自己全部的课程内容及相应作业，</p>
+<p>参与讨论区评价</p>
+<p>与教师互动</p>
+<h4 id="系统管理者"><strong>系统管理者</strong></h4>
+<p>对程序进行更新</p>
+<h2 id="二-涉众分析"><strong>二、</strong> <strong>涉众分析</strong></h2>
+<h3 id="涉众概要"><strong>1.</strong> 涉众概要</h3>
+<table>
+<thead>
+<tr class="header">
+<th><strong>涉众编号</strong></th>
+<th><strong>涉众名称</strong></th>
+<th><strong>涉众说明</strong></th>
+<th><strong>使用系统的方式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>001</strong></td>
+<td>普通学生</td>
+<td>学生是使用该系统导入获取课程信息的主体</td>
+<td>1. 设置可按周显示的课表 <br>2. 设置并获取课程提醒信息 <br>3. 创建作业待办</td>
+</tr>
+<tr class="even">
+<td><strong>002</strong></td>
+<td>系统开发人员</td>
+<td>系统开发人员是对系统进行开发和维护的人员</td>
+<td>1. 开发课程提醒系统 <br>2. 对程序进行更新</td>
+</tr>
+</tbody>
+</table>
+<h3 id="涉众简档"><strong>2. 涉众简档</strong></h3>
+<h4 id="普通学生"><strong>2.1</strong> <strong>普通学生</strong></h4>
+<table>
+<thead>
+<tr class="header">
+<th><strong>涉众</strong></th>
+<th><strong>001普通学生</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>涉众代表</strong></td>
+<td><strong>普通用户代表</strong></td>
+</tr>
+<tr class="even">
+<td><strong>特点</strong></td>
+<td><strong>系统的主要使用者,在校大学生</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>职责</strong></td>
+<td><strong>1.</strong> <strong>下载并使用该系统</strong> <br><strong>2.</strong> <strong>导入并修改可按周查看的课表</strong> <br><strong>3.</strong> <strong>获取课前提醒</strong> <br><strong>4.</strong> <strong>添加可备注的待办/作业,可设定提醒时间</strong></td>
+</tr>
+<tr class="even">
+<td><strong>成功标准</strong></td>
+<td><strong>1.</strong> <strong>能及时获取课程提醒信息</strong> <br><strong>2.</strong> <strong>课表显示周数,课程名称,时间,教师,教室.</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>参与</strong></td>
+<td><strong>不参与系统建设</strong></td>
+</tr>
+<tr class="even">
+<td><strong>可交付工作</strong></td>
+<td><strong>无</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="系统管理员"><strong>2.2</strong> <strong>系统管理员</strong></h4>
+<table>
+<thead>
+<tr class="header">
+<th><strong>涉众</strong></th>
+<th><strong>002系统开发人员</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>涉众代表</strong></td>
+<td><strong>开发人员代表</strong></td>
+</tr>
+<tr class="even">
+<td><strong>特点</strong></td>
+<td><strong>系统的开发者</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>职责</strong></td>
+<td><strong>1.</strong> <strong>开发课程提醒系统</strong> <strong>2.</strong> <strong>对系统使用中出现的问题进行维护和修复</strong></td>
+</tr>
+<tr class="even">
+<td><strong>成功标准</strong></td>
+<td><strong>课程提醒系统运行良好</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>参与</strong></td>
+<td><strong>参与系统设计</strong></td>
+</tr>
+<tr class="even">
+<td><strong>可交付工作</strong></td>
+<td><strong>课程题型系统</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="三-硬数据采样"><strong>三、 硬数据采样</strong></h2>
+<h3 id="硬数据采样内容"><strong>1. 硬数据采样内容</strong></h3>
+<p><strong>采用调查问卷形式,问卷内容及结果如下</strong></p>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image002.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image004.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image006.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="硬数据采样结果分析"><strong>2.硬数据采样结果分析</strong></h3>
+<ol type="1">
+<li>有效填写人次54，其中大部分为大一、大二学生</li>
+</ol>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image008.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>有2/3的人偶尔在学习生活中错过ddl,对此程序的必要性做出了佐证</li>
+</ol>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image010.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>76%的人认为需要课程提醒,证明了本项目的可行性</li>
+</ol>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image012.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="4" type="1">
+<li><strong>结果显示对于：移动设备上的文字通知，桌面设备上的弹窗或窗口，动设备上的铃声、震动，每天定时短信方式发送至手机 四种提醒方式选择人数相似，可以考虑让用户自行选择设置提醒方式</strong></li>
+</ol>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image014.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="5" type="1">
+<li><strong>对于 课程提醒时间 大多数人[85%]选择了每天定时提醒</strong></li>
+</ol>
+<figure>
+<img src="/2021/04/21/UMLpre-01/clip_image016.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre_02</title>
+    <url>/2021/05/19/UMLpre-02/</url>
+    <content><![CDATA[<p>这次主要是数据建模相关的结果。</p>
+<h2 id="erd">ERD</h2>
+<h3 id="简单情况erd建模">简单情况ERD建模</h3>
+<figure>
+<img src="/2021/05/19/UMLpre-02/image-20210519151540050.png" alt="image-20210519151540050"><figcaption aria-hidden="true">image-20210519151540050</figcaption>
+</figure>
+<h3 id="根据硬表单的erd建模">根据硬表单的ERD建模</h3>
+<figure>
+<img src="/2021/05/19/UMLpre-02/image-20210519151600681.png" alt="image-20210519151600681"><figcaption aria-hidden="true">image-20210519151600681</figcaption>
+</figure>
+<h2 id="dfd">DFD</h2>
+<h3 id="上下文图">上下文图</h3>
+<figure>
+<img src="/2021/05/19/UMLpre-02/image-20210519151632864.png" alt="image-20210519151632864"><figcaption aria-hidden="true">image-20210519151632864</figcaption>
+</figure>
+<h3 id="层图">0层图</h3>
+<figure>
+<img src="/2021/05/19/UMLpre-02/image-20210519151643756.png" alt="image-20210519151643756"><figcaption aria-hidden="true">image-20210519151643756</figcaption>
+</figure>
+<h3 id="层图-1">1层图</h3>
+<figure>
+<img src="/2021/05/19/UMLpre-02/image-20210519151653038.png" alt="image-20210519151653038"><figcaption aria-hidden="true">image-20210519151653038</figcaption>
+</figure>
+<h2 id="微规格说明"><strong>微规格说明</strong></h2>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">OPEN</span> bitClassSchedule.app</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span></span><br><span class="line">CASE1 (<span class="keyword">without</span>-ClassTable-<span class="keyword">database</span>)</span><br><span class="line">4Action1: <span class="keyword">show</span> <span class="keyword">add</span> data <span class="keyword">View</span></span><br><span class="line">4Action2: <span class="keyword">get</span> the classSchedule <span class="keyword">Input</span>(.xls File)</span><br><span class="line">4Action3: <span class="keyword">create</span> the ClassTable <span class="keyword">database</span></span><br><span class="line">CASE2(ClassTable-Created)</span><br><span class="line">4Action1: <span class="keyword">show</span> the basic main <span class="keyword">Window</span></span><br><span class="line">4Action2: count <span class="type">date</span></span><br><span class="line">Action3: <span class="keyword">create</span> Button[本周课表] <span class="keyword">and</span> [我的作业待办]</span><br><span class="line">Action4: <span class="keyword">search</span> the <span class="keyword">DataBase</span> <span class="keyword">and</span> <span class="keyword">show</span> today’s <span class="keyword">class</span> information</span><br><span class="line">Action(OnClickButton[本周课表]): change <span class="keyword">View</span> <span class="keyword">to</span> bzkebiao</span><br><span class="line">4Action1: <span class="keyword">create</span> basic layout</span><br><span class="line">4Action2: count week</span><br><span class="line">Action3: <span class="keyword">search</span> the ClassTable.db <span class="keyword">database</span> <span class="keyword">and</span> <span class="keyword">create</span> the bzkebiao</span><br><span class="line">Action4: <span class="keyword">set</span> OnClickListener(show_class_information) <span class="keyword">on</span> <span class="keyword">all</span> the <span class="keyword">class</span> textview shown <span class="keyword">on</span> bzkebiao.xml</span><br><span class="line">Action(OnClickTextView[show_class_information]):</span><br><span class="line">4Action1: Alert <span class="keyword">View</span> class_inf_basic.xml</span><br><span class="line">Action2: <span class="keyword">Search</span> ClassTable.db, collect <span class="keyword">and</span> <span class="keyword">show</span> <span class="keyword">all</span> the Information <span class="keyword">or</span> the chosen <span class="keyword">class</span> </span><br><span class="line">4Action(OnClickButton[我的作业待办]):change <span class="keyword">View</span> <span class="keyword">to</span> daiban.xml</span><br><span class="line">44Action1: <span class="keyword">create</span> the basic layout(<span class="keyword">with</span> “<span class="keyword">add</span>”,”clear” button)</span><br><span class="line">Action2: <span class="keyword">database</span>(daiban.db) <span class="keyword">exists</span>? <span class="keyword">Read</span> daiban.db : <span class="keyword">create</span> daiban.<span class="keyword">database</span></span><br><span class="line">44Action3: sort <span class="keyword">all</span> the daiban_work <span class="keyword">by</span> <span class="type">time</span>, <span class="keyword">show</span></span><br><span class="line">44Action(OnClick “<span class="keyword">add</span>” Button):</span><br><span class="line">444Action1: Change <span class="keyword">to</span> <span class="keyword">View</span> add_daiban.xml</span><br><span class="line">444Action2: <span class="keyword">write</span> the daiban_work information</span><br><span class="line">444Action3: put daiban_work <span class="keyword">in</span> <span class="keyword">database</span></span><br><span class="line">44Action(OnClickButton[clear]):</span><br><span class="line">444Action1: remove daiban.db</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="数据字典"><strong>数据字典</strong></h2>
+<table>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>课程信息</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>别名</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>使用的地点和方法</td>
+<td>保存课程信息(input) <br>显示今日课程(output) <br>展示本周课程信息(output) <br>发送课程信息(input) <br>显示课程详细信息(output)</td>
+</tr>
+<tr class="odd">
+<td>描述</td>
+<td>1. <code>Classname = Text</code> <br>2. <code>Zhouci = [”&#123;1~20&#125;-&#123;1~20&#125;周” or”&#123;1~20&#125;周” ]  例:1-8周\| 12周</code> <br>3. <code>Kaishi =[第&#123;1-13&#125;节]</code> <br>4. <code>Jieshu=[第&#123;1-13&#125;节]</code> <br>5. <code>Teacher=text</code> <br>6. <code>教室 = text</code></td>
+</tr>
+<tr class="even">
+<td>格式</td>
+<td><code>SQLite database Information  In table Class</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>待办</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>别名</td>
+<td>Daiban_work(in AddView.java and MyTask.java)</td>
+</tr>
+<tr class="even">
+<td>使用的地点和方法</td>
+<td>存储待办(input)<br> 显示待办(output)<br> 删除待办(input)<br> 查找待办(output)</td>
+</tr>
+<tr class="odd">
+<td>描述</td>
+<td>1. <code>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min</code><br> 2. <code>Inf= text</code><br> 3. <code>Deadline=同Create_time</code><br> 4. <code>Remind_time=同Create_time</code></td>
+</tr>
+<tr class="even">
+<td>格式</td>
+<td><code>SQLite database Information  In table daiban.db</code></td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre_03</title>
+    <url>/2021/05/19/UMLpre-03/</url>
+    <content><![CDATA[<p>课程提醒系统demo的repo在此：https://gitee.com/i-dont-miss-it/bitClassScheduleApp</p>
+<h3 id="changelog">ChangeLog</h3>
+<p>（待完成…）</p>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cpp_vector_用迭代器初始化</title>
+    <url>/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
+    <content><![CDATA[<p>前几日突发奇想，既然可以用迭代器给vector初始化，那如果用一些奇奇怪怪的迭代器进行初始化会怎么样呢？话不多说，实验一下(环境为<code>gcc 9.3.0-17ubuntu1~20.04</code>)，代码如下。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要c++11</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec1&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec2&#123;<span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> a = &#123;vec2.<span class="built_in">end</span>(), vec1.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec3</span><span class="params">(a)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec4</span><span class="params">(vec1.end(), vec2.begin())</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec5</span><span class="params">(vec1.end(), vec1.begin())</span></span>;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec6&#123;vec1.<span class="built_in">end</span>(), vec2.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>是搞出来了两个迭代器作为元素的vector呢还是直接复制两个迭代器地址之间的内容？</p>
+<p>实验结果是：</p>
+<ul>
+<li><p><code>vec3</code>导致编译时报错</p>
+<p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">没有与参数列表匹配的构造函数 <span class="string">&quot;std::vector&lt;_Tp, _Alloc&gt;::vector [其中 _Tp=int, _Alloc=std::allocator&lt;int&gt;]&quot;</span> 实例 -- 参数类型为:  (std::initializer_list&lt;__gnu_cxx::__normal_iterator&lt;<span class="keyword">int</span> *, std::vector&lt;<span class="keyword">int</span>, std::allocator&lt;<span class="keyword">int</span>&gt;&gt;&gt;&gt;)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>vec5</code>导致运行时报错</p>
+<p><figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">terminate called after throwing an<span class="built_in"> instance </span>of &#x27;std::length_error&#x27;</span><br><span class="line">  what():  cannot create std::vector larger than max_size()</span><br></pre></td></tr></table></figure></p></li>
+<li><p>注释掉<code>vec3</code>、<code>vec5</code>后，可发现其余vector内部存放的数据 <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413210624685.png" alt="image-20210413210624685" style="zoom:80%;"></p></li>
+</ul>
+<p>以上结果是为什么呢？</p>
+<p>首先介绍一下背景知识：</p>
+<ul>
+<li><p>C++11引入了新类型，叫做 <code>std::initializer_list</code>，即大括号初始化列表，用于列表初始化一个对象。 当遇到以下情况时一个<code>initializer_list</code>被自动创建（copy自cppreference）：</p>
+<ul>
+<li>a <em>braced-init-list</em> is used to <a href="https://en.cppreference.com/w/cpp/language/list_initialization">list-initialize</a> an object, where the corresponding constructor accepts an <code>std::initializer_list</code> parameter</li>
+<li>a <em>braced-init-list</em> is used as the right operand of <a href="https://en.cppreference.com/w/cpp/language/operator_assignment#Builtin_direct_assignment">assignment</a> or as a <a href="https://en.cppreference.com/w/cpp/language/overload_resolution#Implicit_conversion_sequence_in_list-initialization">function call argument</a>, and the corresponding assignment operator/function accepts an <code>std::initializer_list</code> parameter</li>
+<li>a <em>braced-init-list</em> is bound to <a href="https://en.cppreference.com/w/cpp/language/auto"><code>auto</code></a>, including in a <a href="https://en.cppreference.com/w/cpp/language/range-for">ranged for loop</a></li>
+</ul>
+<p>C++11允许构造函数和其他函数把初始化列表当做参数，使用方法如下</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myVector</span> &#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;T&gt; m_vec;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">myVector</span>(<span class="keyword">const</span> std::initializer_list&lt;T&gt;&amp; v) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i : v)</span><br><span class="line">            m_vec.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> index) &#123; <span class="keyword">return</span> m_vec[index]; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p>背景知识介绍完了，那就来结合源码解释一下实验现象8。</p>
+<ul>
+<li><p><code>vec3</code>的编译时报错： <code>vec3</code>是<code>vector&lt;int&gt;</code>。接受大括号初始化列表作为参数的构造函数，需要的是内含<code>int</code>的初始化列表，而我们构造的<code>auto a = &#123;vec2.end(), vec1.begin()&#125;;</code>是内含<code>vector&lt;int&gt;::iterator</code>的初始化列表，所以报错<code>没有与参数列表匹配的构造函数</code>。 如果把<code>vec3</code>一行改为<code>vector&lt;vector&lt;int&gt;::iterator&gt; vec3(a);</code>则可以通过编译。</p></li>
+<li><p>其余vec的现象的原因是一样的。跟踪代码运行阅读对应源码可知： <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213612781.png" alt="image-20210413213612781" style="zoom:80%;"></p>
+<p><img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213630796.png" alt="image-20210413213630796" style="zoom:80%;"></p>
+<p><img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214627923.png" alt="image-20210413213630796" style="zoom:80%;"></p>
+<p><img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213653848.png" alt="image-20210413213653848" style="zoom:80%;"></p>
+<p><img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213707553.png" alt="image-20210413213707553" style="zoom:80%;"></p>
+<p><img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214724940.png" alt="image-20210413213707553" style="zoom:80%;"></p>
+<p>如果给vector的构造函数传两个iterator作为参数，那么就从第一个iterator开始读内存做<span class="math inline">\(n=distance(iterator_a, iterator_b)\)</span>次emplace到新的vector里。如果distance超过最大值（这里vec5的情况应该是负溢）则报错。如此一来就能解释vec456的奇妙行为了。当然vec4和vec6没有报错也是环境原因，可能换一个编译器或者系统就会导致那里出错。</p></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高斯消元解异或方程组</title>
+    <url>/2020/08/09/gauss-xor-equation/</url>
+    <content><![CDATA[<p>当时遇到了道题，分析之后解异或方程组就完事了。代码如下：</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Gauss</span>(<span class="params">Row: <span class="built_in">int</span>, Column: <span class="built_in">int</span></span>):</span></span><br><span class="line">    row = <span class="number">0</span></span><br><span class="line">    col = <span class="number">0</span></span><br><span class="line">    max_r = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> row &amp;lt; Row <span class="keyword">and</span> col &amp;lt; Column:</span><br><span class="line">        max_r = row</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 找出当前列最大值</span></span><br><span class="line">            <span class="keyword">if</span> (Matrix[i][col]) &gt; (Matrix[max_r][col]):</span><br><span class="line">                max_r = i</span><br><span class="line">        <span class="keyword">if</span> Matrix[max_r][col] == <span class="number">0</span>:  <span class="comment"># 记录自由变元</span></span><br><span class="line">            row -= <span class="number">1</span></span><br><span class="line">            Free_x[Free_num] = col+<span class="number">1</span></span><br><span class="line">            Free_num += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> max_r != row:  <span class="comment"># 交换</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                tmp = Matrix[row][i]</span><br><span class="line">                Matrix[row][i] = Matrix[max_r][i]</span><br><span class="line">                Matrix[max_r][i] = tmp</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 消元</span></span><br><span class="line">            <span class="keyword">if</span> Matrix[i][col] != <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                    Matrix[i][j] ^= Matrix[row][j]</span><br><span class="line">        row += <span class="number">1</span></span><br><span class="line">        col += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row, Row):  <span class="comment"># 无解</span></span><br><span class="line">        <span class="keyword">if</span> Matrix[i][Column] != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> row &amp;lt; Column:  <span class="comment"># 无穷多解</span></span><br><span class="line">        <span class="keyword">return</span> Column-row</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 唯一解</span></span><br><span class="line">    i = Column-<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &gt;= <span class="number">0</span>:</span><br><span class="line">        X_Ans[i] = Matrix[i][Column]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, Column):</span><br><span class="line">            X_Ans[i] ^= Matrix[i][j] <span class="keyword">and</span> X_Ans[j]</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>CTF</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>以Integer类为例的包装类型装箱拆箱与判断相等</title>
     <url>/2021/04/01/%E4%BB%A5Integer%E7%B1%BB%E4%B8%BA%E4%BE%8B%E7%9A%84%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B%E8%A3%85%E7%AE%B1%E6%8B%86%E7%AE%B1%E4%B8%8E%E5%88%A4%E6%96%AD%E7%9B%B8%E7%AD%89/</url>
     <content><![CDATA[<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">app1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer i1 = <span class="number">100</span>;</span><br><span class="line">        Integer j1 = <span class="number">100</span>;</span><br><span class="line">        System.out.println(i1 == j1); <span class="comment">// true </span></span><br><span class="line">        Integer i2 = <span class="number">129</span>;</span><br><span class="line">        Integer j2 = <span class="number">129</span>;</span><br><span class="line">        System.out.println(i2 == j2); <span class="comment">// false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>为什么会这样呢.jpg</p>
 <span id="more"></span>
-
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
-<li><p><code>==</code>判断地址相等</p>
-</li>
+<h2 id="分析">分析</h2>
+<ol type="1">
+<li><p><code>==</code>判断地址相等</p></li>
 <li><p>自动装箱时编译器调用<code>valueOf()</code>将原始类型值转换成对象，同时自动拆箱时，编译器通过调用类似<code>intValue()</code>,<code>doubleValue()</code>这类的方法将对象转换成原始类型值。</p>
 <ul>
 <li><code>Integer c = 200;</code>类似这样触发自动装箱</li>
 <li><code>Integer.equals(int a)</code>也对a触发自动装箱</li>
 <li><code>Integer == int</code>对<code>Integer</code>类型触发自动拆箱</li>
-</ul>
-</li>
+</ul></li>
 <li><p><code>Object.equals()</code>默认</p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> <code>Integer.equals()</code>重写成</p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Integer) &#123;</span><br><span class="line">            <span class="keyword">return</span> value == ((Integer)obj).intValue();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> 可见<code>Integer.equals()</code>是比较值。</p>
-</li>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>Integer.equals()</code>重写成</p>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Integer) &#123;</span><br><span class="line">            <span class="keyword">return</span> value == ((Integer)obj).intValue();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可见<code>Integer.equals()</code>是比较值。</p></li>
 <li><p><code>Integer.intValue()</code></p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">intValue</span><span class="params">()</span>  </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> value;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">intValue</span><span class="params">()</span>  </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> value;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></p></li>
 <li><p><code>Integer.valueOf()</code></p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> 在常量池中则返回池中引用，否则创建新的<code>Integer</code>对象。</p>
-</li>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在常量池中则返回池中引用，否则创建新的<code>Integer</code>对象。</p></li>
 <li><p><code>Integer.IntegerCache</code>常量池</p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Cache to support the object identity semantics of autoboxing for values</span></span><br><span class="line"><span class="comment"> * between -128 and 127 (inclusive) as required by JLS.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The cache is initialized on first usage. The size of the cache may be</span></span><br><span class="line"><span class="comment"> * controlled by the &#123;<span class="doctag">@code</span> -XX:AutoBoxCacheMax=&lt;size&gt;&#125; option. During VM</span></span><br><span class="line"><span class="comment"> * initialization, java.lang.Integer.IntegerCache.high property may be set and</span></span><br><span class="line"><span class="comment"> * saved in the private system properties in the jdk.internal.misc.VM class.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * WARNING: The cache is archived with CDS and reloaded from the shared archive</span></span><br><span class="line"><span class="comment"> * at runtime. The archived cache (Integer[]) and Integer objects reside in the</span></span><br><span class="line"><span class="comment"> * closed archive heap regions. Care should be taken when changing the</span></span><br><span class="line"><span class="comment"> * implementation and the cache array should not be assigned with new Integer</span></span><br><span class="line"><span class="comment"> * object(s) after initialization.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Integer[] cache;</span><br><span class="line">    <span class="keyword">static</span> Integer[] archivedCache;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// high value may be configured by property</span></span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">        String integerCacheHighPropValue = VM.getSavedProperty(<span class="string">&quot;java.lang.Integer.IntegerCache.high&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                h = Math.max(parseInt(integerCacheHighPropValue), <span class="number">127</span>);</span><br><span class="line">                <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                h = Math.min(h, Integer.MAX_VALUE - (-low) - <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (NumberFormatException nfe) &#123;</span><br><span class="line">                <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Load IntegerCache.archivedCache from archive, if possible</span></span><br><span class="line">        VM.initializeFromArchive(IntegerCache.class);</span><br><span class="line">        <span class="keyword">int</span> size = (high - low) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Use the archived cache if it exists and is large enough</span></span><br><span class="line">        <span class="keyword">if</span> (archivedCache == <span class="keyword">null</span> || size &gt; archivedCache.length) &#123;</span><br><span class="line">            Integer[] c = <span class="keyword">new</span> Integer[size];</span><br><span class="line">            <span class="keyword">int</span> j = low;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c.length; i++) &#123;</span><br><span class="line">                c[i] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line">            &#125;</span><br><span class="line">            archivedCache = c;</span><br><span class="line">        &#125;</span><br><span class="line">        cache = archivedCache;</span><br><span class="line">        <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">        <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Cache to support the object identity semantics of autoboxing for values</span></span><br><span class="line"><span class="comment"> * between -128 and 127 (inclusive) as required by JLS.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The cache is initialized on first usage. The size of the cache may be</span></span><br><span class="line"><span class="comment"> * controlled by the &#123;<span class="doctag">@code</span> -XX:AutoBoxCacheMax=&lt;size&gt;&#125; option. During VM</span></span><br><span class="line"><span class="comment"> * initialization, java.lang.Integer.IntegerCache.high property may be set and</span></span><br><span class="line"><span class="comment"> * saved in the private system properties in the jdk.internal.misc.VM class.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * WARNING: The cache is archived with CDS and reloaded from the shared archive</span></span><br><span class="line"><span class="comment"> * at runtime. The archived cache (Integer[]) and Integer objects reside in the</span></span><br><span class="line"><span class="comment"> * closed archive heap regions. Care should be taken when changing the</span></span><br><span class="line"><span class="comment"> * implementation and the cache array should not be assigned with new Integer</span></span><br><span class="line"><span class="comment"> * object(s) after initialization.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Integer[] cache;</span><br><span class="line">    <span class="keyword">static</span> Integer[] archivedCache;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// high value may be configured by property</span></span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">        String integerCacheHighPropValue = VM.getSavedProperty(<span class="string">&quot;java.lang.Integer.IntegerCache.high&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                h = Math.max(parseInt(integerCacheHighPropValue), <span class="number">127</span>);</span><br><span class="line">                <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                h = Math.min(h, Integer.MAX_VALUE - (-low) - <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (NumberFormatException nfe) &#123;</span><br><span class="line">                <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Load IntegerCache.archivedCache from archive, if possible</span></span><br><span class="line">        VM.initializeFromArchive(IntegerCache.class);</span><br><span class="line">        <span class="keyword">int</span> size = (high - low) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Use the archived cache if it exists and is large enough</span></span><br><span class="line">        <span class="keyword">if</span> (archivedCache == <span class="keyword">null</span> || size &gt; archivedCache.length) &#123;</span><br><span class="line">            Integer[] c = <span class="keyword">new</span> Integer[size];</span><br><span class="line">            <span class="keyword">int</span> j = low;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c.length; i++) &#123;</span><br><span class="line">                c[i] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line">            &#125;</span><br><span class="line">            archivedCache = c;</span><br><span class="line">        &#125;</span><br><span class="line">        cache = archivedCache;</span><br><span class="line">        <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">        <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
 <li><p><code>Integer(int)</code>构造函数</p>
- <figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Constructs a newly allocated &#123;<span class="doctag">@code</span> Integer&#125; object that</span></span><br><span class="line"><span class="comment">  * represents the specified &#123;<span class="doctag">@code</span> int&#125; value.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span>   value   the value to be represented by the</span></span><br><span class="line"><span class="comment">  *                  &#123;<span class="doctag">@code</span> Integer&#125; object.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@deprecated</span></span></span><br><span class="line"><span class="comment">  * It is rarely appropriate to use this constructor. The static factory</span></span><br><span class="line"><span class="comment">  * &#123;<span class="doctag">@link</span> #valueOf(int)&#125; is generally a better choice, as it is</span></span><br><span class="line"><span class="comment">  * likely to yield significantly better space and time performance.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="meta">@Deprecated</span>(since=<span class="string">&quot;9&quot;</span>)</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Integer</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.value = value;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>   官方建议用静态工厂方法<code>valueOf(int)</code>替代本构造函数，因为在时间与空间方面的性能都更好。</p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer i = Integer.ValueOf(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-<p> 具体原因如下：</p>
+<p><figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Constructs a newly allocated &#123;<span class="doctag">@code</span> Integer&#125; object that</span></span><br><span class="line"><span class="comment">  * represents the specified &#123;<span class="doctag">@code</span> int&#125; value.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span>   value   the value to be represented by the</span></span><br><span class="line"><span class="comment">  *                  &#123;<span class="doctag">@code</span> Integer&#125; object.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@deprecated</span></span></span><br><span class="line"><span class="comment">  * It is rarely appropriate to use this constructor. The static factory</span></span><br><span class="line"><span class="comment">  * &#123;<span class="doctag">@link</span> #valueOf(int)&#125; is generally a better choice, as it is</span></span><br><span class="line"><span class="comment">  * likely to yield significantly better space and time performance.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="meta">@Deprecated</span>(since=<span class="string">&quot;9&quot;</span>)</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Integer</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.value = value;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>官方建议用静态工厂方法<code>valueOf(int)</code>替代本构造函数，因为在时间与空间方面的性能都更好。</p>
+<p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer i = Integer.ValueOf(<span class="number">10</span>);</span><br></pre></td></tr></table></figure></p>
+<p>具体原因如下：</p>
 <ul>
 <li><code>Integer.ValueOf(int)</code>中有<code>IntegerCache</code>常量池，相当于做了一个缓存，在缓存范围内的都可以直接从缓存中取，而不必生成新的对象，提高了对象的利用率。</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们用一段代码来总结各种情况。</p>
+<h2 id="总结">总结</h2>
+<p>我们用一段代码来总结各种情况。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">app1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer IntNew200_1 = <span class="keyword">new</span> Integer(<span class="number">200</span>);</span><br><span class="line">        Integer IntNew200_2 = <span class="keyword">new</span> Integer(<span class="number">200</span>);</span><br><span class="line">        Integer IntEqual200_1 = <span class="number">200</span>;</span><br><span class="line">        Integer IntEqual200_2 = <span class="number">200</span>;</span><br><span class="line">        Integer IntNew100_1 = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">        Integer IntNew100_2 = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">        Integer IntEqual100_1 = <span class="number">100</span>;</span><br><span class="line">        Integer IntEqual100_2 = <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">int</span> IntPri200 = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;两个new出来200\t\t==\t&quot;</span> + (IntNew200_2 == IntNew200_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个new出来200\t\tequal\t&quot;</span> + IntNew200_2.equals(IntNew200_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;new出200和int装箱200\t==\t&quot;</span> + (IntNew200_2 == IntEqual200_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;new出200和int装箱200\tequal\t&quot;</span> + (IntNew200_2.equals(IntEqual200_1)));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个int装箱200\t\t==\t&quot;</span> + (IntEqual200_1 == IntEqual200_2));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个int装箱200\t\tequal\t&quot;</span> + (IntEqual200_1.equals(IntEqual200_2)));</span><br><span class="line">        System.out.println(<span class="string">&quot;基本类型200和new出200\t==\t&quot;</span> + (IntPri200 == IntNew200_2));</span><br><span class="line">        System.out.println(<span class="string">&quot;基本类型200和new出200\tequal\t&quot;</span> + (IntNew200_2.equals(IntPri200)));</span><br><span class="line">        System.out.println(<span class="string">&quot;基本类型200和int装箱200\t==\t&quot;</span> + (IntPri200 == IntEqual200_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;基本类型200和int装箱200\tequal\t&quot;</span> + (IntEqual200_1.equals(IntPri200)));</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;两个new出来100\t\t==\t&quot;</span> + (IntNew100_2 == IntNew100_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个new出来100\t\tequal\t&quot;</span> + IntNew100_2.equals(IntNew100_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;new出100和int装箱100\t==\t&quot;</span> + (IntNew100_2 == IntEqual100_1));</span><br><span class="line">        System.out.println(<span class="string">&quot;new出100和int装箱100\tequal\t&quot;</span> + (IntNew100_2.equals(IntEqual100_1)));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个int装箱100\t\t==\t&quot;</span> + (IntEqual100_1 == IntEqual100_2));</span><br><span class="line">        System.out.println(<span class="string">&quot;两个int装箱100\t\tequal\t&quot;</span> + (IntEqual100_1.equals(IntEqual100_2)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>Output:</p>
 <figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">两个<span class="keyword">new</span>出来<span class="number">200</span>          ==      <span class="literal">false</span></span><br><span class="line">两个<span class="keyword">new</span>出来<span class="number">200</span>          equal   <span class="literal">true</span> </span><br><span class="line"><span class="keyword">new</span>出<span class="number">200</span>和<span class="keyword">int</span>装箱<span class="number">200</span>    ==      <span class="literal">false</span></span><br><span class="line"><span class="keyword">new</span>出<span class="number">200</span>和<span class="keyword">int</span>装箱<span class="number">200</span>    equal   <span class="literal">true</span> </span><br><span class="line">两个<span class="keyword">int</span>装箱<span class="number">200</span>          ==      <span class="literal">false</span></span><br><span class="line">两个<span class="keyword">int</span>装箱<span class="number">200</span>          equal   <span class="literal">true</span> </span><br><span class="line">基本类型<span class="number">200</span>和<span class="keyword">new</span>出<span class="number">200</span>   ==      <span class="literal">true</span></span><br><span class="line">基本类型<span class="number">200</span>和<span class="keyword">new</span>出<span class="number">200</span>   equal   <span class="literal">true</span></span><br><span class="line">基本类型<span class="number">200</span>和<span class="keyword">int</span>装箱<span class="number">200</span> ==      <span class="literal">true</span></span><br><span class="line">基本类型<span class="number">200</span>和<span class="keyword">int</span>装箱<span class="number">200</span> equal   <span class="literal">true</span></span><br><span class="line">两个<span class="keyword">new</span>出来<span class="number">100</span>          ==      <span class="literal">false</span></span><br><span class="line">两个<span class="keyword">new</span>出来<span class="number">100</span>          equal   <span class="literal">true</span></span><br><span class="line"><span class="keyword">new</span>出<span class="number">100</span>和<span class="keyword">int</span>装箱<span class="number">100</span>    ==      <span class="literal">false</span></span><br><span class="line"><span class="keyword">new</span>出<span class="number">100</span>和<span class="keyword">int</span>装箱<span class="number">100</span>    equal   <span class="literal">true</span></span><br><span class="line">两个<span class="keyword">int</span>装箱<span class="number">100</span>          ==      <span class="literal">true</span></span><br><span class="line">两个<span class="keyword">int</span>装箱<span class="number">100</span>          equal   <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
 <p>对上述Output的理解：</p>
-<ol>
+<ol type="1">
 <li>调用<code>Integer(int)</code>即创建一个新的对象。<code>==</code>比较地址。</li>
 <li><code>Integer.equal()</code>比较值。</li>
 <li>调用<code>Integer(int)</code>即创建一个新的对象。<code>==</code>比较地址。</li>
@@ -98,378 +500,139 @@
       </tags>
   </entry>
   <entry>
-    <title>高斯消元解异或方程组</title>
-    <url>/2020/08/09/gauss-xor-equation/</url>
-    <content><![CDATA[<p>当时遇到了道题，分析之后解异或方程组就完事了。代码如下：</p>
-<span id="more"></span>
+    <title>数字信封及数字签名</title>
+    <url>/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/</url>
+    <content><![CDATA[<h1 id="数字信封及数字签名">数字信封及数字签名</h1>
+<p>[toc]</p>
+<h2 id="des与对称加密">DES与对称加密</h2>
+<p><strong><em>DES现在已经不是一种安全的加密方法，DES标准和3DES标准已逐渐被AES所取代。</em></strong></p>
+<p>DES是一种对称加密算法，这类算法在加密和解密时使用相同的密钥，其安全性依靠密钥的长度和保密。 <span class="math display">\[
+加密：\quad E_k(\mathbf{M}) = \mathbf{C}\\
+解密：\quad D_k(\mathbf{C}) = D_k(E_k(\mathbf{M})) = \mathbf{M}
+\]</span> <img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/Untitled%20Diagram.svg" alt="Untitled Diagram"></p>
+<ul>
+<li>优点
+<ul>
+<li>计算量小，运算速度比公钥加密快很多</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>要求双方取得相同的密钥，难以安全地传递密钥</li>
+</ul></li>
+</ul>
+<h2 id="rsa与非对称加密">RSA与非对称加密</h2>
+<p>RSA是一种非对称加密算法。非对称加密为数据的加密与解密提供了一个非常安全的方法，它使用了一对密钥——公钥和私钥，私钥只能由一方保管，不能外泄，而公钥则可以发给任何请求它的人，加密和解密需要两个不同的密钥。RSA算法利用了一个数学难题：大整数因数分解。正向操作非常简单，而逆向操作非常困难。</p>
+<ul>
+<li>优点
+<ul>
+<li>安全性高</li>
+<li>……</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>在计算上相当复杂，加密速度慢</li>
+<li>……</li>
+</ul></li>
+</ul>
+<h3 id="rsa流程">RSA流程</h3>
+<figure>
+<img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg" alt="非对称加密"><figcaption aria-hidden="true">非对称加密</figcaption>
+</figure>
+<h4 id="公钥与私钥的产生">公钥与私钥的产生</h4>
+<ol type="1">
+<li>随机选取两个大质数<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span>，其中<span class="math inline">\(p\neq q\)</span></li>
+<li>计算<span class="math inline">\(N=p\times q\)</span></li>
+<li>计算<span class="math inline">\(r = \varphi(N) = \varphi(p)\times\varphi(q) = (p-1)\times(q-1)\)</span>，具体参见<em>欧拉函数</em></li>
+<li>选择一个小于<span class="math inline">\(r\)</span>的整数<span class="math inline">\(e\)</span>，使<span class="math inline">\(e\)</span>与<span class="math inline">\(r\)</span>互质</li>
+<li>求<span class="math inline">\(d\)</span>，满足<span class="math inline">\(ed\equiv1\quad \mathrm{mod}\;r\)</span>，参见模逆元</li>
+<li>销毁<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span></li>
+<li><span class="math inline">\((N,e)\)</span>是公钥，<span class="math inline">\((N,d)\)</span>是私钥</li>
+</ol>
+<h4 id="加密与解密消息">加密与解密消息</h4>
+<p><span class="math display">\[
+加密\quad\quad c\equiv n^e\quad \mathrm{mod}\;N\\
+解密\quad\quad n\equiv c^d\quad \mathrm{mod}\;N
+\]</span></p>
+<h5 id="证明">证明</h5>
+<p>$$ <span class="math display">\[\begin{equation}
+\begin{aligned}
+c^{d}&amp;\equiv n^{ed}\quad\mathrm{mod}\;N\\
+n^{ed}&amp;=n^{1+k\varphi(N)}\\
+&amp;=n(n^{\varphi({N})})^h\\
+若n,N互质:\\
+n^{ed}&amp;\equiv n(1)^h\equiv n\quad\mathrm{mod}\;N\\
+若n,N不互质:\\
+设\quad
+n &amp;= ph\;,\;ed-1 = k(q-1)\\
+有\quad
+n^{ed}&amp;=(ph)^{ed}\\
+&amp;\equiv ph \equiv n\quad \mathrm{mod}\;p\\
+n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
+&amp;\equiv 1^kn\equiv n\quad\mathrm{mod}\;q\\
+\\
+\implies n^{ed}\equiv&amp; n\quad\mathrm{mod}\;N
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Gauss</span>(<span class="params">Row: <span class="built_in">int</span>, Column: <span class="built_in">int</span></span>):</span></span><br><span class="line">    row = <span class="number">0</span></span><br><span class="line">    col = <span class="number">0</span></span><br><span class="line">    max_r = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> row &amp;lt; Row <span class="keyword">and</span> col &amp;lt; Column:</span><br><span class="line">        max_r = row</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 找出当前列最大值</span></span><br><span class="line">            <span class="keyword">if</span> (Matrix[i][col]) &gt; (Matrix[max_r][col]):</span><br><span class="line">                max_r = i</span><br><span class="line">        <span class="keyword">if</span> Matrix[max_r][col] == <span class="number">0</span>:  <span class="comment"># 记录自由变元</span></span><br><span class="line">            row -= <span class="number">1</span></span><br><span class="line">            Free_x[Free_num] = col+<span class="number">1</span></span><br><span class="line">            Free_num += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> max_r != row:  <span class="comment"># 交换</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                tmp = Matrix[row][i]</span><br><span class="line">                Matrix[row][i] = Matrix[max_r][i]</span><br><span class="line">                Matrix[max_r][i] = tmp</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row+<span class="number">1</span>, Row):  <span class="comment"># 消元</span></span><br><span class="line">            <span class="keyword">if</span> Matrix[i][col] != <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col, Column+<span class="number">1</span>):</span><br><span class="line">                    Matrix[i][j] ^= Matrix[row][j]</span><br><span class="line">        row += <span class="number">1</span></span><br><span class="line">        col += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row, Row):  <span class="comment"># 无解</span></span><br><span class="line">        <span class="keyword">if</span> Matrix[i][Column] != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> row &amp;lt; Column:  <span class="comment"># 无穷多解</span></span><br><span class="line">        <span class="keyword">return</span> Column-row</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 唯一解</span></span><br><span class="line">    i = Column-<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> i &gt;= <span class="number">0</span>:</span><br><span class="line">        X_Ans[i] = Matrix[i][Column]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, Column):</span><br><span class="line">            X_Ans[i] ^= Matrix[i][j] <span class="keyword">and</span> X_Ans[j]</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
+\end{aligned}
+\end{equation}\]</span> $$</p>
+<h3 id="潜在问题">潜在问题</h3>
+<h4 id="中间人攻击">中间人攻击</h4>
+<h5 id="介绍">介绍</h5>
+<p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
+<figure>
+<img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA.svg" alt="非对称中间人"><figcaption aria-hidden="true">非对称中间人</figcaption>
+</figure>
+<h5 id="解决方式">解决方式</h5>
+<p>今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<strong><em>CA</em></strong>及<strong><em>PKI</em></strong>。</p>
+<h4 id="密钥生成">密钥生成</h4>
+<blockquote>
+<p>首先要使用概率算法来验证随机产生的大的整数是否质数，这样的算法比较快而且可以消除掉大多数非质数。假如有一个数通过了这个测试的话，那么要使用一个精确的测试来保证它的确是一个质数。</p>
+<p>除此之外这样找到的p和q还要满足一定的要求，首先它们不能太靠近，此外p-1或q-1的因子不能太小，否则的话N也可以被很快地分解。</p>
+<p>此外寻找质数的算法不能给攻击者任何信息，这些质数是怎样找到的，尤其产生随机数的软件必须非常好。要求是随机和不可预测。这两个要求并不相同。一个随机过程可能可以产生一个不相关的数的系列，但假如有人能够预测出（或部分地预测出）这个系列的话，那么它就已经不可靠了。比如有一些非常好的随机数算法，但它们都已经被发表，因此它们不能被使用，因为假如一个攻击者可以猜出<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span>一半的位的话，那么他们就已经可以轻而易举地推算出另一半。</p>
+<p>此外密钥d必须足够大，1990年有人证明假如<span class="math inline">\(p\)</span>大于<span class="math inline">\(q\)</span>而小于<span class="math inline">\(2q\)</span>（这是一个很常见的情况）而<span class="math inline">\(d&lt;\frac{1}{3}\times N^{\frac{1}{4}}\)</span>，那么从<span class="math inline">\(N\)</span>和<span class="math inline">\(e\)</span>可以很有效地推算出<span class="math inline">\(d\)</span>。此外<span class="math inline">\(e=2\)</span>永远不应该被使用。</p>
+<p><strong><em>Wikipedia</em></strong></p>
+</blockquote>
+<h2 id="数字信封">数字信封</h2>
+<p>为什么？</p>
+<ul>
+<li>非对称加密算法加密与解密使用不同密钥，安全性高，但是慢</li>
+<li>对称加密算法速度快，但是如何安全传递密钥是个问题</li>
+</ul>
+<p>因此我们想到用非对称加密算法传递对称加密算法的密钥，而用对称加密算法来加密消息本身。</p>
+<figure>
+<img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"><figcaption aria-hidden="true">数字信封</figcaption>
+</figure>
+<h2 id="数字签名">数字签名</h2>
+<p>通常我们使用公钥加密，用私钥解密。而在数字签名中，我们使用私钥加密（相当于生成签名），公钥解密（相当于验证签名）。可以这么理解：公钥是公开的，私钥是保密的，我们要用一个东西验证信息的发送者，那自然要用公开的公钥来验证；而明文只能加密，密文只能解密，所以验证时是用发送者的公钥对发来的密文进行解密。</p>
+<blockquote>
+<p>我们可以直接对消息进行签名（即使用私钥加密，此时加密的目的是为了签名，而不是保密），验证者用公钥正确解密消息，如果和原消息一致，则验证签名成功。但通常我们会对消息的散列值签名，因为通常散列值的长度远小于消息原文，使得签名（非对称加密）的效率大大提高。注意，计算消息的散列值不是数字签名的必要步骤。</p>
+<p><strong><em>Wikipedia</em></strong></p>
+</blockquote>
+<p>使用数字签名（不论是原文还是hash值），可以很容易地验证消息完整性和消息来源。</p>
+<figure>
+<img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.svg" alt="Hash+数字签名"><figcaption aria-hidden="true">Hash+数字签名</figcaption>
+</figure>
+<h2 id="总体实现">总体实现</h2>
+<h3 id="流程图">流程图</h3>
+<p><strong><em>图例的使用很不规范，仅作示意用</em></strong></p>
+<figure>
+<img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/diagram-1622201417795.svg" alt="diagram"><figcaption aria-hidden="true">diagram</figcaption>
+</figure>
+<h3 id="代码模拟">代码模拟</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> DES, PKCS1_OAEP</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> random, get_random_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sender</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self, rawmsg: <span class="built_in">str</span>, lis_pubk</span>):</span></span><br><span class="line">        des_key = get_random_bytes(<span class="number">8</span>)</span><br><span class="line">        rsa_dig_encrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_desk_encrypter = PKCS1_OAEP.new(lis_pubk)</span><br><span class="line">        des_encrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        enc_des_k = rsa_desk_encrypter.encrypt(des_key)</span><br><span class="line">        enc_msg = des_encrypter.encrypt(pad(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>), <span class="number">8</span>))</span><br><span class="line">        raw_dig = SHA256.new()</span><br><span class="line">        raw_dig.update(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        enc_dig = rsa_dig_encrypter.encrypt(</span><br><span class="line">            <span class="built_in">bytes</span>(raw_dig.hexdigest(), encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> enc_des_k, enc_msg, enc_dig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">listener</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listen</span>(<span class="params">self, com_msg, sender_pubk</span>):</span></span><br><span class="line">        (enc_des_k, enc_msg, enc_dig) = com_msg</span><br><span class="line">        rsa_desk_decrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_dig_decrypter = PKCS1_OAEP.new(sender_pubk)</span><br><span class="line">        des_key = rsa_desk_decrypter.decrypt(enc_des_k)</span><br><span class="line">        des_decrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        dig_recv = <span class="built_in">str</span>(rsa_dig_decrypter.decrypt(enc_dig), encoding=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">        msg = unpad(des_decrypter.decrypt(enc_msg), <span class="number">8</span>)</span><br><span class="line">        challenge_dig = SHA256.new()</span><br><span class="line">        challenge_dig.update(msg)</span><br><span class="line">        <span class="keyword">if</span>(dig_recv == challenge_dig.hexdigest()):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;CHECK PASS&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;CHECK FAILED&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Bob receives a msg from Alice:\n\t&#x27;</span>+<span class="built_in">str</span>(msg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    alice_pubk = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    <span class="comment"># 这里pyCroptodome库出于安全原因禁用了使用公钥解密的操作，因此这里不得不这么写</span></span><br><span class="line">    bob_prik = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    alice_prik = alice_pubk.public_key()</span><br><span class="line">    bob_pubk = bob_prik.public_key()</span><br><span class="line">    alice = sender(alice_prik)</span><br><span class="line">    bob = listener(bob_prik)</span><br><span class="line">    bob.listen(alice.send(<span class="built_in">input</span>(<span class="string">&#x27;Alice says:\n\t&#x27;</span>), bob_pubk), alice_pubk)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>学习</category>
+        <category>课程</category>
       </categories>
-      <tags>
-        <tag>CTF</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Synth-V根据颤音自动画响度插件</title>
-    <url>/2021/04/06/Synth-V%E6%A0%B9%E6%8D%AE%E9%A2%A4%E9%9F%B3%E8%87%AA%E5%8A%A8%E7%94%BB%E5%93%8D%E5%BA%A6%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<p>一个月前给Synth V写了个脚本，用于根据颤音自动画响度，解放双手，再也不用握着鼠标描参数曲线辣！<strong>项目地址</strong>：<a href="https://github.com/Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato">Rheinhauss/SynthV_plugin_auto_loudness_by_vibrato</a></p>
-<p>暂时只有<code>覆盖原响度</code>和<code>叠加在原响度上</code>的模式。可以自行设置合适的强度和曲线精度（每四分音符 参数点的数量），也可以选择是否简化响度曲线。</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>选取（可多选）你想让本插件处理的音符，点击<code>脚本 -&gt; tool -&gt; 根据颤音设置响度</code>，设置合适的参数，然后执行。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>不支持在音符内部有bpm改变的情况</p>
-<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>其实还挺简单的，Synth V颤音参数描述的就是一个正弦曲线，所以：</p>
-<ol>
-<li><p>遍历获取相应音符颤音参数</p>
-</li>
-<li><p> <code>Math.sin()；</code></p>
-</li>
-<li><p>写入</p>
-</li>
-</ol>
-<p>就完事了。</p>
-<p>麻烦的地方在于一点点文档里没有说明<em>（或者我没看到..）</em>的坑：</p>
-<ul>
-<li><p>音符如果没有设置相关参数，则获取出来是 <code>NaN</code> ，所以要形如 <code>if (isNaN(n.attr.tF0VbrStart)) n.attr.tF0VbrStart = attrDefault.tF0VbrStart;</code> 来fallback到音轨的默认参数上；</p>
-</li>
-<li><p>音轨如果没有设置默认参数，则获取出来是 <code>undefined</code> ，所以要形如 <code>if (attrDefault.tF0VbrStart === undefined) attrDefault.tF0VbrStart = 0.250;</code> 检查一下；</p>
-</li>
-<li><p>文档里没说一些重要的对象怎么获得<em>（或者我没看到..）</em>，所以要么找官方示例要么自己摸索。</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Synth V</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GitHub-Pages自定义域名原理</title>
-    <url>/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<p>[toc]</p>
-<h2 id="GitHub-Pages-用法"><a href="#GitHub-Pages-用法" class="headerlink" title="GitHub Pages 用法"></a>GitHub Pages 用法</h2><p>GitHub Pages <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site">提供了自定义域名的功能</a>，可以通过如下操作来配置：</p>
-<ol>
-<li><p>在相应repo的设置里找到 Custom Domain 进行设置。</p>
- <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407164637971.png" alt="image-20210407164637971" style="zoom:67%;"></li>
-<li><p>在自己的DNS提供商处设置CNAME记录，例如把 <code>null.sakuya.world</code> 指向 <code>rheinhauss.github.io</code> 。</p>
-</li>
-</ol>
-<p>更详细的信息请参阅 GitHub 相关文档。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>自然我们要研究一下是怎么实现的（看上去就是普普通通的 CNAME ）。</p>
-<p>假设两种情况：</p>
-<ol>
-<li><p>只在DNS提供商那里设置CNAME，如图<br> <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407165622647.png" alt="image-20210407165622647"></p>
-<p> 此时访问 <code>test.null.sakuya.world</code> 返回的是GitHub的404页面</p>
- <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407165907442.png" alt="image-20210407165907442" style="zoom:67%;"></li>
-<li><p>只在GitHub的repo设置里配置Custom Domain，访问该自定义网址，有</p>
- <img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407170201369.png" alt="image-20210407170201369" style="zoom:80%;"></li>
-</ol>
-<p>这是为什么呢？于是尝试 <code>dig</code> 和抓包来分析发生了什么。</p>
-<p>我使用的是BIND工具包里的dig。</p>
-<p>执行 <code>dig +trace null.sakuya.world</code> ，得到结果</p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; +trace null.sakuya.world</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      f.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      l.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      k.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      e.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      b.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      m.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      d.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      c.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      j.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      g.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      a.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      h.root-servers.net.</span><br><span class="line">.                      <span class="number"> 437031 </span> IN      NS      i.root-servers.net.</span><br><span class="line">;; Received<span class="number"> 267 </span>bytes from 10.0.0.13<span class="comment">#53(10.0.0.13) in 5 ms</span></span><br><span class="line">// 获取根服务器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.gamma.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.alpha.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.delta.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 172800 </span> IN      NS      demand.beta.aridns.net.au.</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      DS     <span class="number"> 32434 </span>8<span class="number"> 1 </span>1596E70AD9CA4E41EC20414EC7DE740257786677</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      DS     <span class="number"> 32434 </span>8<span class="number"> 2 </span>18643A414DCC7EE02580E7A21793A0F63F5393C400DE9CA004465755 BF7CFF05</span><br><span class="line">world.                 <span class="number"> 86400 </span>  IN      RRSIG   DS<span class="number"> 8 </span>1<span class="number"> 86400 </span>20210419170000<span class="number"> 20210406160000 </span>14631 . ZK3ZM0VBTHPGMhdmX4W9LW/2e+TrC/afrnCzCc14X9U+h/OILV28EX1L dRY1zqGCZZpvnb5qsiaYIiDDdOurhgESTDwOO7XQGs8Hx9XFxc9dEFV+ FF0Ynx4WiZV+pZMxCf4L5H1aUaOWPGyuZHxTGyUdYECnrbivivzfjUD2 9VL3eUeLEOONPV7H83shzPybhxh9NjDCSYfljYgRzt48TrlUUAJE2z39 wtWHEyOraCk4e9XobaFmwNTuUFvqTFuf/+4zDGLkNnxpNaQofn5dFM9t EMI7jG0MqZw6nKMy5jv8BR7Y7+of4ZXJhCK9Dic5IVlZ62K+j/z5Urgr SUNG/A==</span><br><span class="line">;; Received<span class="number"> 741 </span>bytes from 2001:7fe::53<span class="comment">#53(i.root-servers.net) in 31 ms</span></span><br><span class="line">// 从根服务器获取顶级域名记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns3.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns5.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns2.he.net.</span><br><span class="line">sakuya.world.          <span class="number"> 86400 </span>  IN      NS      ns4.he.net.</span><br><span class="line">domi2ilach7iekt0e4kfuv9gfj62vr0u.world.<span class="number"> 86400 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 1 </span>7CD0CF42 DOUN8CS85QFN98IORLO2HVUF2L5F696S NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">domi2ilach7iekt0e4kfuv9gfj62vr0u.world.<span class="number"> 86400 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 86400 </span>20210507082438<span class="number"> 20210407072438 </span>19704 world. Zhf5SHBslCcz9c1ywuoqo8jLKnxtHU2zgpb7SpHsES3IrKLLCa2cxNDN 2DGh2Dcdjx9nR+j0yGI5DSawLE9QTEZC0TKC/cn4BWXPbkyHEaA6KpDm cTPuKRdWvRD99zG8AJIF+MhC4mpZIPDeaVVK5udtwqn2rA+B6tc7LNbk thSpYeFg6NAbuie7p+O0UUga+6EVb+nesp0lbiWejOdEXw==</span><br><span class="line">5lp930j1svf536kt4a909i566itlnoa8.world.<span class="number"> 86400 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 1 </span>7CD0CF42 5MEH8F935EFLDLTPKHCTE9LRBA958KVS NS DS RRSIG</span><br><span class="line">5lp930j1svf536kt4a909i566itlnoa8.world.<span class="number"> 86400 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 86400 </span>20210506165014<span class="number"> 20210406162719 </span>19704 world. m1rvU0mRNT7PdV80wp1F8oW3mYl0LUYyZxxNYPBtHjhvy1//2SATsyzD Z+/LUVBbfiWW6cJP4Ey8bhOwExB+faZF3qbKL7/bUpFe5Sy/BZXJiFKw DgFeYAYTPY9WtTWNpxnEvqm6g0N83yLj7EpUuOex87uBkrJZ+cIR4a0K RklrxgZRA2NuHfWvdAdTY/ach21k8kkba/Ao0dJjmn2ZPQ==</span><br><span class="line">;; Received<span class="number"> 690 </span>bytes from 2001:dcd:1::7<span class="comment">#53(demand.alpha.aridns.net.au) in 29 ms</span></span><br><span class="line">//从上条获取的 demand.xxxx.aridns.net.au 获取二级域名记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">null.sakuya.world.     <span class="number"> 86400 </span>  IN      CNAME   rheinhauss.github.io.</span><br><span class="line">;; Received<span class="number"> 80 </span>bytes from 2001:470:200::2<span class="comment">#53(ns2.he.net) in 72 ms</span></span><br></pre></td></tr></table></figure>
-
-<p>最终是CNAME到 <code>rheinhauss.github.io</code> ，于是继续 <code>dig +trace rheinhauss.github.io</code> ，得到</p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; +trace rheinhauss.github.io</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      i.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      d.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      g.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      e.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      k.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      l.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      a.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      b.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      h.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      c.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      f.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      m.root-servers.net.</span><br><span class="line">.                      <span class="number"> 436307 </span> IN      NS      j.root-servers.net.</span><br><span class="line">;; Received<span class="number"> 267 </span>bytes from 10.0.0.13<span class="comment">#53(10.0.0.13) in 6 ms</span></span><br><span class="line"></span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      a2.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      b0.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      c0.nic.io.</span><br><span class="line">io.                    <span class="number"> 172800 </span> IN      NS      a0.nic.io.</span><br><span class="line">io.                    <span class="number"> 86400 </span>  IN      DS     <span class="number"> 57355 </span>8<span class="number"> 2 </span>95A57C3BAB7849DBCDDF7C72ADA71A88146B141110318CA5BE672057 E865C3E2</span><br><span class="line">io.                    <span class="number"> 86400 </span>  IN      RRSIG   DS<span class="number"> 8 </span>1<span class="number"> 86400 </span>20210419170000<span class="number"> 20210406160000 </span>14631 . LesMUo9DIF7nZqdiU1/I8zkBc2tH/eGmSngiWhaWTdHc6GhiXYmuMOY3 PGaGLE0dp99x1sQSvs5lRuYIqH5XGRYvvtzQjibGN12X4MqdzqAqsNEN MUdDE60ACi7qlGck87c4a66yeFsgShi/3mC95E2JnsZMWiHNcdgN0vrS zpBMDSvDYtE+VtwHOydLztjym6oZrmNEbIWYQ9ZExLZWaB5DehvZpXcC xSheLgKdYM/r1OBEuyqRZhwzXn7gwu6nmwKRQQuCK2pDV4ZEwjuZphlW nZL7wdKSAlfh2HIyT6pCvuOnwn8Hv7JPUWzciNBS7sWHOTcSTpD7Offc jqCDEQ==</span><br><span class="line">;; Received<span class="number"> 660 </span>bytes from 2001:500:1::53<span class="comment">#53(h.root-servers.net) in 21 ms</span></span><br><span class="line"></span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns2.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      ns-692.awsdns-22.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns3.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      ns-1622.awsdns-10.co.uk.</span><br><span class="line">github.io.             <span class="number"> 86400 </span>  IN      NS      dns1.p05.nsone.net.</span><br><span class="line">0d790076pp5pfktg2hrthj5bj6ckckcb.io.<span class="number"> 900 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 10 </span>332539EE7F95C32A 0D7BD4G2J0SLS1QJ0OVHK6NSRI6V9MIK NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">0d790076pp5pfktg2hrthj5bj6ckckcb.io.<span class="number"> 900 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 900 </span>20210428091714<span class="number"> 20210407081714 </span>31080 io. WNkdcw4u54lGQaemuSd4RWHn2KMvrXDroN+hP0OrRKd6UlmyCfTVO2tm sLUnVdAdollhmKiq6BNYwkZ1dO+B1It8b7NSUY94d4wmxfC/4ePScXyp wmM0aQXOxQHskWksUmtym1793RKTJFxOOZWoB1epWattt4+eW8o+Ne79 zeo=</span><br><span class="line">0jecjt17pqtnq6cj627kpnf4n06hphai.io.<span class="number"> 900 </span>IN NSEC3<span class="number"> 1 </span>1<span class="number"> 10 </span>332539EE7F95C32A 0JES1F5OD9SG1E4CCRGBS865PMBUV4PC NS DS RRSIG</span><br><span class="line">0jecjt17pqtnq6cj627kpnf4n06hphai.io.<span class="number"> 900 </span>IN RRSIG NSEC3<span class="number"> 8 </span>2<span class="number"> 900 </span>20210422151640<span class="number"> 20210401141640 </span>31080 io. jCQEKBD8H79jGL2KZqtCm9YC2ptX2j9v9ZON2IbkNgCEsd3s08tITkPT krnxJ9ksiZLqHzMR86ejBAtIEFpheQIFJG7n6CzYOlGUsC3dc5NPYlp1 jVzr/bifk9Cft2gcl/A726Eg1QjpLGIC3BqJMryKyt9Kh7ymip9o4oOR 7Ts=</span><br><span class="line">;; Received<span class="number"> 686 </span>bytes from 2a01:8840:9e::17<span class="comment">#53(a0.nic.io) in 94 ms</span></span><br><span class="line"></span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.108.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.109.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.111.153</span><br><span class="line">rheinhauss.github.io.  <span class="number"> 3600 </span>   IN      A       185.199.110.153</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns1.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns2.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns3.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      dns4.p05.nsone.net.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-1339.awsdns-39.org.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-1622.awsdns-10.co.uk.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-393.awsdns-49.com.</span><br><span class="line">github.io.             <span class="number"> 900 </span>    IN      NS      ns-692.awsdns-22.net.</span><br><span class="line">;; Received<span class="number"> 339 </span>bytes from 2600:9000:5302:b400::1<span class="comment">#53(ns-692.awsdns-22.net) in 39 ms</span></span><br></pre></td></tr></table></figure>
-
-<p>可知，最终解析得到的是四个A记录。</p>
-<p>对于只在GitHub的repo设置里配置Custom Domain的情况，在第一步就会失败；对于只在DNS提供商那里设置CNAME的情况，这两步都能顺利执行得到四个A记录。但是直接访问此ip是无法访问我们的 Github Pages 的。原因在于请求头里的 <code>Host</code> 字段。</p>
-<p> 我们知道，不同的域名通过A记录或者CNAME方式可以连接都同一个IP下，同一个IP也可以设置多个不同站点，那我访问不同的域名都转发到同一IP，怎么区分这些不同的站点呢，就是用的Host字段。Host字段就是”originally requested domain”，相当于我们在地址栏里输入的域名。</p>
-<p>访问 <code>null.sakuya.world</code> 时 Fiddler 抓包可发现</p>
-<p><img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407173303458.png" alt="image-20210407173303458"></p>
-<p>因此我们可以得知，当 Github Pages 接受到的 HTTP 请求中， Host 字段的内容在CNAME文件里有描述时，返回对应仓库中的内容。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>Github pages 的文档中有一段话</p>
-<blockquote>
-<p><strong>Warning:</strong> We strongly recommend not using wildcard DNS records, such as <code>*.example.com</code>. A wildcard DNS record will allow anyone to host a site at one of your subdomains.</p>
-</blockquote>
-<p>即不要用 <code>*.example.com</code> 的 CNAME 用于 Github pages服务。原因就是任何人都可以在Github pages利用你的子域名。如果 xxx.example.com 已被用于现有的 github pages 服务，那么添加 Custom Domain 时会有提示；如果还没有占用，则可以添加</p>
-<img src="/2021/04/07/Github-Pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%8E%9F%E7%90%86/image-20210407175359804.png" alt="image-20210407175359804" style="zoom:80%;">
-
-<p>此时如果DNS记录里含有 <code>*.example.com</code> 的CNAME记录，那么就可以用这个子域名成功访问pages。</p>
-<p>有人可能会好奇，不是CNAME到 <code>rheinhauss.github.io</code> 吗？这个是我自己的pages服务呀？原因在于，<code>*.github.io</code>，或者说整个pages服务最终就解析到那几个ip，效果是一样的。</p>
-<p>语无伦次，请见谅。</p>
-]]></content>
       <tags>
         <tag>网络</tag>
-        <tag>DNS</tag>
-        <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cpp_vector_用迭代器初始化</title>
-    <url>/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/</url>
-    <content><![CDATA[<p>前几日突发奇想，既然可以用迭代器给vector初始化，那如果用一些奇奇怪怪的迭代器进行初始化会怎么样呢？话不多说，实验一下(环境为<code>gcc 9.3.0-17ubuntu1~20.04</code>)，代码如下。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要c++11</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec1&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec2&#123;<span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> a = &#123;vec2.<span class="built_in">end</span>(), vec1.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec3</span><span class="params">(a)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec4</span><span class="params">(vec1.end(), vec2.begin())</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">vec5</span><span class="params">(vec1.end(), vec1.begin())</span></span>;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec6&#123;vec1.<span class="built_in">end</span>(), vec2.<span class="built_in">begin</span>()&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>是搞出来了两个迭代器作为元素的vector呢还是直接复制两个迭代器地址之间的内容？</p>
-<p>实验结果是：</p>
-<ul>
-<li><p><code>vec3</code>导致编译时报错  </p>
-  <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">没有与参数列表匹配的构造函数 <span class="string">&quot;std::vector&lt;_Tp, _Alloc&gt;::vector [其中 _Tp=int, _Alloc=std::allocator&lt;int&gt;]&quot;</span> 实例 -- 参数类型为:  (std::initializer_list&lt;__gnu_cxx::__normal_iterator&lt;<span class="keyword">int</span> *, std::vector&lt;<span class="keyword">int</span>, std::allocator&lt;<span class="keyword">int</span>&gt;&gt;&gt;&gt;)</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p><code>vec5</code>导致运行时报错  </p>
-  <figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">terminate called after throwing an<span class="built_in"> instance </span>of &#x27;std::length_error&#x27;</span><br><span class="line">  what():  cannot create std::vector larger than max_size()</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>注释掉<code>vec3</code>、<code>vec5</code>后，可发现其余vector内部存放的数据</p>
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413210624685.png" alt="image-20210413210624685" style="zoom:80%;"></li>
-</ul>
-<p>以上结果是为什么呢？</p>
-<p>首先介绍一下背景知识：</p>
-<ul>
-<li><p>C++11引入了新类型，叫做 <code>std::initializer_list</code>，即大括号初始化列表，用于列表初始化一个对象。<br>  当遇到以下情况时一个<code>initializer_list</code>被自动创建（copy自cppreference）：</p>
-<ul>
-<li>a <em>braced-init-list</em> is used to <a href="https://en.cppreference.com/w/cpp/language/list_initialization">list-initialize</a> an object, where the corresponding constructor accepts an <code>std::initializer_list</code> parameter</li>
-<li>a <em>braced-init-list</em> is used as the right operand of <a href="https://en.cppreference.com/w/cpp/language/operator_assignment#Builtin_direct_assignment">assignment</a> or as a <a href="https://en.cppreference.com/w/cpp/language/overload_resolution#Implicit_conversion_sequence_in_list-initialization">function call argument</a>, and the corresponding assignment operator/function accepts an <code>std::initializer_list</code> parameter</li>
-<li>a <em>braced-init-list</em> is bound to <a href="https://en.cppreference.com/w/cpp/language/auto"><code>auto</code></a>, including in a <a href="https://en.cppreference.com/w/cpp/language/range-for">ranged for loop</a></li>
-</ul>
-<p>  C++11允许构造函数和其他函数把初始化列表当做参数，使用方法如下</p>
-  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myVector</span> &#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;T&gt; m_vec;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">myVector</span>(<span class="keyword">const</span> std::initializer_list&lt;T&gt;&amp; v) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i : v)</span><br><span class="line">            m_vec.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> index) &#123; <span class="keyword">return</span> m_vec[index]; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p> 背景知识介绍完了，那就来结合源码解释一下实验现象8。</p>
-<ul>
-<li><p><code>vec3</code>的编译时报错：<br>  <code>vec3</code>是<code>vector&lt;int&gt;</code>。接受大括号初始化列表作为参数的构造函数，需要的是内含<code>int</code>的初始化列表，而我们构造的<code>auto a = &#123;vec2.end(), vec1.begin()&#125;;</code>是内含<code>vector&lt;int&gt;::iterator</code>的初始化列表，所以报错<code>没有与参数列表匹配的构造函数</code>。<br>  如果把<code>vec3</code>一行改为<code>  vector&lt;vector&lt;int&gt;::iterator&gt; vec3(a);</code>则可以通过编译。</p>
-</li>
-<li><p>其余vec的现象的原因是一样的。跟踪代码运行阅读对应源码可知：</p>
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213612781.png" alt="image-20210413213612781" style="zoom:80%;">
-  
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213630796.png" alt="image-20210413213630796" style="zoom:80%;">
-  
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214627923.png" alt="image-20210413213630796" style="zoom:80%;">
-  
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213653848.png" alt="image-20210413213653848" style="zoom:80%;">
-  
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413213707553.png" alt="image-20210413213707553" style="zoom:80%;">
-  
-  <img src="/2021/04/13/cpp-vector-%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96/image-20210413214724940.png" alt="image-20210413213707553" style="zoom:80%;">
-  
-  如果给vector的构造函数传两个iterator作为参数，那么就从第一个iterator开始读内存做$n=distance(iterator_a, iterator_b)$次emplace到新的vector里。如果distance超过最大值（这里vec5的情况应该是负溢）则报错。如此一来就能解释vec456的奇妙行为了。当然vec4和vec6没有报错也是环境原因，可能换一个编译器或者系统就会导致那里出错。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre_01</title>
-    <url>/2021/04/21/UMLpre-01/</url>
-    <content><![CDATA[<h2 id="一-项目前景和范围"><a href="#一-项目前景和范围" class="headerlink" title="一.   项目前景和范围"></a><strong>一.</strong>   <strong>项目前景和范围</strong></h2><h3 id="1-项目前景"><a href="#1-项目前景" class="headerlink" title="1. 项目前景"></a>1. 项目前景</h3><h4 id="在校生通过全面课程提醒来提升学习效率"><a href="#在校生通过全面课程提醒来提升学习效率" class="headerlink" title="在校生通过全面课程提醒来提升学习效率"></a><strong>在校生通过全面课程提醒来提升学习效率</strong></h4><p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目提供全校所有课程的基本信息，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
-<h3 id="2-项目范围"><a href="#2-项目范围" class="headerlink" title="2. 项目范围"></a>2. 项目范围</h3><h4 id="在校学生"><a href="#在校学生" class="headerlink" title="在校学生"></a><strong>在校学生</strong></h4><p>通过自身账号登录系统查看自己全部的课程内容及相应作业，</p>
-<p>参与讨论区评价</p>
-<p>与教师互动</p>
-<h4 id="系统管理者"><a href="#系统管理者" class="headerlink" title="系统管理者"></a><strong>系统管理者</strong></h4><p>对程序进行更新</p>
-<h2 id="二、-涉众分析"><a href="#二、-涉众分析" class="headerlink" title="二、  涉众分析"></a><strong>二、</strong>  <strong>涉众分析</strong></h2><h3 id="1-涉众概要"><a href="#1-涉众概要" class="headerlink" title="1. 涉众概要"></a><strong>1.</strong> 涉众概要</h3><table>
-<thead>
-<tr>
-<th><strong>涉众编号</strong></th>
-<th><strong>涉众名称</strong></th>
-<th><strong>涉众说明</strong></th>
-<th><strong>使用系统的方式</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>001</strong></td>
-<td>普通学生</td>
-<td>学生是使用该系统导入获取课程信息的主体</td>
-<td>1.     设置可按周显示的课表  <br>2.     设置并获取课程提醒信息  <br>3.     创建作业待办</td>
-</tr>
-<tr>
-<td><strong>002</strong></td>
-<td>系统开发人员</td>
-<td>系统开发人员是对系统进行开发和维护的人员</td>
-<td>1.     开发课程提醒系统  <br>2.     对程序进行更新</td>
-</tr>
-</tbody></table>
-<h3 id="2-涉众简档"><a href="#2-涉众简档" class="headerlink" title="2. 涉众简档"></a><strong>2. 涉众简档</strong></h3><h4 id="2-1-普通学生"><a href="#2-1-普通学生" class="headerlink" title="2.1 普通学生"></a><strong>2.1</strong> <strong>普通学生</strong></h4><table>
-<thead>
-<tr>
-<th><strong>涉众</strong></th>
-<th><strong>001普通学生</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>涉众代表</strong></td>
-<td><strong>普通用户代表</strong></td>
-</tr>
-<tr>
-<td><strong>特点</strong></td>
-<td><strong>系统的主要使用者,在校大学生</strong></td>
-</tr>
-<tr>
-<td><strong>职责</strong></td>
-<td><strong>1.</strong>      <strong>下载并使用该系统</strong>  <br><strong>2.</strong>      <strong>导入并修改可按周查看的课表</strong>  <br><strong>3.</strong>      <strong>获取课前提醒</strong>  <br><strong>4.</strong>      <strong>添加可备注的待办/作业,可设定提醒时间</strong></td>
-</tr>
-<tr>
-<td><strong>成功标准</strong></td>
-<td><strong>1.</strong>      <strong>能及时获取课程提醒信息</strong>  <br><strong>2.</strong>      <strong>课表显示周数,课程名称,时间,教师,教室.</strong></td>
-</tr>
-<tr>
-<td><strong>参与</strong></td>
-<td><strong>不参与系统建设</strong></td>
-</tr>
-<tr>
-<td><strong>可交付工作</strong></td>
-<td><strong>无</strong></td>
-</tr>
-</tbody></table>
-<h4 id="2-2-系统管理员"><a href="#2-2-系统管理员" class="headerlink" title="2.2 系统管理员"></a><strong>2.2</strong> <strong>系统管理员</strong></h4><table>
-<thead>
-<tr>
-<th><strong>涉众</strong></th>
-<th><strong>002系统开发人员</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>涉众代表</strong></td>
-<td><strong>开发人员代表</strong></td>
-</tr>
-<tr>
-<td><strong>特点</strong></td>
-<td><strong>系统的开发者</strong></td>
-</tr>
-<tr>
-<td><strong>职责</strong></td>
-<td><strong>1.</strong>      <strong>开发课程提醒系统</strong>  <strong>2.</strong>      <strong>对系统使用中出现的问题进行维护和修复</strong></td>
-</tr>
-<tr>
-<td><strong>成功标准</strong></td>
-<td><strong>课程提醒系统运行良好</strong></td>
-</tr>
-<tr>
-<td><strong>参与</strong></td>
-<td><strong>参与系统设计</strong></td>
-</tr>
-<tr>
-<td><strong>可交付工作</strong></td>
-<td><strong>课程题型系统</strong></td>
-</tr>
-</tbody></table>
-<h2 id="三、-硬数据采样"><a href="#三、-硬数据采样" class="headerlink" title="三、 硬数据采样"></a><strong>三、 硬数据采样</strong></h2><h3 id="1-硬数据采样内容"><a href="#1-硬数据采样内容" class="headerlink" title="1. 硬数据采样内容"></a><strong>1. 硬数据采样内容</strong></h3><p><strong>采用调查问卷形式,问卷内容及结果如下</strong></p>
-<p><img src="/2021/04/21/UMLpre-01/clip_image002.jpg" alt="img"></p>
-<p><img src="/2021/04/21/UMLpre-01/clip_image004.jpg" alt="img"></p>
-<p><img src="/2021/04/21/UMLpre-01/clip_image006.jpg" alt="img"></p>
-<h3 id="2-硬数据采样结果分析"><a href="#2-硬数据采样结果分析" class="headerlink" title="2.硬数据采样结果分析"></a><strong>2.硬数据采样结果分析</strong></h3><ol>
-<li>有效填写人次54，其中大部分为大一、大二学生</li>
-</ol>
-<p><img src="/2021/04/21/UMLpre-01/clip_image008.png" alt="img"></p>
-<ol start="2">
-<li>有2/3的人偶尔在学习生活中错过ddl,对此程序的必要性做出了佐证</li>
-</ol>
-<p><img src="/2021/04/21/UMLpre-01/clip_image010.png" alt="img"></p>
-<ol start="3">
-<li>76%的人认为需要课程提醒,证明了本项目的可行性</li>
-</ol>
-<p><img src="/2021/04/21/UMLpre-01/clip_image012.png" alt="img"></p>
-<ol start="4">
-<li><strong>结果显示对于：移动设备上的文字通知，桌面设备上的弹窗或窗口，动设备上的铃声、震动，每天定时短信方式发送至手机 四种提醒方式选择人数相似，可以考虑让用户自行选择设置提醒方式</strong></li>
-</ol>
-<p><img src="/2021/04/21/UMLpre-01/clip_image014.png" alt="img"></p>
-<ol start="5">
-<li><strong>对于 课程提醒时间 大多数人[85%]选择了每天定时提醒</strong></li>
-</ol>
-<p><img src="/2021/04/21/UMLpre-01/clip_image016.png" alt="img"></p>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>作业</tag>
-        <tag>UML需求工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre_02</title>
-    <url>/2021/05/19/UMLpre-02/</url>
-    <content><![CDATA[<p>这次主要是数据建模相关的结果。</p>
-<h2 id="ERD"><a href="#ERD" class="headerlink" title="ERD"></a>ERD</h2><h3 id="简单情况ERD建模"><a href="#简单情况ERD建模" class="headerlink" title="简单情况ERD建模"></a>简单情况ERD建模</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151540050.png" alt="image-20210519151540050"></p>
-<h3 id="根据硬表单的ERD建模"><a href="#根据硬表单的ERD建模" class="headerlink" title="根据硬表单的ERD建模"></a>根据硬表单的ERD建模</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151600681.png" alt="image-20210519151600681"></p>
-<h2 id="DFD"><a href="#DFD" class="headerlink" title="DFD"></a>DFD</h2><h3 id="上下文图"><a href="#上下文图" class="headerlink" title="上下文图"></a>上下文图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151632864.png" alt="image-20210519151632864"></p>
-<h3 id="0层图"><a href="#0层图" class="headerlink" title="0层图"></a>0层图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151643756.png" alt="image-20210519151643756"></p>
-<h3 id="1层图"><a href="#1层图" class="headerlink" title="1层图"></a>1层图</h3><p><img src="/2021/05/19/UMLpre-02/image-20210519151653038.png" alt="image-20210519151653038"></p>
-<h2 id="微规格说明"><a href="#微规格说明" class="headerlink" title="微规格说明"></a><strong>微规格说明</strong></h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">OPEN</span> bitClassSchedule.app</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span></span><br><span class="line">CASE1 (<span class="keyword">without</span>-ClassTable-<span class="keyword">database</span>)</span><br><span class="line">4Action1: <span class="keyword">show</span> <span class="keyword">add</span> data <span class="keyword">View</span></span><br><span class="line">4Action2: <span class="keyword">get</span> the classSchedule <span class="keyword">Input</span>(.xls File)</span><br><span class="line">4Action3: <span class="keyword">create</span> the ClassTable <span class="keyword">database</span></span><br><span class="line">CASE2(ClassTable-Created)</span><br><span class="line">4Action1: <span class="keyword">show</span> the basic main <span class="keyword">Window</span></span><br><span class="line">4Action2: count <span class="type">date</span></span><br><span class="line">Action3: <span class="keyword">create</span> Button[本周课表] <span class="keyword">and</span> [我的作业待办]</span><br><span class="line">Action4: <span class="keyword">search</span> the <span class="keyword">DataBase</span> <span class="keyword">and</span> <span class="keyword">show</span> today’s <span class="keyword">class</span> information</span><br><span class="line">Action(OnClickButton[本周课表]): change <span class="keyword">View</span> <span class="keyword">to</span> bzkebiao</span><br><span class="line">4Action1: <span class="keyword">create</span> basic layout</span><br><span class="line">4Action2: count week</span><br><span class="line">Action3: <span class="keyword">search</span> the ClassTable.db <span class="keyword">database</span> <span class="keyword">and</span> <span class="keyword">create</span> the bzkebiao</span><br><span class="line">Action4: <span class="keyword">set</span> OnClickListener(show_class_information) <span class="keyword">on</span> <span class="keyword">all</span> the <span class="keyword">class</span> textview shown <span class="keyword">on</span> bzkebiao.xml</span><br><span class="line">Action(OnClickTextView[show_class_information]):</span><br><span class="line">4Action1: Alert <span class="keyword">View</span> class_inf_basic.xml</span><br><span class="line">Action2: <span class="keyword">Search</span> ClassTable.db, collect <span class="keyword">and</span> <span class="keyword">show</span> <span class="keyword">all</span> the Information <span class="keyword">or</span> the chosen <span class="keyword">class</span> </span><br><span class="line">4Action(OnClickButton[我的作业待办]):change <span class="keyword">View</span> <span class="keyword">to</span> daiban.xml</span><br><span class="line">44Action1: <span class="keyword">create</span> the basic layout(<span class="keyword">with</span> “<span class="keyword">add</span>”,”clear” button)</span><br><span class="line">Action2: <span class="keyword">database</span>(daiban.db) <span class="keyword">exists</span>? <span class="keyword">Read</span> daiban.db : <span class="keyword">create</span> daiban.<span class="keyword">database</span></span><br><span class="line">44Action3: sort <span class="keyword">all</span> the daiban_work <span class="keyword">by</span> <span class="type">time</span>, <span class="keyword">show</span></span><br><span class="line">44Action(OnClick “<span class="keyword">add</span>” Button):</span><br><span class="line">444Action1: Change <span class="keyword">to</span> <span class="keyword">View</span> add_daiban.xml</span><br><span class="line">444Action2: <span class="keyword">write</span> the daiban_work information</span><br><span class="line">444Action3: put daiban_work <span class="keyword">in</span> <span class="keyword">database</span></span><br><span class="line">44Action(OnClickButton[clear]):</span><br><span class="line">444Action1: remove daiban.db</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="数据字典"><a href="#数据字典" class="headerlink" title="数据字典"></a><strong>数据字典</strong></h2><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>课程信息</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>别名</td>
-<td></td>
-</tr>
-<tr>
-<td>使用的地点和方法</td>
-<td>保存课程信息(input)   <br>显示今日课程(output)  <br>展示本周课程信息(output)  <br>发送课程信息(input)  <br>显示课程详细信息(output)</td>
-</tr>
-<tr>
-<td>描述</td>
-<td>1.     <code>Classname = Text </code> <br>2.     <code>Zhouci = [”&#123;1~20&#125;-&#123;1~20&#125;周” or”&#123;1~20&#125;周” ]  例:1-8周| 12周</code>  <br>3.     <code>Kaishi =[第&#123;1-13&#125;节]</code>  <br>4.     <code>Jieshu=[第&#123;1-13&#125;节]</code>  <br>5.     <code>Teacher=text</code>  <br>6.     <code>教室 = text</code></td>
-</tr>
-<tr>
-<td>格式</td>
-<td><code>SQLite database Information  In table Class</code></td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>待办</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>别名</td>
-<td>Daiban_work(in AddView.java and  MyTask.java)</td>
-</tr>
-<tr>
-<td>使用的地点和方法</td>
-<td>存储待办(input)<br>  显示待办(output)<br>  删除待办(input)<br>  查找待办(output)</td>
-</tr>
-<tr>
-<td>描述</td>
-<td>1.     <code>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min</code><br>  2.     <code>Inf= text</code><br>  3.     <code>Deadline=同Create_time</code><br>  4.     <code>Remind_time=同Create_time</code></td>
-</tr>
-<tr>
-<td>格式</td>
-<td><code>SQLite database Information  In table daiban.db</code></td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>作业</tag>
-        <tag>UML需求工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre_03</title>
-    <url>/2021/05/19/UMLpre-03/</url>
-    <content><![CDATA[<p>课程提醒系统demo的repo在此：<a href="https://gitee.com/i-dont-miss-it/bitClassScheduleApp">https://gitee.com/i-dont-miss-it/bitClassScheduleApp</a></p>
-<h3 id="ChangeLog"><a href="#ChangeLog" class="headerlink" title="ChangeLog"></a>ChangeLog</h3><p>（待完成…）</p>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>作业</tag>
-        <tag>UML需求工程</tag>
+        <tag>密码学</tag>
       </tags>
   </entry>
   <entry>
     <title>梦志 2021.05.28</title>
     <url>/2021/05/28/%E6%A2%A6%E5%BF%97-2021-05-28/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again :(" data-whm="Oh, these decrypted content cannot be verified, but you can still have a look :D">
-  <script id="hbeData" type="hbeData" data-hmacdigest="7dc6168838609e8f156f3bae97bd28678cf1b9f0502dd163b4b921884690ab20">fb7b6e92d8a8d1af19e249503d95625a7e2c880a3249c13db6cbc69b063396b17e7c513c00dffc9539e63138df926d3c026282ca68a23173c1645efadc1eb76ed6c12934fc84f2504865facb4965a7e2abdf4cb293d097e326122e7bb543d1ba65617772491680880de4e611feb712da9ce33f30f17ce87579da3de90fcb3def28aa744e159f68656e11cf7c70179c1d98e4446b1bc91de7df099c28bbaa196fbedb283d8909632ca00bbad7efde96af1012307bfd7a1d5badad23c2a97be7a07900dd191d3017492f0ccc8e036723b63ef174e6f6a3a9730472374bd2c6e6eb9b0727f76257942f8653f4067932d3ae0e0f0bdf0d38fe3992c12a09522b75a31d82acd3cc5f86458ec9c659fbaeff2e09c8cb9b9b2cb7a75a89c275eae1a9359329d12e9fe5f1ba720b1ee50c80bf87a45b639d975e06e5382995b224d84651f5ea896fb46fa443752d30c881a44e156e170c2496df8d637e046976b202d9dcd1e7834e70d815c519c9a3cb6fa203de27d5e603f4b3b8be748997927acc2ec5c056f78a3bfa0ce654dbcc19eddbe6ace8741f73caa78c608b83bd8b62e9d805461f2f174dbff2badd4d0d9c1f60f08606e7aa56c66bd1a9c6e1c372c4a4d2c493ee3caae1159518df03c1adee203b261f84a19d778bd24515e618531c29f32700534cfeaa0b45a8b952bdce9025280ac2253f0fc0a3b0bacc9da8621780797e10224c2c34dac3335e49e4fc9078b6b34de84903ed0533b6609323e4ff7b26d4a4fb78f60ec423fea4b04f71c981c60e9d5e53029cc8f55bde5e6cb6127ee259d5b5103224807839cf9c819e99da2f7a7e42a84c6fdf1b455c672e0ebf354b83df82da688cd10e4275ab02f19a5c91a86448937a0aa99f20511da9c157059b9754117e3ee171f9c7b1890dd5132aeeba3cbbe72f6f9a7344264c7acc993b041c6dfd6f284c59e0326f8789e0eaeb4db1fa03f6187dede1a093f0203b9dd9c56b6cc3a7ff3784c06303c3e388d93a257d23e67a9913e1308aa73ecc9f4b7c2b9b3aab67eb16c66eb1d149d4f3626e67900b05116384c5c5b4961a92cef5149c7bdd72049433b5cbe06eb02f63644bfd82097a7d42a5470102ea58bb077152aa4a1126c5d37d587f4b42ba404d2796ddd79210625e5468cfd94ed7046c219c4fccc2ae4807cf7222b2b86c5358c70e8635caf7c4575fa20acaec9c83571254bcf3d5011c9bb16f17a606627e57d005477e7e65ae8d2eebc991a4cd6cc038a7756b8d9b504344f1e5966794ee9a964323b2ef85c0ea28df49b5258f469cb15706265629048add0bd8e30120dc80e65599a7d0f652af16b4e722c047985896be284a1a133d990bf72edf2e30a2f15854622334ee07852e7ab6d5b68e4899eedb12bd0a77935140885c5120c2846a88368ac38f17ecbd1ba2a76c6b18d688243cd482f79d44d44c4285ed96039c4e3790cc503af099b6b3f6c434dc738c0359cd25be8b41d1086ae16936250800ce2ca30d39ded5fcedae384922fcc8811335d8d475259cf370a2ce29e77b1afbbf1d03c7c060ebdbeb1f2951e12c9c3009fb4eb95cb9ec2b5c1f12490378e7b80cbc68c9431e9202b63e22d222b28035a174acacbea7c0ad40ba1053471b01681a1aa76a621d1b8ebea395933b65d9af20d57c9dcc78dbcc4c8a8a473d522ef115359ae94ba96bb274d137d6d370ade25ca68d69c66717b6265efedd369f7e38482577f7e960b55eb7274b5845d0e0ca8f64d3440d5f52828bdfbf181431f7f55f1d927714dcf2ad65d796d72489d0d5c4e90be126651ebc162e064f3f5c07f966700375d8929baf1ef852d1b570464654841a322baddb4dd9233e8c095c8cb7ac41fd80f15469715a30540d60cad3451651d019bb18925fb650c4ef8e742c48602409f57c74d1c786259e482dd570c3db71af3068543808cb80e11108646228a5ad1e174be0034fb1c40f76aae9fe158bf20a0c29d2011cc00f7f84f179c4af6a2169e0f0ef8f93246f08456783e7c05ac404c66cfc812ce8b99e24ba1f5b0670212afad946ed5d4ed2a33fc5671205a5a9afbce7dd5a65a946f7506eab491c07c29e36c7d1301a0d99bb0f6039eba761e291d93eeb6d3c3fb11b238ec5029edeeef7eb8dcf0bb25261f9e251afabd2eb076461183b0dd02a86c8ec16f22f7b8e3d2ed17918b6e3612f5d0d466c4a074b8c5464f1ff579caac3a9ccd2ec9f545d41587961d65a60e5b2745fc9274b5132930920d88480b438b8b611dd27ebeaa51ae78d3636c05812fbc15c4c3619b9269b2c78206e1eba255454e5014e81b1469e87bd65b46b9d4d611d3bbe8aff43f909436ff1df31915ac3a445f4b02c7e4dd6f375f89b8d212e575b2cd699d609a4b58d6ad890e75399d1fd304a5c3bd943b1132bafd20328069edf077ec17e1a1c694420c848925b4181b8484442474fb517e50b7fc230b6b6476d5807ecdd72e8b5cbcf07445bea60040955c0b8ac99024ec0455c2fdd5a43da1d3d65faa1f77e5893b370d5b6aae27b88acf9af47ad865ff40d8acb07397cc1838f5420e90b808d21ce8c0254aba5dec320ec64b9e53faf25064ccd95eb81bd00503d381ba17a9b0ffcecae08ba6f51437019ad398a3d1b513e9106bb5c62e0b3f56d82f9846e87da8c24acb86e24e6c82e15544d30f5b3601e9c8853b1c319d69ee9dca8720db743a18dd3f66b6abea967f2aee799d815fc247595ea0847c82849e10a67a61435cb3b5ab362e924c7fc6aa3f5ee1a686748bdef1b0514aa9b60f31e300eac386be89dfefd6d1e099470623bc8bbd27f1df65ea609a4c7d0af53e43668d117906b73344ac4785d05d4a1a76bd89a65db9d801fa237776cca8d16d3876d9df57e3e3f7d85d28a897288f7d14aaddbcc3cbe488178d7e083e99560f3f0db507e91a0e3120028512f7aadd43ee39033aaf8d25e7cdef45c79614d16c0507579d40b99bcb03388129eff4256d5bc2dddfffae140ac448d5c5880e382e218751f94c6f173da484a3e52ebfddded6c928691023c12a7e1e125ff250aac4fc258199127107fe7355361b8b66e19f8c9c3b483ac523b2bf962e9ca3dd3f0b761d24f03213ea94aabe273f104284170ef89514ba46930af1ef4a01077fa6b01c9146fad86731eb37fb5c84f499f9eeb48ce93ec47cb139a84b9a848d24655fb58e9f0598fb55e47e86959caaacdbed5ca74ba25371c53d4868c5e3e51437d638fdfcef20fee2ae18738a524b50fbab347c28480de4026fc63ee7458255d92e1212ceb2e660ca605a920462a84d53b8b1460998e0ef1596962468dc97dc76b21459b9de760678eea8de3abef367b25196e37de709952bd8b2a46ee7d5b8c7c7b7fb4881d405cbc676850eac83c5609a964ac58c39e57a1294871fe1bc0e9f40e9730a62221e7e30f1a1be6e61eb10ede6f2d2024a61814bc6fa629e1bf8ae7a06b3f7dfbada4f5da7ad69252c2c0742f98524a7c855e4412b176aa2b9b911213d243f6b73f8ade91efb3d5938563229f5cd73157eff652e2f86cb981caa19fda88acb9d926cf41f06ac37413236172815bf17575841f604c512b950787c31791e46b60020ef09d47043bc65c2d5b7f7d8d91f51663c8aa7cd8d9073f0a7a207bd7c3d618f24f886f934947ad68d55090cfc78ad5583424931a7457f23804610a379cf2d0db3b961584496052feb56f48ed478d7f0ce15be82d05b06af47075f5290f7af82ba36e4ea3fdc3065da45adccb9ed4a3faf79961fb6f0080e1c1a540e5c658309285ff08e41f7cd6afbbbf04bc1af0ef09c1f8f7028ea3c0290741781976b49ac23f2ba3ec9c78b718702000d89c5251b2e536756204706afad42f3e0ea0df5068b448645d827f85df4103373dc685dbf617e2db1f4a517566be3141141872f39a0375df01707cf6a3c265979e5038705e51e43afd9a1f7145b93ea01e4fb7236a8b498b291aad6eef55908f08452d0afe2391d325358183413c68f1645611ec3d6ad0bee928ef4a8c8729da6a2ed90cb916c7b118</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="9ab45f1049365a54abe9cff2346ea159d8a3c4a9b721bebaa10153dada071cc5">fb7b6e92d8a8d1af19e249503d95625a7e2c880a3249c13db6cbc69b063396b17e7c513c00dffc9539e63138df926d3c026282ca68a23173c1645efadc1eb76ed6c12934fc84f2504865facb4965a7e2abdf4cb293d097e326122e7bb543d1ba5fcfccc7a0c23474d133a8dd245139a4c304430ddbecb51d812100c0e36f40d31d84714f1364526bc41912ebaaff12aa59b1397213a513fb1af6c640b4da63bb11c8d7f6339d63ba977271a5f48d89683d640686b538ed1a883050d408a8b6461fd2aaf7219c5b28731551bc5792fd35504c22c8b5a4d06201d9d82ac3b7df84ad0ef25d40b35a10a81eb3a0941fb4bba2a6d6e3a50e3dcdec8d349f286c193de0c0ad5cf9d2629d991cb4c446f3508e1e7a7f7fd9d7306bf2c8d6b4ebb32ba31b7ea89d80be1a714d7335efc8e52dab2bcf946350876a3c7517cbd140b1bb02f4068f7450bcc2aa6adf5a88d045a66aadda4a7e6bf3916b4778747054482ac0b0a80ddd0be2776942b58270d69a2655aeaab50068b4ae852478eb6958b37663f11cdccdb4ed0a40628ea7f53ed3936a722976612574a6b18f52441caec5dc271b7d6fa0f2526f7ed86fbfb7b176e04433c000f473d72adc8fbea6cd8e9c82a72f2c35f33ee6a2fa49c743eba46b602ffac3ad8eb4c862a4f2db1846bc8a06d299dcf523a8c89a2056e3cdee8f8edadf9468daec392ab071e460e4f82dc58481d4c2985b8ec0d242bbe5507d0c9513e697552b4ac205307f683c735cf022a0a86bc6b85b8674d42b5ca8d7cad49faff6dcbd84af526d58f909d02b6ff4661a6f9b8eaeed42e4f861b73dc7ab73f7f36b22c06025d67814082d2db4e3f7f1c5e91e50832741751c6c5d303a7262524043291c1d7aaf3b995d15432599883c17a7aa732a2428ab66fcc11ef22c5e752a50b84c452f76ad7954980b0458c36cedb1a505c4164ebc33f144ab88c3c22bec9aa64741e8bc8d7b5eaaeede88175cb86c6ae839963ddcc045d091f405515f52a3858634857419b4192d0a64a0c76cc0e5737fd23fe5110f727694a2a47143120b13f5face2475c3a352cff63cf2fbfd30528b69193d62556968eabbc685a5805c41b3bb93de242c26c5a1e111b628eaf4e65016725a4618acb3a07829fedfce8274c50cd0f3ced1b0fc7bc6f0b7888ffc224faa1c9d063b1b5ae9328cd8b1d297ccd0b1a7164ac8e53ede6c62a697ed573664585b565f3202dde916a4325b52df5cdf9f4aaf6893c6e6429eae405d28cf10e45808da3b55eaef2a045ebf94500fc7772fe1365d325e88f528b7604bf3a8d1d1a8069f5f58943b0c8ffbef6d4d46c01cfa1b99cdb9bb24609c1d5d775ac1c7a648420f4bbbd36861462fab7a4e4e4bcdc3c09eeabcb757e365e0eddd5c4b220f43273df5df735b65636c8fbd1c87f62fe24e323b86d321d399cba79847e4c7e072cfb69dccf21dea4e15b5f7f7c9d314968ecee12f64cf86b7c45edc21a43bbee1497f4b69af9f50e95fdd39d31c1203049c179913275d19072260d93ffe256de9cc757ba71b098f3aa5b44884b9288763e3154debcac356afd1be14239def818cac6a5cc664e3ca46ca7b9c88e66630d2c8da9db44e4b1b426747f2571cac980f310337924fc8b886d62b5f4dd73dac0b8c17b6d43a67589b9b9aa0a9dbdd69b9385a247596dfa6174b9c31192b992cfdeedfca0a3efd7de23433ea904841fb3d0d95d79afc2852ce3ee784c630d496b6aaeb5def69044e5acbc02c011ba0f20e728fb34fd2183fb52fe5d03b5846d3b8bced10ca68e8a1d7a834649266162a668ae8fbaffb6f69d1e46a5e4b83366622bcfac66f8392c262cf03dc1bdabd51cd89862d67eb38f34dc039ddb3f2226fd9d006a534e0a0f197c85b84380319436136e612fd631eb6bbb0939a8fe2cd63877694135ca0d9659efb79ad282e1745ad9417eccee37c6ba934b40d2b42693224c94dddedbe70e975c87bd239d52bb7edb6dde9f917aae3490bdca514e9de4a9e0bbeed710835d4e4ff6d3007eeeef0295f6ea30dfcd0b37e9e277fc0918bd5d493bd4591dcf2ddda0609f7b1d2f436bd29dd5a7668c993bc7f2d69d6d0d369305f60e111b775815f1c54a7c9e8afbd8533f5b56e0e8de8bf6be62cf5684594d1620c6a622d6187eccd806fc0d375c0b754d9bb449f66149f4a17babac006a0cb9be162e52c3cfd0133231b2ce656b3fdbfcfee1dc7af11b7358fd9123ce617271f8ba13805129d77d337d1891f4c3edc7584a2482a29a74a280026b07c178c6da6b97d36d3b594d0bc43d5d3d210d669ec77edcabc325721c8c27dec2723f05ca3537e0a595a809ebc5f5a57fab35133a092a10957688df885d2cd2d6b7cb05f3ea8c8a2f429d4eebfbe3e9e47c0b21fa6c584a2b8d6991abbe70f69864f84e57f8c89cf0967d984c3dd613c9506b309bb5cbe51a1d427b42cfaa1a2eb85f443fc7fbc73ccfa8c27957f349b1ad49b76a4437b343d5354527a3ea9bc337d3cca2a681fb20da3489e85b124b88ac9c183a545e54b0e4093805ff2f54593b1e74d28217f4d61af93aef53b90ec96558985a79860da4c4cc1e43bba82ca2afc9b44a3fdb4519d21eac54ee61e67c96d764ea26a1c327e319e79c688c175cced0b1a457da67a1d20388b3a4eadb9c722a3f174dc2c606bc3b75a21c253dbb0331ef9756aef7f1f2960353b07a2c861cc263afc4e6460155a2a2621ecebd8c7836e57f5a198340bb6c447723b52671779781729d5b4847428a2f2b6a62e11307896832200fb579fca16070ebe40b6e42daede27820775b4ba1c3ba51f1bf1fde88c01ae7e008a1321520016695697f6c8363f8991b58f47a9e9d4684c7e50753e6efc1009dc28d928a25144a12985e6e64726e01ede97de76d12fdbd0b8f3622185736ebcb07335921ca4748feca3d79473c56f756a104515608adf6e38d0fe3868069f1a416e4724b5a95747f63f30339a679c95a516f41e84962add0cdd815d04ece88b5a535930983118358ce4549ccb0ad0844346a24b1a9a83728ef72d57310dfa49264c12e3c988b62dfcf36e8b5370dc61e03b94c7198486dc39ecdedaa795d13b78ec87cbd4fac9c6bfe88bbfb9c3bb3802e44d0d739e21afe319b91caa67efb1a69a27022eba8e7b07904cc8edf5f85319aa9742e970825d52ebb8f32babdfa5da14ce1ac3ec6e39ff0ebe42f31f73e9b10f9b402ff15e35adfe9940ef805c1a55609cf9b42c28558827eb5515465fc22ec5195c69b2b483fcdf740fadbd352b405261616c666b3d0395047fb801ef60c1358cad78a3f91e0cebc2832b734272a595f55fe93fc33c62d2c1fbc3c76ef7878802393cee04ce74a48ebdae3b5f31302bda84020881e4b7a659986b4b3542748e84e25c2d875a04862fb9186b51b7a12d144ed83a56e182f3523cd11cebcaa7e6c1352e05f28738cdd3a078c227490cfabbb52811e07a9a1f3d0576cd0eaacf6b90fc5912bf7a92b2a6b36218f0005b3c9de37130ae7612637216dab3fd894178ec836619415e82d37d6d7892d21859a49b349c86b8cb047f7e367c41b026cfafa3152c395d061aee43ee871150286c4ef46254dea8d6e992a63867180b4dca02fc9f5026bf65433ce85fa89f7cb9118b143a8fa0edfd668d0736f4bea293850baacca934c18543c37515528c3f7c90a77c5613c6298de2b76fadd3ed6b452b43e15ab78b548e2fc0bee56d86802f4b0b8597ee9918b83b5daf44da9f654c2b2c269751004bcf68d9f4a402d7c53ad12d8f35e762fe1c4c8515080961959b7008deda98ecc8213e41563acf2ed96beb5618072ca1318c117e4d1aa87b06092efaf6b1a86037b6d3d634fbcecdf6e1576b2517b1d0a6fb7383b91f89dc44a75c9a002bbc6b9a60a5074a802654d6034bb492808307aa25c578a2dd4bcabd59dacb02e1f2a8e78a95b34813e79d5953908eb4b1a96dd6ae0882857225c48a1ede6e2a48fcb6fda8aa3efb312e0929dbe696ced26314c5ba9f79d7b5322df3ade78dae1975a3db32d529456310f592534dbdb039646325248e9d91ee020ac56d438cfa44adc16932f8805b</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -485,85 +648,6 @@
       </categories>
       <tags>
         <tag>梦志</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数字信封及数字签名</title>
-    <url>/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/</url>
-    <content><![CDATA[<h1 id="数字信封及数字签名"><a href="#数字信封及数字签名" class="headerlink" title="数字信封及数字签名"></a>数字信封及数字签名</h1><p>[toc]</p>
-<h2 id="DES与对称加密"><a href="#DES与对称加密" class="headerlink" title="DES与对称加密"></a>DES与对称加密</h2><p><em><strong>DES现在已经不是一种安全的加密方法，DES标准和3DES标准已逐渐被AES所取代。</strong></em></p>
-<p>DES是一种对称加密算法，这类算法在加密和解密时使用相同的密钥，其安全性依靠密钥的长度和保密。<br>$$<br>加密：\quad E_k(\mathbf{M}) = \mathbf{C}\<br>解密：\quad D_k(\mathbf{C}) = D_k(E_k(\mathbf{M})) = \mathbf{M}<br>$$<br><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/Untitled%20Diagram.svg" alt="Untitled Diagram"></p>
-<ul>
-<li>优点<ul>
-<li>计算量小，运算速度比公钥加密快很多</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>要求双方取得相同的密钥，难以安全地传递密钥</li>
-</ul>
-</li>
-</ul>
-<h2 id="RSA与非对称加密"><a href="#RSA与非对称加密" class="headerlink" title="RSA与非对称加密"></a>RSA与非对称加密</h2><p>RSA是一种非对称加密算法。非对称加密为数据的加密与解密提供了一个非常安全的方法，它使用了一对密钥——公钥和私钥，私钥只能由一方保管，不能外泄，而公钥则可以发给任何请求它的人，加密和解密需要两个不同的密钥。RSA算法利用了一个数学难题：大整数因数分解。正向操作非常简单，而逆向操作非常困难。</p>
-<ul>
-<li>优点<ul>
-<li>安全性高</li>
-<li>……</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>在计算上相当复杂，加密速度慢</li>
-<li>……</li>
-</ul>
-</li>
-</ul>
-<h3 id="RSA流程"><a href="#RSA流程" class="headerlink" title="RSA流程"></a>RSA流程</h3><p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg" alt="非对称加密"></p>
-<h4 id="公钥与私钥的产生"><a href="#公钥与私钥的产生" class="headerlink" title="公钥与私钥的产生"></a>公钥与私钥的产生</h4><ol>
-<li>随机选取两个大质数$p$和$q$，其中$p\neq q$</li>
-<li>计算$N=p\times q$</li>
-<li>计算$r = \varphi(N) = \varphi(p)\times\varphi(q) = (p-1)\times(q-1)$，具体参见<em>欧拉函数</em></li>
-<li>选择一个小于$r$的整数$e$，使$e$与$r$互质</li>
-<li>求$d$，满足$ed\equiv1\quad \mathrm{mod};r$，参见模逆元</li>
-<li>销毁$p$和$q$</li>
-<li>$(N,e)$是公钥，$(N,d)$是私钥</li>
-</ol>
-<h4 id="加密与解密消息"><a href="#加密与解密消息" class="headerlink" title="加密与解密消息"></a>加密与解密消息</h4><p>$$<br>加密\quad\quad c\equiv n^e\quad \mathrm{mod};N\<br>解密\quad\quad n\equiv c^d\quad \mathrm{mod};N<br>$$</p>
-<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><p>$$<br>\begin{equation}<br>\begin{aligned}<br>c^{d}&amp;\equiv n^{ed}\quad\mathrm{mod};N\<br>n^{ed}&amp;=n^{1+k\varphi(N)}\<br>&amp;=n(n^{\varphi({N})})^h\<br>若n,N互质:\<br>n^{ed}&amp;\equiv n(1)^h\equiv n\quad\mathrm{mod};N\<br>若n,N不互质:\<br>设\quad<br>n &amp;= ph;,;ed-1 = k(q-1)\<br>有\quad<br>n^{ed}&amp;=(ph)^{ed}\<br>&amp;\equiv ph \equiv n\quad \mathrm{mod};p\<br>n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\<br>&amp;\equiv 1^kn\equiv n\quad\mathrm{mod};q\<br>\<br>\implies n^{ed}\equiv&amp; n\quad\mathrm{mod};N</p>
-<p>\end{aligned}<br>\end{equation}<br>$$</p>
-<h3 id="潜在问题"><a href="#潜在问题" class="headerlink" title="潜在问题"></a>潜在问题</h3><h4 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
-<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA.svg" alt="非对称中间人"></p>
-<h5 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h5><p>今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<em><strong>CA</strong></em>及<em><strong>PKI</strong></em>。</p>
-<h4 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h4><blockquote>
-<p>首先要使用概率算法来验证随机产生的大的整数是否质数，这样的算法比较快而且可以消除掉大多数非质数。假如有一个数通过了这个测试的话，那么要使用一个精确的测试来保证它的确是一个质数。</p>
-<p>除此之外这样找到的p和q还要满足一定的要求，首先它们不能太靠近，此外p-1或q-1的因子不能太小，否则的话N也可以被很快地分解。</p>
-<p>此外寻找质数的算法不能给攻击者任何信息，这些质数是怎样找到的，尤其产生随机数的软件必须非常好。要求是随机和不可预测。这两个要求并不相同。一个随机过程可能可以产生一个不相关的数的系列，但假如有人能够预测出（或部分地预测出）这个系列的话，那么它就已经不可靠了。比如有一些非常好的随机数算法，但它们都已经被发表，因此它们不能被使用，因为假如一个攻击者可以猜出$p$和$q$一半的位的话，那么他们就已经可以轻而易举地推算出另一半。</p>
-<p>此外密钥d必须足够大，1990年有人证明假如$p$大于$q$而小于$2q$（这是一个很常见的情况）而$d&lt;\frac{1}{3}\times N^{\frac{1}{4}}$，那么从$N$和$e$可以很有效地推算出$d$。此外$e=2$永远不应该被使用。</p>
-<p><em><strong>Wikipedia</strong></em></p>
-</blockquote>
-<h2 id="数字信封"><a href="#数字信封" class="headerlink" title="数字信封"></a>数字信封</h2><p>为什么？</p>
-<ul>
-<li>非对称加密算法加密与解密使用不同密钥，安全性高，但是慢</li>
-<li>对称加密算法速度快，但是如何安全传递密钥是个问题</li>
-</ul>
-<p>因此我们想到用非对称加密算法传递对称加密算法的密钥，而用对称加密算法来加密消息本身。</p>
-<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"></p>
-<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>通常我们使用公钥加密，用私钥解密。而在数字签名中，我们使用私钥加密（相当于生成签名），公钥解密（相当于验证签名）。可以这么理解：公钥是公开的，私钥是保密的，我们要用一个东西验证信息的发送者，那自然要用公开的公钥来验证；而明文只能加密，密文只能解密，所以验证时是用发送者的公钥对发来的密文进行解密。</p>
-<blockquote>
-<p>我们可以直接对消息进行签名（即使用私钥加密，此时加密的目的是为了签名，而不是保密），验证者用公钥正确解密消息，如果和原消息一致，则验证签名成功。但通常我们会对消息的散列值签名，因为通常散列值的长度远小于消息原文，使得签名（非对称加密）的效率大大提高。注意，计算消息的散列值不是数字签名的必要步骤。</p>
-<p><em><strong>Wikipedia</strong></em></p>
-</blockquote>
-<p>使用数字签名（不论是原文还是hash值），可以很容易地验证消息完整性和消息来源。</p>
-<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.svg" alt="Hash+数字签名"></p>
-<h2 id="总体实现"><a href="#总体实现" class="headerlink" title="总体实现"></a>总体实现</h2><h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><em><strong>图例的使用很不规范，仅作示意用</strong></em></p>
-<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/diagram-1622201417795.svg" alt="diagram"></p>
-<h3 id="代码模拟"><a href="#代码模拟" class="headerlink" title="代码模拟"></a>代码模拟</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> DES, PKCS1_OAEP</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> random, get_random_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sender</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self, rawmsg: <span class="built_in">str</span>, lis_pubk</span>):</span></span><br><span class="line">        des_key = get_random_bytes(<span class="number">8</span>)</span><br><span class="line">        rsa_dig_encrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_desk_encrypter = PKCS1_OAEP.new(lis_pubk)</span><br><span class="line">        des_encrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        enc_des_k = rsa_desk_encrypter.encrypt(des_key)</span><br><span class="line">        enc_msg = des_encrypter.encrypt(pad(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>), <span class="number">8</span>))</span><br><span class="line">        raw_dig = SHA256.new()</span><br><span class="line">        raw_dig.update(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        enc_dig = rsa_dig_encrypter.encrypt(</span><br><span class="line">            <span class="built_in">bytes</span>(raw_dig.hexdigest(), encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> enc_des_k, enc_msg, enc_dig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">listener</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listen</span>(<span class="params">self, com_msg, sender_pubk</span>):</span></span><br><span class="line">        (enc_des_k, enc_msg, enc_dig) = com_msg</span><br><span class="line">        rsa_desk_decrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_dig_decrypter = PKCS1_OAEP.new(sender_pubk)</span><br><span class="line">        des_key = rsa_desk_decrypter.decrypt(enc_des_k)</span><br><span class="line">        des_decrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        dig_recv = <span class="built_in">str</span>(rsa_dig_decrypter.decrypt(enc_dig), encoding=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">        msg = unpad(des_decrypter.decrypt(enc_msg), <span class="number">8</span>)</span><br><span class="line">        challenge_dig = SHA256.new()</span><br><span class="line">        challenge_dig.update(msg)</span><br><span class="line">        <span class="keyword">if</span>(dig_recv == challenge_dig.hexdigest()):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;CHECK PASS&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;CHECK FAILED&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Bob receives a msg from Alice:\n\t&#x27;</span>+<span class="built_in">str</span>(msg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    alice_pubk = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    <span class="comment"># 这里pyCroptodome库出于安全原因禁用了使用公钥解密的操作，因此这里不得不这么写</span></span><br><span class="line">    bob_prik = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    alice_prik = alice_pubk.public_key()</span><br><span class="line">    bob_pubk = bob_prik.public_key()</span><br><span class="line">    alice = sender(alice_prik)</span><br><span class="line">    bob = listener(bob_prik)</span><br><span class="line">    bob.listen(alice.send(<span class="built_in">input</span>(<span class="string">&#x27;Alice says:\n\t&#x27;</span>), bob_pubk), alice_pubk)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-        <tag>面密码学</tag>
       </tags>
   </entry>
 </search>
