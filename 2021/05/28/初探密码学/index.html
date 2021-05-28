@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"null.sakuya.world","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="初探密码学 引入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探密码学">
+<meta property="og:url" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/">
+<meta property="og:site_name" content="Mein Blog">
+<meta property="og:description" content="初探密码学 引入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/wangy/AppData/Roaming/Typora/typora-user-images/image-20210528230847591.png">
+<meta property="og:image" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/Untitled%20Diagram.svg">
+<meta property="og:image" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg">
+<meta property="og:image" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA-1622216524858.svg">
+<meta property="og:image" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg">
+<meta property="og:image" content="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/diagram-1622201417795.svg">
+<meta property="article:published_time" content="2021-05-28T08:41:08.000Z">
+<meta property="article:modified_time" content="2021-05-28T08:41:08.000Z">
+<meta property="article:author" content="Rheinhauss">
+<meta property="article:tag" content="网络">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="讲课">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/wangy/AppData/Roaming/Typora/typora-user-images/image-20210528230847591.png">
+
+<link rel="canonical" href="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>初探密码学 | Mein Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Mein Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">「ザ・ワールド」</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Rheinhauss">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mein Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初探密码学
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-28 16" itemprop="dateCreated datePublished" datetime="2021-05-28T16:41:08+08:00">2021-05-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A4%BE%E5%9B%A2/" itemprop="url" rel="index"><span itemprop="name">社团</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="初探密码学">初探密码学</h1>
+<h2 id="引入">引入</h2>
+<h3 id="贴吧神贴">贴吧神贴</h3>
+<p>https://bbs.hupu.com/32986778.html</p>
+<h3 id="意义">意义</h3>
+<p><strong><em>如何在不安全（敌人存在）的环境中通信</em></strong></p>
+<p>相似问题：</p>
+<ul>
+<li>工程学——如何利用不可靠的组件构成一个可靠的系统？——容错性
+<ul>
+<li>e.g. 拜占庭将军问题——各种分布式系统的一致性问题</li>
+</ul></li>
+</ul>
+<p>一般来说，密码设计者的根本目标是保障信息及信息系统的</p>
+<ul>
+<li>机密性（Confidentiality）</li>
+<li>完整性（Integrity）</li>
+<li>可用性（Availability）</li>
+<li>认证性（Authentication）</li>
+<li>不可否认性（Non-repudiation）</li>
+</ul>
+<p>其中，前三者被称为信息安全的 <strong>CIA</strong> 三要素 。</p>
+<p>授权读取信息的人可以轻松通过发信人所提供的密钥解密信息，但未经授权的人员则不行。现代加密技术依赖现代计算机在破解密钥上并不高效的事实来保证其安全性。</p>
+<h2 id="几个基本概念与代数基础">几个基本概念与代数基础</h2>
+<h3 id="基本概念">基本概念</h3>
+<p>明文：需要秘密传送的消息。</p>
+<p>密文：明文经过密码变换后的消息。</p>
+<p>加密：由明文到密文的变换。</p>
+<p>解密：从密文恢复出明文的过程。</p>
+<p>破译：非法接收者试图从密文分析出明文的过程。</p>
+<p>加密算法：对明文进行加密时采用的一组规则。</p>
+<p>解密算法：对密文进行解密时采用的一组规则。</p>
+<p>密钥：加密和解密时使用的一组秘密信息。</p>
+<p><img src="C:/Users/wangy/AppData/Roaming/Typora/typora-user-images/image-20210528230847591.png" alt="image-20210528230847591" style="zoom:67%;"></p>
+<h4 id="攻击">攻击</h4>
+<h6 id="唯密文攻击">唯密文攻击</h6>
+<p>在仅知密文的情况下进行攻击。</p>
+<h6 id="已知明文攻击">已知明文攻击</h6>
+<p>指攻击者掌握了某段明文 x 和对应密文 y</p>
+<h6 id="选择密文攻击">选择密文攻击</h6>
+<p>攻击者掌握对解密机的访问权限，可构造任意密文所对应的明文<code>x</code></p>
+<h6 id="选择明文攻击">选择明文攻击</h6>
+<p>攻击者拥有加密机的访问权限，可构造所选一定数量的明文所对应的密文</p>
+<h6 id="旁路攻击侧信道攻击边信道攻击">旁路攻击、侧信道攻击、边信道攻击</h6>
+<p>它基于从密码系统的物理实现中获取的信息而非暴力破解法或是算法中的理论性弱点（较之密码分析）。例如：时间信息、功率消耗、电磁泄露或甚是声音可以提供额外的信息来源，这可被利用于对系统的进一步破解。</p>
+<h6 id="社会工程学攻击">社会工程学攻击</h6>
+<p>社会工程学指的是通过与他人的合法交流，来使其心理受到影响，做出某些动作或者是透露一些机密信息的方式。这通常被认为是欺诈他人以收集信息、行骗和入侵计算机系统的行为。</p>
+<h6 id="section">…………</h6>
+<h3 id="代数">代数</h3>
+<h5 id="模逆元">模逆元</h5>
+<p><span class="math inline">\(ab \equiv 1\mod n\)</span></p>
+<p>b是a的模逆元</p>
+<h2 id="古典密码学">古典密码学</h2>
+<p>主要是代换、置换，以及一堆奇奇怪怪的方法。</p>
+<p>应用上也经常组合各种方法加密来增加复杂性。</p>
+<h3 id="代换式密码">代换式密码</h3>
+<h4 id="单表代换">单表代换</h4>
+<h5 id="凯撒密码">凯撒密码</h5>
+<p>凯撒密码的替换方法是通过排列明文和密文字母表，密文字母表示通过将明文字母表向左或向右移动一个固定数目的位置。</p>
+<h6 id="举例">举例</h6>
+<p>例如，当偏移量是左移3的时候（解密时的密钥就是3）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">明文字母表：ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><br><span class="line">密文字母表：DEFGHIJKLMNOPQRSTUVWXYZABC</span><br></pre></td></tr></table></figure>
+<h6 id="引出形式描述形式语言的严谨性">引出形式描述——形式语言的严谨性</h6>
+<p><span class="math inline">\(E_{n}(x)=(x+n)\mod 26\)</span></p>
+<p><span class="math inline">\(D_{n}(x)=(x-n)\mod 26\)</span></p>
+<h6 id="多次迭代">多次迭代？</h6>
+<p>通过多次使用凯撒密码来加密并不能获得更大的安全性，因为使用偏移量A加密得到的结果再用偏移量B加密，等同于使用A+B的偏移量进行加密的结果。</p>
+<h5 id="仿射密码凯撒密码的拓展">仿射密码——凯撒密码的拓展</h5>
+<p>仿射密码是一种替换密码。它是一个字母对一个字母的。</p>
+<p>它的加密函数是<span class="math inline">\(E(x)=ax+b{\pmod {m}}\)</span>，其中</p>
+<ul>
+<li>a和m互质。</li>
+<li>m是字母的数目。</li>
+</ul>
+<p>解码函数是<span class="math inline">\(D(x)=a^{-1}(x-b){\pmod {m}}\)</span>，其中<span class="math inline">\(a^{-1}\)</span>是<span class="math inline">\(a\)</span>在 <span class="math inline">\(\mathbb {Z}_m\)</span>群的乘法逆元。</p>
+<p>当 <span class="math inline">\(a=1\)</span>，仿射加密为凯撒密码 ，因该加密方程可简化为线性移动。</p>
+<h6 id="思考">思考</h6>
+<p>多次仿射加密？</p>
+<h5 id="莫尔斯电码-等等">莫尔斯电码 等等</h5>
+<p>同上，按一个表进行代换。不一定是字符，可以是字体的区别等，如培根密码：培根密码使用两种不同的字体，代表 A 和 B，结合加密表进行加解密。</p>
+<h5 id="破译方法">破译方法</h5>
+<h6 id="频率分析">频率分析</h6>
+<p>当密文长度足够大的情况下，可以先分析密文中每个字母出现的频率，然后将这一频率与正常情况下的该语言字母表中所有字母的出现频率做比较。</p>
+<p>例如在英语中，正常明文中字母E和T出现的频率特别高，而字母Q和Z出现的频率特别低，而在法语中出现频率最高的字母是E，最低的是K和W。可以通过这一特点，分析密文字母出现的频率，可以估计出正确的偏移量。</p>
+<h6 id="暴力尝试">暴力尝试</h6>
+<ul>
+<li>凯撒密码：25种；</li>
+<li>仿射密码（加密英文）：即<span class="math inline">\(m=26\)</span>时，a和b共有<span class="math inline">\(12\times 26=312\)</span>种可能（12是因为0-26里只有12个数与26互质），很容易就能暴力搜完。</li>
+<li>……</li>
+</ul>
+<h4 id="多表代换">多表代换</h4>
+<h5 id="维吉尼亚密码">维吉尼亚密码</h5>
+<h5 id="破译方法-1">破译方法</h5>
+<h6 id="频率分析-1">频率分析？</h6>
+<p>可以吗？明文中重复的元素在密文中并不重复。不行。</p>
+<h6 id="卡西斯基试验">卡西斯基试验</h6>
+<p>基于类似<code>the</code>这样的常用单词有可能被同样的密钥字母进行加密，从而在密文中重复出现。例如，明文中不同的<code>CRYPTO</code>可能被密钥<code>ABCDEF</code>加密成不同的密文：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">密钥：ABCDEF AB CDEFA <span class="keyword">BCD </span>EFABCDEFABCD</span><br><span class="line">明文：CRYPTO IS <span class="keyword">SHORT </span>FOR CRYPTOGRAPHY</span><br><span class="line">密文：CSASXT IT UKSWT GQU GWYQVRKWAQJB</span><br></pre></td></tr></table></figure>
+<p>此时明文中重复的元素在密文中并不重复。然而，如果密钥相同的话，结果可能便为（使用密钥<code>ABCD</code>）：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">密钥：ABCDAB CD ABCDA <span class="keyword">BCD </span>ABCDABCDABCD</span><br><span class="line">明文：CRYPTO IS <span class="keyword">SHORT </span>FOR CRYPTOGRAPHY</span><br><span class="line">密文：CSASTP KV SIQUT GQU CSASTPIUAQJB</span><br></pre></td></tr></table></figure>
+<p>此时卡西斯基试验就能产生效果。对于更长的段落此方法更为有效，因为通常密文中重复的片段会更多。如通过下面的密文就能破译出密钥的长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">密文：DYDUXRMHTVDVNQDQNWDYDUXRMHARTJGWNQD</span><br></pre></td></tr></table></figure>
+<p>其中，两个<code>DYDUXRMH</code>的出现相隔了18个字母。因此，可以假定密钥的长度是18的约数，即长度为18、9、6、3或2。而两个<code>NQD</code>则相距20个字母，意味着密钥长度应为20、10、5、4或2。取两者的交集，则可以基本确定密钥长度为2。</p>
+<h6 id="弗里德曼试验optional">弗里德曼试验(optional)</h6>
+<p>弗里德曼试验由威廉·F·弗里德曼于1920年代发明。他使用了重合指数（index of coincidence）来描述密文字母频率的不匀性，从而破译密码。<span class="math inline">\(\kappa _{p}\)</span>指目标语言中两个任意字母相同的概率（英文中为0.067），<span class="math inline">\(\kappa _{r}\)</span>指字母表中这种情况出现的概率（英文中为<span class="math inline">\(1/26=0.0385\)</span>），从而密钥长度可以估计为：</p>
+<p><span class="math display">\[
+\kappa _{p}-\kappa _{r} \over {\kappa _{o}-\kappa _{r}}
+\]</span> 其中，观察概率为 <span class="math display">\[
+\kappa _{o}=\frac{\sum _{i=1}^{c}n_i(n_i-1)}{N(N-1)}
+\]</span> 其中，<span class="math inline">\(c\)</span>是指字母表的长度（英文为26），N指文本的长度，<span class="math inline">\(n_1\)</span>到<span class="math inline">\(n_c\)</span>是指密文的字母频率，为整数。</p>
+<p>此方法只是一种估计，会随着文本长度的增加而更为精确。在实践中，会尝试接近此估计的多个密钥长度。 一种更好的方法是将密文写成矩阵形式，其中列数与假定的密钥长度一致，将每一列的重合指数单独计算，并求得平均重合指数。对于所有可能的密钥长度，平均重合指数最高的最有可能是真正的密钥长度。这样的试验可以作为卡西斯基试验的补充。</p>
+<h6 id="频率分析-2">频率分析</h6>
+<p>一旦能够确定密钥的长度，密文就能重新写成多列，列数与密钥长度对应。这样每一列其实就是一个凯撒密码，而此密码的密钥（偏移量）则对应于维吉尼亚密码密钥的相应字母。与破译凯撒密码类似的方法，就能将密文破译。</p>
+<h4 id="希尔密码optional">希尔密码（optional）</h4>
+<p>希尔密码是运用基本矩阵论原理的替换密码，由Lester S. Hill在1929年发明。</p>
+<p>每个字母当作26进制数字：A=0, B=1, C=2... 一串字母当成n维向量，跟一个n×n的矩阵相乘，再将得出的结果模26。</p>
+<p>注意用作加密的矩阵（即密匙）在<span class="math inline">\(\mathbb {Z}_{26}^{n}\)</span>必须是可逆的，否则就不可能解码。只有矩阵的行列式和26互质，才是可逆的。</p>
+<p>考虑讯息ACT，因为A=0，C=2，T=19，讯息是： <span class="math inline">\(\begin{pmatrix}0\\2\\19\end{pmatrix}\)</span></p>
+<p>设密匙为 <span class="math inline">\(\begin{pmatrix}6&amp;24&amp;1\\13&amp;16&amp;10\\20&amp;17&amp;15\end{pmatrix}\)</span></p>
+<p>确认它是可逆的：</p>
+$
+<span class="math display">\[\begin{vmatrix}6&amp;24&amp;1\\13&amp;16&amp;10\\20&amp;17&amp;15\end{vmatrix}\]</span>
+<p><span class="math display">\[\equiv 6(16\cdot 15-10\cdot 17)-24(13\cdot 15-10\cdot 20)+1(13\cdot 17-16\cdot 20)\]</span>$</p>
+加密过程： $
+<span class="math display">\[\begin{pmatrix}6&amp;24&amp;1\\13&amp;16&amp;10\\20&amp;17&amp;15\end{pmatrix}\begin{pmatrix}0\\2\\19\end{pmatrix}\]</span>
+<p>$<span class="math inline">\(\begin{pmatrix}67\\222\\319\end{pmatrix}\equiv {\begin{pmatrix}15\\14\\7\end{pmatrix}\mod 26}\)</span></p>
+<p>对应的密文便是“POH”。</p>
+假设对方知道密文和密匙，首先找出密匙的逆矩阵：$
+<span class="math display">\[\begin{pmatrix}8&amp;5&amp;10\\21&amp;8&amp;21\\21&amp;12&amp;8\end{pmatrix}\]</span>
+<p>$</p>
+将逆矩阵和密文相乘：$
+<span class="math display">\[\begin{pmatrix}8&amp;5&amp;10\\21&amp;8&amp;21\\21&amp;12&amp;8\end{pmatrix}\]</span>
+<p>$ <span class="math inline">\(\begin{pmatrix}8&amp;5&amp;10\\21&amp;8&amp;21\\21&amp;12&amp;8\end{pmatrix}\)</span><span class="math inline">\(\begin{pmatrix}15\\14\\7\end{pmatrix}\)</span><span class="math inline">\(\equiv \begin{pmatrix}260\\574\\539\end{pmatrix}\)</span><span class="math inline">\(\equiv {\begin{pmatrix}0\\2\\19\end{pmatrix}\mod 26}\)</span></p>
+<p>便得到“ACT”。</p>
+<h4 id="工具">工具</h4>
+<p>https://www.quipqiup.com/</p>
+<p>It can solve simple substitution ciphers.</p>
+<h3 id="移位置换式密码">移位（置换）式密码</h3>
+<p>移位式密码，它们字母本身不变，变的是顺序。许多移位式密码是基于几何而设计的。</p>
+<h4 id="栅栏密码">栅栏密码</h4>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abcd</span><br><span class="line">efgh</span><br><span class="line">ijkl</span><br><span class="line">mnop</span><br><span class="line">-----</span><br><span class="line">aeimbfjncgkodhlp</span><br></pre></td></tr></table></figure>
+<h3 id="古典密码学小结">古典密码学小结</h3>
+<p>缺乏安全性，易被频率分析等攻击方式破解</p>
+<p>CTF中常见 让考生进行唯密文攻击 的题。</p>
+<h2 id="现代密码学">现代密码学</h2>
+<p>而现代密码学则起源于 20 世纪中后期出现的大量相关理论，1949 年香农（C. E. Shannon）发表了题为《保密系统的通信理论》的经典论文标志着现代密码学的开始。现代密码学主要包含以下几个方面：</p>
+<ul>
+<li>对称加密（Symmetric Cryptography），以 DES，AES，RC4 为代表。
+<ul>
+<li>分组密码（Block Cipher），又称为块密码。</li>
+<li>序列密码（Stream Cipher），又称为流密码。</li>
+<li>……</li>
+</ul></li>
+<li>非对称加密（Asymmetric Cryptography），以 RSA，ElGamal，椭圆曲线加密为代表。</li>
+<li>哈希函数（Hash Function），以 MD5，SHA-1，SHA-512 等为代表。</li>
+<li>数字签名（Digital Signature），以 RSA 签名，ElGamal 签名，DSA 签名为代表。</li>
+</ul>
+<h3 id="对称密码">对称密码</h3>
+<p>这类算法在加密和解密时使用相同的密钥，其安全性依靠密钥的长度和保密。</p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/Untitled%20Diagram.svg" alt="Untitled Diagram"><figcaption aria-hidden="true">Untitled Diagram</figcaption>
+</figure>
+<h4 id="前置知识">前置知识</h4>
+<h5 id="随机数">随机数</h5>
+<p>伪随机数生成器（pseudorandom number generator，PRNG），又称为确定性随机位生成器（deterministic random bit generator，DRBG），是用来生成<strong>接近于绝对随机数序列的数字序列</strong>的算法。一般来说，PRNG 会依赖于一个初始值，也称为种子，来生成对应的伪随机数序列。只要种子确定了，PRNG 所生成的随机数就是完全确定的，因此其生成的随机数序列并不是真正随机的。</p>
+<p>就目前而言，PRNG 在众多应用都发挥着重要的作用，比如模拟（蒙特卡洛方法），电子竞技，密码应用。</p>
+<p>随机性的严格性（这三个性质的严格性依次递增）</p>
+<ul>
+<li>随机性：随机数应该不存在统计学偏差，是完全杂乱的数列。</li>
+<li>不可预测性：不能从过去的序列推测出下一个出现的数。</li>
+<li>不可重现性：除非数列保存下来，否则不能重现相同的数列。</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">类别</th>
+<th style="text-align: center;">随机性</th>
+<th style="text-align: center;">不可预测性</th>
+<th style="text-align: center;">不可重现性</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">弱伪随机数</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">强伪随机数</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">真随机数</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: center;">Y</td>
+</tr>
+</tbody>
+</table>
+<p>一般来说，密码学中使用的随机数是第二种。</p>
+<p>一种常见的伪随机数生成器：</p>
+<ul>
+<li>线性同余发生器LCG <span class="math inline">\(X_{n+1} = (aX_n+b)\mod m\)</span></li>
+</ul>
+<h4 id="流密码">流密码</h4>
+<p>流密码一般逐字节或者逐比特处理信息。一般来说</p>
+<ul>
+<li>流密码的密钥长度会与明文的长度相同。</li>
+<li>流密码的密钥派生自一个较短的密钥，派生算法通常为一个伪随机数生成算法。</li>
+</ul>
+<p>需要注意的是，流加密目前来说都是对称加密。</p>
+<p>伪随机数生成算法生成的序列的随机性越强，明文中的统计特征被覆盖的更好。</p>
+<p>流密码加解密非常简单，在已知明文的情况下，可以非常容易地获取密钥流。</p>
+<p>流密码的关键在于设计好的伪随机数生成器。一般来说，伪随机数生成器的基本构造模块为反馈移位寄存器。当然，也有一些特殊设计的流密码，比如 RC4。</p>
+<h4 id="块密码">块密码</h4>
+<p>所谓块加密就是每次加密一块明文，常见的加密算法有</p>
+<ul>
+<li>DES 加密 <strong><em>DES现在已经不是一种安全的加密方法，DES标准和3DES标准已逐渐被AES所取代。</em></strong>
+<ul>
+<li>输入 64 位。</li>
+<li>输出 64 位。</li>
+<li>密钥 64 位，使用 64 位密钥中的 56 位，剩余的 8 位要么丢弃，要么作为奇偶校验位。</li>
+</ul></li>
+<li>AES 加密
+<ul>
+<li>输入：128 比特。</li>
+<li>输出：128 比特。</li>
+<li>密钥128、192或256位</li>
+</ul></li>
+</ul>
+<p>可以把块加密理解一种特殊的替代密码，但是其每次替代的是一大块。而正是由于一大块，明文空间巨大，而且对于不同的密钥，我们无法做一个表进行对应相应的密文，因此必须得有 <strong>复杂</strong> 的加解密算法来加解密明密文。</p>
+<p>而与此同时，明文往往可能很长也可能很短，不是块长度的整数倍，因此在块加密时往往需要两个辅助</p>
+<ul>
+<li>padding，即 padding 到指定分组长度</li>
+<li>初始化向量IV</li>
+<li>分组加密模式，即明文分组加密的方式
+<ul>
+<li>ECB：最简单的块密码加密模式，加密前根据加密块大小（如AES为128位）分成若干块，之后将每块使用相同的密钥单独加密，解密同理。（最后一块需要padding）</li>
+<li>CBC：每个明文块先与前一个密文块进行异或后，再进行加密（最后一块需要padding，在第一个块中需要使用初始化向量。）</li>
+<li>PCBC</li>
+<li>CFB</li>
+<li>OFB</li>
+<li>CTR</li>
+<li>……</li>
+</ul></li>
+</ul>
+<h4 id="小结">小结</h4>
+<p>代换技术与置换技术通常结合使用。一般地，可先利用代换技术加密，再用置换技术将密文再次加密。这是现代密码学的对称加密方法的基础。</p>
+<ul>
+<li><p>优点</p>
+<ul>
+<li><p>计算量小，运算速度比非对称加密快很多</p>
+<ul>
+<li><p>混淆，Confusion，将密文与密钥之间的统计关系变得尽可能复杂，使得攻击者即使获取了密文的一些统计特性，也无法推测密钥。一般使用复杂的非线性变换可以得到很好的混淆效果，常见的方法如下</p>
+<ul>
+<li>S 盒</li>
+<li>乘法</li>
+</ul></li>
+<li><p>扩散，Diffusion，使得明文中的每一位影响密文中的许多位。常见的方法有</p>
+<ul>
+<li>线性变换</li>
+<li>置换</li>
+<li>移位，循环移位</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>缺点</p>
+<ul>
+<li>密钥管理
+<ul>
+<li>单钥密码技术要求通信双方事先交换密钥。在实际应用中，一方需要与成千上万的通信方进行交易，若采用对称密码技术，每个用户需要管理成千上万个不同对象通信的密钥</li>
+<li>双方如何交换密钥。通过传统手段，还是通过因特网，都会遇到密钥传送的安全性问题。</li>
+<li>在现实环境中，密钥通常会经常更换，更为极端的是，每次传送都使用不同的密钥，单钥密码技术的密钥管理和发布都是远远无法满足使用要求的。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="非对称密码公钥密码">非对称密码（公钥密码）</h3>
+<p>在非对称密码中，加密者与解密者所使用的密钥并不一样。一把密钥公开，一把密钥由密钥对所有者秘密保存。</p>
+<p>公钥密码体制的基本原理——陷门单向函数<span class="math inline">\(f\)</span>：正向计算容易，即如果知道了加密密钥<span class="math inline">\(k_{e}\)</span>和消息<span class="math inline">\(x\)</span>，容易计算<span class="math inline">\(y=f(x;k_{e})\)</span>，不知道解密密钥<span class="math inline">\(k_{d}\)</span>时反向计算<span class="math inline">\(x=f^{-1}(y;k_{d})\)</span>不可行的（所谓计算不可行，是指计算上相当复杂，在有限的时间和成本范围内很难得到想要的结果，已无实际意义），知道解密密钥<span class="math inline">\(k_{d}\)</span>时反向计算可行。</p>
+<ul>
+<li>大整数质因数分解问题——RSA</li>
+<li>背包问题——Merkle–Hellman背包加密</li>
+<li>椭圆曲线离散对数问题——ECC，ECDH，ECDSA——（比特币）</li>
+<li>循环群离散对数问题——ElGamal</li>
+<li>合数模下求解平方根问题——Rabin</li>
+<li>格密码（前沿）
+<ul>
+<li>SVP问题</li>
+<li>CVP问题</li>
+<li>……</li>
+</ul></li>
+</ul>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg" alt="非对称加密"><figcaption aria-hidden="true">非对称加密</figcaption>
+</figure>
+<p><strong><em>公钥密码学的出现解决了密钥分发问题，使大规模的安全通信得以实现；</em></strong></p>
+<p>公钥密码学还可用于另外一些应用：数字签名、防抵赖等；</p>
+<h4 id="rsa">RSA</h4>
+<h5 id="公钥与私钥的产生">公钥与私钥的产生</h5>
+<ol type="1">
+<li>随机选取两个大质数<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span>，其中<span class="math inline">\(p\neq q\)</span></li>
+<li>计算<span class="math inline">\(N=p\times q\)</span></li>
+<li>计算<span class="math inline">\(r = \varphi(N) = \varphi(p)\times\varphi(q) = (p-1)\times(q-1)\)</span>，具体参见<em>欧拉函数</em></li>
+<li>选择一个小于<span class="math inline">\(r\)</span>的整数<span class="math inline">\(e\)</span>，使<span class="math inline">\(e\)</span>与<span class="math inline">\(r\)</span>互质</li>
+<li>求<span class="math inline">\(d\)</span>，满足<span class="math inline">\(ed\equiv1\quad \mathrm{mod}\;r\)</span>，参见模逆元</li>
+<li>销毁<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span><strong>（为什么？）</strong></li>
+<li><span class="math inline">\((N,e)\)</span>是公钥，<span class="math inline">\((N,d)\)</span>是私钥</li>
+</ol>
+<h6 id="pq的生成">p、q的生成</h6>
+<p>常用RSA2048、RSA4096</p>
+<p><strong>素性测试</strong></p>
+<ul>
+<li>试除法？
+<ul>
+<li>以RSA1024（实际中不建议使用，因为密钥长度过短）为例，p和q大约在<span class="math inline">\(2^{512}\)</span>的数量级上，太慢了！</li>
+</ul></li>
+<li>费马小定理（判定一个数是否为素数的<strong>必要条件</strong>）</li>
+<li>Fermat素性测试：前10亿个自然数中出错的数有600个之多，第一个出错的数小得惊人，仅仅是一个三位数，<code>561</code></li>
+<li>Miller-Rabin素性测试</li>
+<li>………..</li>
+</ul>
+<p><strong>随机数</strong></p>
+<ul>
+<li>每次生成一个完全不一样的随机数，进行素性测试</li>
+<li>成一个随机奇数之后，每次对其加2，进行素性测试</li>
+<li>因此随机数生成器的安全性十分重要！
+<ul>
+<li>斯诺登：NSA在RSA一款加密软件的随机数算法中加入了后门</li>
+</ul></li>
+</ul>
+<h6 id="为什么是只有两个质数多个可以吗">为什么是只有两个质数？多个可以吗？</h6>
+<p>组合变多对RSA安全性反而降低了，因为分解变得容易了</p>
+<h6 id="e太小">e太小</h6>
+<p>例如<span class="math inline">\(e=3\)</span></p>
+<p>假设用户使用的密钥 e=3。考虑到加密关系满足： <span class="math display">\[
+c \equiv m3 \mod N \\
+m^3 = c + k \times N \\
+m = (c + k \times N)^{\frac{1}{3}}
+\]</span> 攻击者可以从小到大枚举 ，依次开三次根，直到开出整数为止。</p>
+<h5 id="加密与解密消息">加密与解密消息</h5>
+<p><span class="math display">\[
+加密\quad\quad c\equiv n^e\quad \mathrm{mod}\;N\quad\\太大怎么办？分组！n&lt;N\\
+-------------\\
+解密\quad\quad n\equiv c^d\quad \mathrm{mod}\;N
+\]</span></p>
+<h6 id="证明">证明</h6>
+<p>$$ <span class="math display">\[\begin{equation}
+\begin{aligned}
+c^{d}&amp;\equiv n^{ed}\quad\mathrm{mod}\;N\\
+n^{ed}&amp;=n^{1+k\varphi(N)}\\
+&amp;=n(n^{\varphi({N})})^h\\
+若n,N互质:\\
+n^{ed}&amp;\equiv n(1)^h\equiv n\quad\mathrm{mod}\;N\\
+若n,N不互质:\\
+设\quad
+n &amp;= ph\;,\;ed-1 = k(q-1)\\
+有\quad
+n^{ed}&amp;=(ph)^{ed}\\
+&amp;\equiv ph \equiv n\quad \mathrm{mod}\;p\\
+n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
+&amp;\equiv 1^kn\equiv n\quad\mathrm{mod}\;q\\
+\\
+\implies n^{ed}\equiv&amp; n\quad\mathrm{mod}\;N
+
+\end{aligned}
+\end{equation}\]</span> $$</p>
+<h5 id="使用">使用</h5>
+<h6 id="机密性加解密">机密性：加解密</h6>
+<p>A的公开密钥<span class="math inline">\(K_{pub}=(N,e)\)</span>，B用<span class="math inline">\(K_{pub}\)</span>对消息m加密，因为只有A拥有能解密的密钥</p>
+<p>特点:</p>
+<ul>
+<li>B和A从来不认识，都可进行保密通讯，只要知道A的公钥</li>
+<li>速度慢，不实用</li>
+<li>要求对公开密钥（公钥）进行保护，防止修改和替换。<strong>（见下<u>潜在问题&gt;中间人攻击</u>）</strong></li>
+</ul>
+<h6 id="数字签名与身份认证">数字签名与身份认证</h6>
+<p>通常我们使用公钥加密，用私钥解密。而在数字签名中，我们使用私钥加密（相当于生成签名），公钥解密（相当于验证签名）。可以这么理解：公钥是公开的，私钥是保密的，我们要用一个东西验证信息的发送者，那自然要用公开的公钥来验证；而明文只能加密，密文只能解密，所以验证时是用发送者的公钥对发来的密文进行解密。</p>
+<p>加解密流程是相似的，只不过互换了e和d。</p>
+<p>我们可以直接对消息进行签名（即使用私钥加密，此时加密的目的是为了签名，而不是保密），验证者用公钥正确解密消息，如果和原消息一致，则验证签名成功。但通常我们会对消息的散列值（消息摘要）签名，因为通常散列值的长度远小于消息原文，使得签名（非对称加密）的效率大大提高。注意，计算消息的散列值不是数字签名的必要步骤。</p>
+<p><strong>功能：防止非法篡改、伪造，A的抵赖与否认，对A的假冒等。</strong>-&gt;因为只有A拥有A的密钥</p>
+<p><strong>要求对公开密钥（公钥）进行保护，防止修改。</strong></p>
+<h5 id="潜在问题">潜在问题</h5>
+<h6 id="中间人攻击">中间人攻击</h6>
+<p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA-1622216524858.svg" alt="非对称中间人"><figcaption aria-hidden="true">非对称中间人</figcaption>
+</figure>
+<p><strong>解决方式</strong>：今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<strong><em>CA</em></strong>及<strong><em>PKI</em></strong>。</p>
+<h5 id="密钥生成">密钥生成</h5>
+<blockquote>
+<p>首先要使用概率算法来验证随机产生的大的整数是否质数，这样的算法比较快而且可以消除掉大多数非质数。假如有一个数通过了这个测试的话，那么要使用一个精确的测试来保证它的确是一个质数。</p>
+<p>除此之外这样找到的p和q还要满足一定的要求，首先它们不能太靠近，此外p-1或q-1的因子不能太小，否则的话N也可以被很快地分解。</p>
+<p>此外寻找质数的算法不能给攻击者任何信息，这些质数是怎样找到的，尤其产生随机数的软件必须非常好。要求是随机和不可预测。这两个要求并不相同。一个随机过程可能可以产生一个不相关的数的系列，但假如有人能够预测出（或部分地预测出）这个系列的话，那么它就已经不可靠了。比如有一些非常好的随机数算法，但它们都已经被发表，因此它们不能被使用，因为假如一个攻击者可以猜出<span class="math inline">\(p\)</span>和<span class="math inline">\(q\)</span>一半的位的话，那么他们就已经可以轻而易举地推算出另一半。</p>
+<p>此外密钥d必须足够大，1990年有人证明假如<span class="math inline">\(p\)</span>大于<span class="math inline">\(q\)</span>而小于<span class="math inline">\(2q\)</span>（这是一个很常见的情况）而<span class="math inline">\(d&lt;\frac{1}{3}\times N^{\frac{1}{4}}\)</span>，那么从<span class="math inline">\(N\)</span>和<span class="math inline">\(e\)</span>可以很有效地推算出<span class="math inline">\(d\)</span>。此外<span class="math inline">\(e=2\)</span>永远不应该被使用。</p>
+<p><strong><em>Wikipedia</em></strong></p>
+</blockquote>
+<h5 id="攻击-1">攻击</h5>
+<ul>
+<li><p>攻击RSA的一种方式的关键点在于如何分解n。若分解成功使<span class="math inline">\(n=pq\)</span>，则可以算出<span class="math inline">\(\varphi(n)＝(p-1)(q-1)\)</span>，然后由公开的e，解出秘密的d。</p></li>
+<li><p>中国剩余定理</p></li>
+<li><p>…………</p></li>
+</ul>
+<h5 id="小结-1">小结</h5>
+<p>缺点</p>
+<ul>
+<li>在计算上比较复杂，加密速度慢
+<ul>
+<li>数的量级的对比</li>
+<li>对称密码都是二进制布尔代数、加法，非对称密码，eg RSA都是幂运算、模运算！</li>
+</ul></li>
+</ul>
+<h3 id="数字信封技术">数字信封技术</h3>
+<p>为什么？</p>
+<ul>
+<li>非对称加密算法加密与解密使用不同密钥，安全性高，但是慢</li>
+<li>对称加密算法速度快，但是如何安全传递密钥是个问题</li>
+</ul>
+<p>于是怎么办？怎么组合两种加密方法以扬长避短？</p>
+<p>因此我们想到用对称加密算法来加密消息本身，而用非对称加密算法传递对称加密算法所需的密钥。一般常用的是每次会话使用不同的随机的对称加密算法密钥。</p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"><figcaption aria-hidden="true">数字信封</figcaption>
+</figure>
+<p>想要加上完整性验证，怎么办？</p>
+<h4 id="数字信封数字签名">数字信封+数字签名</h4>
+<p><strong><em>图例的使用很不规范，仅作示意用</em></strong></p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/diagram-1622201417795.svg" alt="diagram"><figcaption aria-hidden="true">diagram</figcaption>
+</figure>
+<h3 id="消息摘要算法哈希hash函数">消息摘要算法（哈希Hash函数）</h3>
+<h4 id="为什么">为什么？</h4>
+<ul>
+<li>现实中的签名情形：
+<ul>
+<li>给一张纸签名、给一份合同签名、给修改的合同、给一本书签名、中缝签名</li>
+</ul></li>
+<li>数字签名面对的问题
+<ul>
+<li>变长的字符串</li>
+<li>为了签名的高效完成</li>
+</ul></li>
+</ul>
+<h4 id="hash设计基本要求">Hash设计基本要求</h4>
+<ul>
+<li>相同的输入产生相同的输出（散列值/指纹）</li>
+<li>单向，不可逆（有效时间内不能以可负担的代价逆向计算出来）-&gt;是否和非对称加密的单向陷门函数类似？
+<ul>
+<li>正向计算容易、不知道解密密钥时反向计算不可行、知道解密密钥时反向计算可行：非对称有三条全部特性，Hash只符合前两条</li>
+</ul></li>
+<li>变长的输入，定长的输出</li>
+</ul>
+<h4 id="hash的应用">Hash的应用</h4>
+<p>数据完整性检查</p>
+<h4 id="代表性算法">代表性算法</h4>
+<h5 id="md5128bit">MD5（128bit）</h5>
+<ul>
+<li>输入：任意长的消息，512 比特长的分组。</li>
+<li>输出：128 比特的消息摘要。</li>
+<li>有时候我们获得到的 md5 是 16 位的，其实那是将 32 位 md5 去掉前八位、后八位得到的。</li>
+<li><strong><em>目前可以说 md5 已经基本被攻破了</em></strong>，一般的 MD5 的碰撞都可以在如下网上获取到
+<ul>
+<li>http://www.cmd5.com/</li>
+<li>http://www.ttmd5.com/</li>
+<li>http://pmd5.com/</li>
+<li>https://www.win.tue.nl/hashclash/fastcoll_v1.0.0.5.exe.zip (生成指定前缀的 md5 碰撞)</li>
+</ul></li>
+</ul>
+<h5 id="sha-1160bit">SHA-1（160bit）</h5>
+<ul>
+<li><p>输入：任意长的消息，分为 <strong>512 比特</strong>长的分组。首先在消息右侧补比特 1，然后再补若干个比特 0，直到消息的比特长度满足对 512 取模后余数是 448，使其与 448 模 512 同余。</p></li>
+<li><p>输出：160 比特的消息摘要。</p></li>
+<li><p><strong><em>就目前而言，SHA1 已经不再安全了，因为之前谷歌公布了求得两个 sha1 值一样的 pdf，具体请参考 <a target="_blank" rel="noopener" href="https://shattered.io/">shattered</a> 。</em></strong></p></li>
+</ul>
+<h3 id="数字证书ca与pki">数字证书、CA与PKI</h3>
+<p>我们知道，摘要算法用来确保数据没有被篡改，非对称加密算法可以对数据进行加解密，签名算法可以确保数据完整性和抗否认性，把这些算法集合到一起，并搞一套完善的标准，这就是数字证书。</p>
+<p>因此，数字证书就是集合了多种密码学算法，用于实现数据加解密、身份认证、签名等多种功能的一种安全标准。</p>
+<p>数字证书可以防止中间人攻击，因为它采用链式签名认证，即通过根证书（Root CA）去签名下一级证书，这样层层签名，直到最终的用户证书。而Root CA证书内置于操作系统中，所以，任何经过CA认证的数字证书都可以对其本身进行校验，确保证书本身不是伪造的。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> TODO</span><br></pre></td></tr></table></figure>
+<h2 id="appendix">Appendix</h2>
+<h3 id="参考资料与推荐阅读">参考资料与推荐阅读</h3>
+<p>[0x00] Wikipedia</p>
+<p>[0x01] CTFwiki</p>
+<p>[0x02] <a target="_blank" rel="noopener" href="https://howiezhao.github.io/2018/08/10/classical-crypto/">古典密码学 <em>Howie's Notes</em></a></p>
+<p>[0x03] 各种标准文件</p>
+<p>[0x04] <a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/">廖雪峰</a></p>
+<p>[0xFF] <a href="https://null.sakuya.world">我的博客（没啥有营养的东西，只是参考了我之前的作业和水文，别看）</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Rheinhauss
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://null.sakuya.world/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/" title="初探密码学">https://null.sakuya.world/2021/05/28/初探密码学/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+              <a href="/tags/%E8%AE%B2%E8%AF%BE/" rel="tag"># 讲课</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/19/UMLpre-03/" rel="prev" title="UMLpre_03">
+      <i class="fa fa-chevron-left"></i> UMLpre_03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/" rel="next" title="数字信封及数字签名">
+      数字信封及数字签名 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-number">1.</span> <span class="nav-text">初探密码学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">引入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B4%E5%90%A7%E7%A5%9E%E8%B4%B4"><span class="nav-number">1.1.1.</span> <span class="nav-text">贴吧神贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E4%B9%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BB%A3%E6%95%B0%E5%9F%BA%E7%A1%80"><span class="nav-number">1.2.</span> <span class="nav-text">几个基本概念与代数基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%94%AF%E5%AF%86%E6%96%87%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.1.</span> <span class="nav-text">唯密文攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B7%B2%E7%9F%A5%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.2.</span> <span class="nav-text">已知明文攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%AF%86%E6%96%87%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.3.</span> <span class="nav-text">选择密文攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.4.</span> <span class="nav-text">选择明文攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%97%81%E8%B7%AF%E6%94%BB%E5%87%BB%E4%BE%A7%E4%BF%A1%E9%81%93%E6%94%BB%E5%87%BB%E8%BE%B9%E4%BF%A1%E9%81%93%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.5.</span> <span class="nav-text">旁路攻击、侧信道攻击、边信道攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E5%B7%A5%E7%A8%8B%E5%AD%A6%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.1.1.0.6.</span> <span class="nav-text">社会工程学攻击</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#section"><span class="nav-number">1.2.1.1.0.7.</span> <span class="nav-text">…………</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">代数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E9%80%86%E5%85%83"><span class="nav-number">1.2.2.0.1.</span> <span class="nav-text">模逆元</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-number">1.3.</span> <span class="nav-text">古典密码学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E6%8D%A2%E5%BC%8F%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">代换式密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E4%BB%A3%E6%8D%A2"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">单表代换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%AF%E6%92%92%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.1.1.1.</span> <span class="nav-text">凯撒密码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.3.1.1.1.1.</span> <span class="nav-text">举例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%95%E5%87%BA%E5%BD%A2%E5%BC%8F%E6%8F%8F%E8%BF%B0%E5%BD%A2%E5%BC%8F%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%A5%E8%B0%A8%E6%80%A7"><span class="nav-number">1.3.1.1.1.2.</span> <span class="nav-text">引出形式描述——形式语言的严谨性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%9A%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.3.1.1.1.3.</span> <span class="nav-text">多次迭代？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%BF%E5%B0%84%E5%AF%86%E7%A0%81%E5%87%AF%E6%92%92%E5%AF%86%E7%A0%81%E7%9A%84%E6%8B%93%E5%B1%95"><span class="nav-number">1.3.1.1.2.</span> <span class="nav-text">仿射密码——凯撒密码的拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">1.3.1.1.2.1.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%AB%E5%B0%94%E6%96%AF%E7%94%B5%E7%A0%81-%E7%AD%89%E7%AD%89"><span class="nav-number">1.3.1.1.3.</span> <span class="nav-text">莫尔斯电码 等等</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A0%B4%E8%AF%91%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.1.1.4.</span> <span class="nav-text">破译方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.1.4.1.</span> <span class="nav-text">频率分析</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E5%B0%9D%E8%AF%95"><span class="nav-number">1.3.1.1.4.2.</span> <span class="nav-text">暴力尝试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E4%BB%A3%E6%8D%A2"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">多表代换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%B4%E5%90%89%E5%B0%BC%E4%BA%9A%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.1.2.1.</span> <span class="nav-text">维吉尼亚密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A0%B4%E8%AF%91%E6%96%B9%E6%B3%95-1"><span class="nav-number">1.3.1.2.2.</span> <span class="nav-text">破译方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E5%88%86%E6%9E%90-1"><span class="nav-number">1.3.1.2.2.1.</span> <span class="nav-text">频率分析？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%A1%E8%A5%BF%E6%96%AF%E5%9F%BA%E8%AF%95%E9%AA%8C"><span class="nav-number">1.3.1.2.2.2.</span> <span class="nav-text">卡西斯基试验</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%97%E9%87%8C%E5%BE%B7%E6%9B%BC%E8%AF%95%E9%AA%8Coptional"><span class="nav-number">1.3.1.2.2.3.</span> <span class="nav-text">弗里德曼试验(optional)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E5%88%86%E6%9E%90-2"><span class="nav-number">1.3.1.2.2.4.</span> <span class="nav-text">频率分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%8C%E5%B0%94%E5%AF%86%E7%A0%81optional"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">希尔密码（optional）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E4%BD%8D%E7%BD%AE%E6%8D%A2%E5%BC%8F%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">移位（置换）式密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%85%E6%A0%8F%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">栅栏密码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.3.</span> <span class="nav-text">古典密码学小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-number">1.4.</span> <span class="nav-text">现代密码学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.1.</span> <span class="nav-text">对称密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">随机数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">流密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%97%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">块密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%81%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">非对称密码（公钥密码）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rsa"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">RSA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AC%E9%92%A5%E4%B8%8E%E7%A7%81%E9%92%A5%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="nav-number">1.4.2.1.1.</span> <span class="nav-text">公钥与私钥的产生</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pq%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">1.4.2.1.1.1.</span> <span class="nav-text">p、q的生成</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E8%B4%A8%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%AF%E4%BB%A5%E5%90%97"><span class="nav-number">1.4.2.1.1.2.</span> <span class="nav-text">为什么是只有两个质数？多个可以吗？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#e%E5%A4%AA%E5%B0%8F"><span class="nav-number">1.4.2.1.1.3.</span> <span class="nav-text">e太小</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86%E6%B6%88%E6%81%AF"><span class="nav-number">1.4.2.1.2.</span> <span class="nav-text">加密与解密消息</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.2.1.2.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.2.1.3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%BA%E5%AF%86%E6%80%A7%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">1.4.2.1.3.1.</span> <span class="nav-text">机密性：加解密</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E4%B8%8E%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-number">1.4.2.1.3.2.</span> <span class="nav-text">数字签名与身份认证</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BD%9C%E5%9C%A8%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.2.1.4.</span> <span class="nav-text">潜在问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB"><span class="nav-number">1.4.2.1.4.1.</span> <span class="nav-text">中间人攻击</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="nav-number">1.4.2.1.5.</span> <span class="nav-text">密钥生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">1.4.2.1.6.</span> <span class="nav-text">攻击</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">1.4.2.1.7.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF"><span class="nav-number">1.4.3.</span> <span class="nav-text">数字信封技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">数字信封+数字签名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95%E5%93%88%E5%B8%8Chash%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.4.</span> <span class="nav-text">消息摘要算法（哈希Hash函数）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E8%A6%81%E6%B1%82"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">Hash设计基本要求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">Hash的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.4.4.</span> <span class="nav-text">代表性算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#md5128bit"><span class="nav-number">1.4.4.4.1.</span> <span class="nav-text">MD5（128bit）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sha-1160bit"><span class="nav-number">1.4.4.4.2.</span> <span class="nav-text">SHA-1（160bit）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6ca%E4%B8%8Epki"><span class="nav-number">1.4.5.</span> <span class="nav-text">数字证书、CA与PKI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#appendix"><span class="nav-number">1.5.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E4%B8%8E%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-number">1.5.1.</span> <span class="nav-text">参考资料与推荐阅读</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Rheinhauss</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rheinhauss" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rheinhauss" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://amachi.com.cn/" title="https:&#x2F;&#x2F;amachi.com.cn&#x2F;" rel="noopener" target="_blank">木灵</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://lirewriter.cn/" title="https:&#x2F;&#x2F;lirewriter.cn&#x2F;" rel="noopener" target="_blank">LR</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rheinhauss</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
