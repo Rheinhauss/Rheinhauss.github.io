@@ -192,7 +192,9 @@
 <p>语无伦次，请见谅。</p>
 ]]></content>
       <tags>
-        <tag>DNS, GitHub</tag>
+        <tag>网络</tag>
+        <tag>DNS</tag>
+        <tag>GitHub</tag>
       </tags>
   </entry>
   <entry>
@@ -262,7 +264,7 @@
 <p>参与讨论区评价</p>
 <p>与教师互动</p>
 <h4 id="系统管理者"><a href="#系统管理者" class="headerlink" title="系统管理者"></a><strong>系统管理者</strong></h4><p>对程序进行更新</p>
-<h2 id="二、-涉众分析"><a href="#二、-涉众分析" class="headerlink" title="二、  涉众分析"></a><strong>二、</strong>  <strong>涉众分析</strong></h2><h3 id="1-涉众概要"><a href="#1-涉众概要" class="headerlink" title="1. 涉众概要**"></a><strong>1.</strong> 涉众概要**</h3><table>
+<h2 id="二、-涉众分析"><a href="#二、-涉众分析" class="headerlink" title="二、  涉众分析"></a><strong>二、</strong>  <strong>涉众分析</strong></h2><h3 id="1-涉众概要"><a href="#1-涉众概要" class="headerlink" title="1. 涉众概要"></a><strong>1.</strong> 涉众概要</h3><table>
 <thead>
 <tr>
 <th><strong>涉众编号</strong></th>
@@ -374,10 +376,11 @@
 <p><img src="/2021/04/21/UMLpre-01/clip_image016.png" alt="img"></p>
 ]]></content>
       <categories>
-        <category>UML需求工程课程</category>
+        <category>课程</category>
       </categories>
       <tags>
         <tag>作业</tag>
+        <tag>UML需求工程</tag>
       </tags>
   </entry>
   <entry>
@@ -441,10 +444,11 @@
 </tbody></table>
 ]]></content>
       <categories>
-        <category>UML需求工程课程</category>
+        <category>课程</category>
       </categories>
       <tags>
         <tag>作业</tag>
+        <tag>UML需求工程</tag>
       </tags>
   </entry>
   <entry>
@@ -454,10 +458,112 @@
 <h3 id="ChangeLog"><a href="#ChangeLog" class="headerlink" title="ChangeLog"></a>ChangeLog</h3><p>（待完成…）</p>
 ]]></content>
       <categories>
-        <category>UML需求工程课程</category>
+        <category>课程</category>
       </categories>
       <tags>
         <tag>作业</tag>
+        <tag>UML需求工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字信封及数字签名</title>
+    <url>/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<h1 id="数字信封及数字签名"><a href="#数字信封及数字签名" class="headerlink" title="数字信封及数字签名"></a>数字信封及数字签名</h1><p>要求：用RSA算法和DES算法实现电子信封技术、为电子信封增加发送方验证和数据完整性验证功能，即数字签名。</p>
+<h2 id="DES与对称加密"><a href="#DES与对称加密" class="headerlink" title="DES与对称加密"></a>DES与对称加密</h2><p><em><strong>DES现在已经不是一种安全的加密方法，DES标准和3DES标准已逐渐被AES所取代。</strong></em></p>
+<p>DES是一种对称加密算法，这类算法在加密和解密时使用相同的密钥，其安全性依靠密钥的长度和保密。<br>$$<br>加密：\quad E_k(\mathbf{M}) = \mathbf{C}\<br>解密：\quad D_k(\mathbf{C}) = D_k(E_k(\mathbf{M})) = \mathbf{M}<br>$$<br><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/Untitled%20Diagram.svg" alt="Untitled Diagram"></p>
+<ul>
+<li>优点<ul>
+<li>计算量小，运算速度比公钥加密快很多</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>要求双方取得相同的密钥，难以安全地传递密钥</li>
+</ul>
+</li>
+</ul>
+<h2 id="RSA与非对称加密"><a href="#RSA与非对称加密" class="headerlink" title="RSA与非对称加密"></a>RSA与非对称加密</h2><p>RSA是一种非对称加密算法。非对称加密为数据的加密与解密提供了一个非常安全的方法，它使用了一对密钥——公钥和私钥，私钥只能由一方保管，不能外泄，而公钥则可以发给任何请求它的人，加密和解密需要两个不同的密钥。RSA算法利用了一个数学难题：大整数因数分解。正向操作非常简单，而逆向操作非常困难。</p>
+<ul>
+<li>优点<ul>
+<li>安全性高</li>
+<li>……</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>在计算上相当复杂，加密速度慢</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+<h3 id="RSA流程"><a href="#RSA流程" class="headerlink" title="RSA流程"></a>RSA流程</h3><p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg" alt="非对称加密"></p>
+<h4 id="公钥与私钥的产生"><a href="#公钥与私钥的产生" class="headerlink" title="公钥与私钥的产生"></a>公钥与私钥的产生</h4><ol>
+<li>随机选取两个大质数$p$和$q$，其中$p\neq q$</li>
+<li>计算$N=p\times q$</li>
+<li>计算$r = \varphi(N) = \varphi(p)\times\varphi(q) = (p-1)\times(q-1)$，具体参见<em>欧拉函数</em></li>
+<li>选择一个小于$r$的整数$e$，使$e$与$r$互质</li>
+<li>求$d$，满足$ed\equiv1\quad \mathrm{mod};r$，参见模逆元</li>
+<li>销毁$p$和$q$</li>
+<li>$(N,e)$是公钥，$(N,d)$是私钥</li>
+</ol>
+<h4 id="加密与解密消息"><a href="#加密与解密消息" class="headerlink" title="加密与解密消息"></a>加密与解密消息</h4><p>$$<br>加密\quad\quad c\equiv n^e\quad \mathrm{mod};N\<br>解密\quad\quad n\equiv c^d\quad \mathrm{mod};N<br>$$</p>
+<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><p>$$<br>\begin{equation}<br>\begin{aligned}<br>c^{d}&amp;\equiv n^{ed}\quad\mathrm{mod};N\<br>n^{ed}&amp;=n^{1+k\varphi(N)}\<br>&amp;=n(n^{\varphi({N})})^h\<br>若n,N互质:\<br>n^{ed}&amp;\equiv n(1)^h\equiv n\quad\mathrm{mod};N\<br>若n,N不互质:\<br>设\quad<br>n &amp;= ph;,;ed-1 = k(q-1)\<br>有\quad<br>n^{ed}&amp;=(ph)^{ed}\<br>&amp;\equiv ph \equiv n\quad \mathrm{mod};p\<br>n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\<br>&amp;\equiv 1^kn\equiv n\quad\mathrm{mod};q\<br>\<br>\implies n^{ed}\equiv&amp; n\quad\mathrm{mod};N</p>
+<p>\end{aligned}<br>\end{equation}<br>$$</p>
+<h3 id="潜在问题"><a href="#潜在问题" class="headerlink" title="潜在问题"></a>潜在问题</h3><h4 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
+<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA.svg" alt="非对称中间人"></p>
+<h5 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h5><p>今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<em><strong>CA</strong></em>及<em><strong>PKI</strong></em>。</p>
+<h4 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h4><blockquote>
+<p>首先要使用概率算法来验证随机产生的大的整数是否质数，这样的算法比较快而且可以消除掉大多数非质数。假如有一个数通过了这个测试的话，那么要使用一个精确的测试来保证它的确是一个质数。</p>
+<p>除此之外这样找到的p和q还要满足一定的要求，首先它们不能太靠近，此外p-1或q-1的因子不能太小，否则的话N也可以被很快地分解。</p>
+<p>此外寻找质数的算法不能给攻击者任何信息，这些质数是怎样找到的，尤其产生随机数的软件必须非常好。要求是随机和不可预测。这两个要求并不相同。一个随机过程可能可以产生一个不相关的数的系列，但假如有人能够预测出（或部分地预测出）这个系列的话，那么它就已经不可靠了。比如有一些非常好的随机数算法，但它们都已经被发表，因此它们不能被使用，因为假如一个攻击者可以猜出$p$和$q$一半的位的话，那么他们就已经可以轻而易举地推算出另一半。</p>
+<p>此外密钥d必须足够大，1990年有人证明假如$p$大于$q$而小于$2q$（这是一个很常见的情况）而$d&lt;\frac{1}{3}\times N^{\frac{1}{4}}$，那么从$N$和$e$可以很有效地推算出$d$。此外$e=2$永远不应该被使用。</p>
+<p><em><strong>Wikipedia</strong></em></p>
+</blockquote>
+<h2 id="数字信封"><a href="#数字信封" class="headerlink" title="数字信封"></a>数字信封</h2><p>为什么？</p>
+<ul>
+<li>非对称加密算法加密与解密使用不同密钥，安全性高，但是慢</li>
+<li>对称加密算法速度快，但是如何安全传递密钥是个问题</li>
+</ul>
+<p>因此我们想到用非对称加密算法传递对称加密算法的密钥，而用对称加密算法来加密消息本身。</p>
+<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"></p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>通常我们使用公钥加密，用私钥解密。而在数字签名中，我们使用私钥加密（相当于生成签名），公钥解密（相当于验证签名）。可以这么理解：公钥是公开的，私钥是保密的，我们要用一个东西验证信息的发送者，那自然要用公开的公钥来验证；而明文只能加密，密文只能解密，所以验证时是用发送者的公钥对发来的密文进行解密。</p>
+<blockquote>
+<p>我们可以直接对消息进行签名（即使用私钥加密，此时加密的目的是为了签名，而不是保密），验证者用公钥正确解密消息，如果和原消息一致，则验证签名成功。但通常我们会对消息的散列值签名，因为通常散列值的长度远小于消息原文，使得签名（非对称加密）的效率大大提高。注意，计算消息的散列值不是数字签名的必要步骤。</p>
+<p><em><strong>Wikipedia</strong></em></p>
+</blockquote>
+<p>使用数字签名（不论是原文还是hash值），可以很容易地验证消息完整性和消息来源。</p>
+<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.svg" alt="Hash+数字签名"></p>
+<h2 id="总体实现"><a href="#总体实现" class="headerlink" title="总体实现"></a>总体实现</h2><h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><em><strong>图例的使用很不规范，仅作示意用</strong></em></p>
+<p><img src="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E6%8A%80%E6%9C%AF/diagram-1622201417795.svg" alt="diagram"></p>
+<h3 id="代码模拟"><a href="#代码模拟" class="headerlink" title="代码模拟"></a>代码模拟</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> DES, PKCS1_OAEP</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> random, get_random_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sender</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self, rawmsg: <span class="built_in">str</span>, lis_pubk</span>):</span></span><br><span class="line">        des_key = get_random_bytes(<span class="number">8</span>)</span><br><span class="line">        rsa_dig_encrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_desk_encrypter = PKCS1_OAEP.new(lis_pubk)</span><br><span class="line">        des_encrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        enc_des_k = rsa_desk_encrypter.encrypt(des_key)</span><br><span class="line">        enc_msg = des_encrypter.encrypt(pad(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>), <span class="number">8</span>))</span><br><span class="line">        raw_dig = SHA256.new()</span><br><span class="line">        raw_dig.update(<span class="built_in">bytes</span>(rawmsg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        enc_dig = rsa_dig_encrypter.encrypt(</span><br><span class="line">            <span class="built_in">bytes</span>(raw_dig.hexdigest(), encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> enc_des_k, enc_msg, enc_dig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">listener</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kp</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.prik = kp</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">listen</span>(<span class="params">self, com_msg, sender_pubk</span>):</span></span><br><span class="line">        (enc_des_k, enc_msg, enc_dig) = com_msg</span><br><span class="line">        rsa_desk_decrypter = PKCS1_OAEP.new(self.prik)</span><br><span class="line">        rsa_dig_decrypter = PKCS1_OAEP.new(sender_pubk)</span><br><span class="line">        des_key = rsa_desk_decrypter.decrypt(enc_des_k)</span><br><span class="line">        des_decrypter = DES.new(des_key, DES.MODE_ECB)</span><br><span class="line">        dig_recv = <span class="built_in">str</span>(rsa_dig_decrypter.decrypt(enc_dig), encoding=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">        msg = unpad(des_decrypter.decrypt(enc_msg), <span class="number">8</span>)</span><br><span class="line">        challenge_dig = SHA256.new()</span><br><span class="line">        challenge_dig.update(msg)</span><br><span class="line">        <span class="keyword">if</span>(dig_recv == challenge_dig.hexdigest()):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;CHECK PASS&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;CHECK FAILED&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Bob receives a msg from Alice:\n\t&#x27;</span>+<span class="built_in">str</span>(msg, encoding=<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    alice_pubk = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    <span class="comment"># 这里pyCroptodome库出于安全原因禁用了使用公钥解密的操作，因此这里不得不这么写</span></span><br><span class="line">    bob_prik = RSA.generate(<span class="number">2048</span>)</span><br><span class="line">    alice_prik = alice_pubk.public_key()</span><br><span class="line">    bob_pubk = bob_prik.public_key()</span><br><span class="line">    alice = sender(alice_prik)</span><br><span class="line">    bob = listener(bob_prik)</span><br><span class="line">    bob.listen(alice.send(<span class="built_in">input</span>(<span class="string">&#x27;Alice says:\n\t&#x27;</span>), bob_pubk), alice_pubk)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+        <tag>面密码学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>梦志 2021.05.28</title>
+    <url>/2021/05/28/%E6%A2%A6%E5%BF%97-2021-05-28/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again :(" data-whm="Oh, these decrypted content cannot be verified, but you can still have a look :D">
+  <script id="hbeData" type="hbeData" data-hmacdigest="7dc6168838609e8f156f3bae97bd28678cf1b9f0502dd163b4b921884690ab20">fb7b6e92d8a8d1af19e249503d95625a7e2c880a3249c13db6cbc69b063396b17e7c513c00dffc9539e63138df926d3c026282ca68a23173c1645efadc1eb76ed6c12934fc84f2504865facb4965a7e2abdf4cb293d097e326122e7bb543d1ba65617772491680880de4e611feb712da9ce33f30f17ce87579da3de90fcb3def28aa744e159f68656e11cf7c70179c1d98e4446b1bc91de7df099c28bbaa196fbedb283d8909632ca00bbad7efde96af1012307bfd7a1d5badad23c2a97be7a07900dd191d3017492f0ccc8e036723b63ef174e6f6a3a9730472374bd2c6e6eb9b0727f76257942f8653f4067932d3ae0e0f0bdf0d38fe3992c12a09522b75a31d82acd3cc5f86458ec9c659fbaeff2e09c8cb9b9b2cb7a75a89c275eae1a9359329d12e9fe5f1ba720b1ee50c80bf87a45b639d975e06e5382995b224d84651f5ea896fb46fa443752d30c881a44e156e170c2496df8d637e046976b202d9dcd1e7834e70d815c519c9a3cb6fa203de27d5e603f4b3b8be748997927acc2ec5c056f78a3bfa0ce654dbcc19eddbe6ace8741f73caa78c608b83bd8b62e9d805461f2f174dbff2badd4d0d9c1f60f08606e7aa56c66bd1a9c6e1c372c4a4d2c493ee3caae1159518df03c1adee203b261f84a19d778bd24515e618531c29f32700534cfeaa0b45a8b952bdce9025280ac2253f0fc0a3b0bacc9da8621780797e10224c2c34dac3335e49e4fc9078b6b34de84903ed0533b6609323e4ff7b26d4a4fb78f60ec423fea4b04f71c981c60e9d5e53029cc8f55bde5e6cb6127ee259d5b5103224807839cf9c819e99da2f7a7e42a84c6fdf1b455c672e0ebf354b83df82da688cd10e4275ab02f19a5c91a86448937a0aa99f20511da9c157059b9754117e3ee171f9c7b1890dd5132aeeba3cbbe72f6f9a7344264c7acc993b041c6dfd6f284c59e0326f8789e0eaeb4db1fa03f6187dede1a093f0203b9dd9c56b6cc3a7ff3784c06303c3e388d93a257d23e67a9913e1308aa73ecc9f4b7c2b9b3aab67eb16c66eb1d149d4f3626e67900b05116384c5c5b4961a92cef5149c7bdd72049433b5cbe06eb02f63644bfd82097a7d42a5470102ea58bb077152aa4a1126c5d37d587f4b42ba404d2796ddd79210625e5468cfd94ed7046c219c4fccc2ae4807cf7222b2b86c5358c70e8635caf7c4575fa20acaec9c83571254bcf3d5011c9bb16f17a606627e57d005477e7e65ae8d2eebc991a4cd6cc038a7756b8d9b504344f1e5966794ee9a964323b2ef85c0ea28df49b5258f469cb15706265629048add0bd8e30120dc80e65599a7d0f652af16b4e722c047985896be284a1a133d990bf72edf2e30a2f15854622334ee07852e7ab6d5b68e4899eedb12bd0a77935140885c5120c2846a88368ac38f17ecbd1ba2a76c6b18d688243cd482f79d44d44c4285ed96039c4e3790cc503af099b6b3f6c434dc738c0359cd25be8b41d1086ae16936250800ce2ca30d39ded5fcedae384922fcc8811335d8d475259cf370a2ce29e77b1afbbf1d03c7c060ebdbeb1f2951e12c9c3009fb4eb95cb9ec2b5c1f12490378e7b80cbc68c9431e9202b63e22d222b28035a174acacbea7c0ad40ba1053471b01681a1aa76a621d1b8ebea395933b65d9af20d57c9dcc78dbcc4c8a8a473d522ef115359ae94ba96bb274d137d6d370ade25ca68d69c66717b6265efedd369f7e38482577f7e960b55eb7274b5845d0e0ca8f64d3440d5f52828bdfbf181431f7f55f1d927714dcf2ad65d796d72489d0d5c4e90be126651ebc162e064f3f5c07f966700375d8929baf1ef852d1b570464654841a322baddb4dd9233e8c095c8cb7ac41fd80f15469715a30540d60cad3451651d019bb18925fb650c4ef8e742c48602409f57c74d1c786259e482dd570c3db71af3068543808cb80e11108646228a5ad1e174be0034fb1c40f76aae9fe158bf20a0c29d2011cc00f7f84f179c4af6a2169e0f0ef8f93246f08456783e7c05ac404c66cfc812ce8b99e24ba1f5b0670212afad946ed5d4ed2a33fc5671205a5a9afbce7dd5a65a946f7506eab491c07c29e36c7d1301a0d99bb0f6039eba761e291d93eeb6d3c3fb11b238ec5029edeeef7eb8dcf0bb25261f9e251afabd2eb076461183b0dd02a86c8ec16f22f7b8e3d2ed17918b6e3612f5d0d466c4a074b8c5464f1ff579caac3a9ccd2ec9f545d41587961d65a60e5b2745fc9274b5132930920d88480b438b8b611dd27ebeaa51ae78d3636c05812fbc15c4c3619b9269b2c78206e1eba255454e5014e81b1469e87bd65b46b9d4d611d3bbe8aff43f909436ff1df31915ac3a445f4b02c7e4dd6f375f89b8d212e575b2cd699d609a4b58d6ad890e75399d1fd304a5c3bd943b1132bafd20328069edf077ec17e1a1c694420c848925b4181b8484442474fb517e50b7fc230b6b6476d5807ecdd72e8b5cbcf07445bea60040955c0b8ac99024ec0455c2fdd5a43da1d3d65faa1f77e5893b370d5b6aae27b88acf9af47ad865ff40d8acb07397cc1838f5420e90b808d21ce8c0254aba5dec320ec64b9e53faf25064ccd95eb81bd00503d381ba17a9b0ffcecae08ba6f51437019ad398a3d1b513e9106bb5c62e0b3f56d82f9846e87da8c24acb86e24e6c82e15544d30f5b3601e9c8853b1c319d69ee9dca8720db743a18dd3f66b6abea967f2aee799d815fc247595ea0847c82849e10a67a61435cb3b5ab362e924c7fc6aa3f5ee1a686748bdef1b0514aa9b60f31e300eac386be89dfefd6d1e099470623bc8bbd27f1df65ea609a4c7d0af53e43668d117906b73344ac4785d05d4a1a76bd89a65db9d801fa237776cca8d16d3876d9df57e3e3f7d85d28a897288f7d14aaddbcc3cbe488178d7e083e99560f3f0db507e91a0e3120028512f7aadd43ee39033aaf8d25e7cdef45c79614d16c0507579d40b99bcb03388129eff4256d5bc2dddfffae140ac448d5c5880e382e218751f94c6f173da484a3e52ebfddded6c928691023c12a7e1e125ff250aac4fc258199127107fe7355361b8b66e19f8c9c3b483ac523b2bf962e9ca3dd3f0b761d24f03213ea94aabe273f104284170ef89514ba46930af1ef4a01077fa6b01c9146fad86731eb37fb5c84f499f9eeb48ce93ec47cb139a84b9a848d24655fb58e9f0598fb55e47e86959caaacdbed5ca74ba25371c53d4868c5e3e51437d638fdfcef20fee2ae18738a524b50fbab347c28480de4026fc63ee7458255d92e1212ceb2e660ca605a920462a84d53b8b1460998e0ef1596962468dc97dc76b21459b9de760678eea8de3abef367b25196e37de709952bd8b2a46ee7d5b8c7c7b7fb4881d405cbc676850eac83c5609a964ac58c39e57a1294871fe1bc0e9f40e9730a62221e7e30f1a1be6e61eb10ede6f2d2024a61814bc6fa629e1bf8ae7a06b3f7dfbada4f5da7ad69252c2c0742f98524a7c855e4412b176aa2b9b911213d243f6b73f8ade91efb3d5938563229f5cd73157eff652e2f86cb981caa19fda88acb9d926cf41f06ac37413236172815bf17575841f604c512b950787c31791e46b60020ef09d47043bc65c2d5b7f7d8d91f51663c8aa7cd8d9073f0a7a207bd7c3d618f24f886f934947ad68d55090cfc78ad5583424931a7457f23804610a379cf2d0db3b961584496052feb56f48ed478d7f0ce15be82d05b06af47075f5290f7af82ba36e4ea3fdc3065da45adccb9ed4a3faf79961fb6f0080e1c1a540e5c658309285ff08e41f7cd6afbbbf04bc1af0ef09c1f8f7028ea3c0290741781976b49ac23f2ba3ec9c78b718702000d89c5251b2e536756204706afad42f3e0ea0df5068b448645d827f85df4103373dc685dbf617e2db1f4a517566be3141141872f39a0375df01707cf6a3c265979e5038705e51e43afd9a1f7145b93ea01e4fb7236a8b498b291aad6eef55908f08452d0afe2391d325358183413c68f1645611ec3d6ad0bee928ef4a8c8729da6a2ed90cb916c7b118</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Password required here ;)</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>梦志</tag>
       </tags>
   </entry>
 </search>
