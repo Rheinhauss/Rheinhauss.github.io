@@ -652,8 +652,11 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
   </entry>
   <entry>
     <title>初探密码学</title>
-    <url>/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/</url>
+    <url>/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/</url>
     <content><![CDATA[<h1 id="初探密码学">初探密码学</h1>
+<blockquote>
+<p>这是我为北京理工大学BIT-NSC社团一次crypto主题线上授课所写的讲稿。</p>
+</blockquote>
 <h2 id="引入">引入</h2>
 <h3 id="贴吧神贴">贴吧神贴</h3>
 <p>https://bbs.hupu.com/32986778.html</p>
@@ -810,10 +813,70 @@ $
 <li>哈希函数（Hash Function），以 MD5，SHA-1，SHA-512 等为代表。</li>
 <li>数字签名（Digital Signature），以 RSA 签名，ElGamal 签名，DSA 签名为代表。</li>
 </ul>
+<h3 id="逻辑运算">逻辑运算</h3>
+<p>1和0</p>
+<h4 id="非-not">非 NOT</h4>
+<h4 id="或-or">或 OR</h4>
+<h4 id="且与-and">且/与 AND</h4>
+<h4 id="异或-xor">异或 XOR</h4>
+<p>性质</p>
+<ol type="1">
+<li>交换律</li>
+<li>结合律（即(a<sup>b)</sup>c == a<sup>(b</sup>c)）</li>
+<li>对于任何数x，都有x<sup>x=0，x</sup>0=x</li>
+<li>自反性 A XOR B XOR B = A xor 0 = A</li>
+</ol>
+<h4 id="小结">小结</h4>
+<table>
+<thead>
+<tr class="header">
+<th><em>P</em></th>
+<th><em>Q</em></th>
+<th>NOT <em>P</em></th>
+<th><em>P</em> AND <em>Q</em></th>
+<th><em>P</em> OR <em>Q</em></th>
+<th><em>P</em> XOR <em>Q</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="对称密码">对称密码</h3>
 <p>这类算法在加密和解密时使用相同的密钥，其安全性依靠密钥的长度和保密。</p>
 <figure>
-<img src="/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/Untitled%20Diagram.svg" alt="Untitled Diagram"><figcaption aria-hidden="true">Untitled Diagram</figcaption>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/Untitled%20Diagram.svg" alt="Untitled Diagram"><figcaption aria-hidden="true">Untitled Diagram</figcaption>
 </figure>
 <h4 id="前置知识">前置知识</h4>
 <h5 id="随机数">随机数</h5>
@@ -902,7 +965,7 @@ $
 <li>……</li>
 </ul></li>
 </ul>
-<h4 id="小结">小结</h4>
+<h4 id="小结-1">小结</h4>
 <p>代换技术与置换技术通常结合使用。一般地，可先利用代换技术加密，再用置换技术将密文再次加密。这是现代密码学的对称加密方法的基础。</p>
 <ul>
 <li><p>优点</p>
@@ -949,10 +1012,35 @@ $
 </ul></li>
 </ul>
 <figure>
-<img src="/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86.svg" alt="非对称加密"><figcaption aria-hidden="true">非对称加密</figcaption>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0.svg" alt="非对称加密"><figcaption aria-hidden="true">非对称加密</figcaption>
 </figure>
 <p><strong><em>公钥密码学的出现解决了密钥分发问题，使大规模的安全通信得以实现；</em></strong></p>
 <p>公钥密码学还可用于另外一些应用：数字签名、防抵赖等；</p>
+<h6 id="中间人攻击">中间人攻击</h6>
+<p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA-1622292199018.svg" alt="非对称中间人"><figcaption aria-hidden="true">非对称中间人</figcaption>
+</figure>
+<p>e.g.</p>
+<p>通信过程如下：</p>
+<ul>
+<li><p>Alice向Bob发送邮件索取公钥。“To Bob：请把你的公钥发给我。From Alice”</p></li>
+<li><p>Mallory通过窃听发现Alice在向Bob索取公钥。</p></li>
+<li><p>Bob看到Alice的邮件，并将自己的公钥发送给Alice。“To Alice：这是我的公钥。From Bob”</p></li>
+<li><p>Mallory拦截Bob的邮件，使其无法发送给Alice。然后，他悄悄地将Bob的公钥保存起来，它稍后会用到Bob的公钥。</p></li>
+<li><p>Mallory伪装成Bob，将自己的公钥发送给Alice。“to Alice：这是我的公钥。From Bob”（其实是Mallory）</p></li>
+<li><p>Alice将自己的消息用Bob的公钥（其实是Mallory的公钥）进行加密。“to Bob：我爱你。From Alice”。但是，Alice所持有的并非Bob的公钥而是Mallory的公钥，因此Alice是用Mallory的公钥对邮件进行加密的。</p></li>
+<li><p>Alice将加密后的消息发送给Bob。</p></li>
+<li><p>Mallory拦截Alice的加密邮件。这封加密邮件是用Mallory的公钥进行加密的，因此Mallory能够对其进行解密，于是Mallory就看到Alice发给Bob的情书。</p></li>
+<li><p>Mallory伪装成Alice写一封假的邮件。“To Bob：我讨厌你，From Alice”（其实是Mallory）。然后他用第4步保存下来的Bob的公钥对这封假的邮件进行加密，并发送给Bob。</p></li>
+<li><p>Bob用自己的私钥对收到的邮件进行解密，然后他看到消息的内容是：“To Bob：我讨厌你，From Alice”</p></li>
+<li><p>Bob伤心极了。</p></li>
+</ul>
+<p>上述过程可以反复多次，Bob向Alice发送加密邮件时也可能受到同样的攻击，因此Bob即便要发邮件给Alice以询问她真实的想法，也会被Mallory随意篡改。</p>
+<figure>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/2018092209170434" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>解决方式</strong>：今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<strong><em>CA</em></strong>及<strong><em>PKI</em></strong>。</p>
 <h4 id="rsa">RSA</h4>
 <h5 id="公钥与私钥的产生">公钥与私钥的产生</h5>
 <ol type="1">
@@ -1038,13 +1126,7 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
 <p><strong>功能：防止非法篡改、伪造，A的抵赖与否认，对A的假冒等。</strong>-&gt;因为只有A拥有A的密钥</p>
 <p><strong>要求对公开密钥（公钥）进行保护，防止修改。</strong></p>
 <h5 id="潜在问题">潜在问题</h5>
-<h6 id="中间人攻击">中间人攻击</h6>
-<p>密钥分配时，若分配公钥和密文传递遭到中间人攻击，理论上双方都不会发现被监听。</p>
-<figure>
-<img src="/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E4%B8%AD%E9%97%B4%E4%BA%BA-1622216524858.svg" alt="非对称中间人"><figcaption aria-hidden="true">非对称中间人</figcaption>
-</figure>
-<p><strong>解决方式</strong>：今天人们一般用可靠的第三方机构签发凭证来防止这样的攻击。详情请参阅<strong><em>CA</em></strong>及<strong><em>PKI</em></strong>。</p>
-<h5 id="密钥生成">密钥生成</h5>
+<h6 id="密钥生成">密钥生成</h6>
 <blockquote>
 <p>首先要使用概率算法来验证随机产生的大的整数是否质数，这样的算法比较快而且可以消除掉大多数非质数。假如有一个数通过了这个测试的话，那么要使用一个精确的测试来保证它的确是一个质数。</p>
 <p>除此之外这样找到的p和q还要满足一定的要求，首先它们不能太靠近，此外p-1或q-1的因子不能太小，否则的话N也可以被很快地分解。</p>
@@ -1058,7 +1140,7 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
 <li><p>中国剩余定理</p></li>
 <li><p>…………</p></li>
 </ul>
-<h5 id="小结-1">小结</h5>
+<h5 id="小结-2">小结</h5>
 <p>缺点</p>
 <ul>
 <li>在计算上比较复杂，加密速度慢
@@ -1076,13 +1158,13 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
 <p>于是怎么办？怎么组合两种加密方法以扬长避短？</p>
 <p>因此我们想到用对称加密算法来加密消息本身，而用非对称加密算法传递对称加密算法所需的密钥。一般常用的是每次会话使用不同的随机的对称加密算法密钥。</p>
 <figure>
-<img src="/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"><figcaption aria-hidden="true">数字信封</figcaption>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81.svg" alt="数字信封"><figcaption aria-hidden="true">数字信封</figcaption>
 </figure>
 <p>想要加上完整性验证，怎么办？</p>
 <h4 id="数字信封数字签名">数字信封+数字签名</h4>
 <p><strong><em>图例的使用很不规范，仅作示意用</em></strong></p>
 <figure>
-<img src="/2021/05/29/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/diagram-1622201417795.svg" alt="diagram"><figcaption aria-hidden="true">diagram</figcaption>
+<img src="/2021/05/28/%E5%88%9D%E6%8E%A2%E5%AF%86%E7%A0%81%E5%AD%A6/diagram-1622201417795.svg" alt="diagram"><figcaption aria-hidden="true">diagram</figcaption>
 </figure>
 <h3 id="消息摘要算法哈希hash函数">消息摘要算法（哈希Hash函数）</h3>
 <h4 id="为什么">为什么？</h4>
@@ -1132,7 +1214,10 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
 <p>我们知道，摘要算法用来确保数据没有被篡改，非对称加密算法可以对数据进行加解密，签名算法可以确保数据完整性和抗否认性，把这些算法集合到一起，并搞一套完善的标准，这就是数字证书。</p>
 <p>因此，数字证书就是集合了多种密码学算法，用于实现数据加解密、身份认证、签名等多种功能的一种安全标准。</p>
 <p>数字证书可以防止中间人攻击，因为它采用链式签名认证，即通过根证书（Root CA）去签名下一级证书，这样层层签名，直到最终的用户证书。而Root CA证书内置于操作系统中，所以，任何经过CA认证的数字证书都可以对其本身进行校验，确保证书本身不是伪造的。</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span> TODO</span><br></pre></td></tr></table></figure>
+<p><code>// TODO …………</code></p>
+<h2 id="尾声">尾声</h2>
+<p>密码学、安全、信任之间的联系。</p>
+<p>理论与技术的优缺点、发展原因、发展动力……解决了什么问题？还有什么问题亟待解决？有什么相似与不同之处？为什么有？为什么才有？还有什么不足？将来可能会有什么？……这样的思维、分析方式有助于学习、理解与接下来的研究。</p>
 <h2 id="appendix">Appendix</h2>
 <h3 id="参考资料与推荐阅读">参考资料与推荐阅读</h3>
 <p>[0x00] Wikipedia</p>
@@ -1143,12 +1228,13 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
 <p>[0xFF] <a href="https://null.sakuya.world">我的博客（没啥有营养的东西，只是参考了我之前的作业和水文，别看）</a></p>
 ]]></content>
       <categories>
-        <category>社团</category>
+        <category>学习</category>
       </categories>
       <tags>
         <tag>网络</tag>
         <tag>密码学</tag>
         <tag>讲课</tag>
+        <tag>社团</tag>
       </tags>
   </entry>
 </search>
