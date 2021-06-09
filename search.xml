@@ -1291,6 +1291,9 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
     <url>/2021/06/09/UMLpre-04/</url>
     <content><![CDATA[<h1 id="分析与绘制各种uml图">分析与绘制各种UML图</h1>
 <h2 id="用例图">用例图</h2>
+<figure>
+<img src="/2021/06/09/UMLpre-04/image-20210609142903048.png" alt="image-20210609142903048"><figcaption aria-hidden="true">image-20210609142903048</figcaption>
+</figure>
 <h2 id="静态图">静态图</h2>
 <h3 id="类图">类图</h3>
 <p>类图用于描述系统中所包含的类以及它们之间的相互关系，帮助人们简化对系统的理解，它是系统分析和设计阶段的重要产物，也是系统编码和测试的重要模型依据。</p>
