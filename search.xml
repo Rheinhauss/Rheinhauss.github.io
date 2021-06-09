@@ -1334,4 +1334,477 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
         <tag>作业</tag>
       </tags>
   </entry>
+  <entry>
+    <title>UMLpre-06-总结</title>
+    <url>/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="总结">总结</h1>
+<h2 id="分工情況">分工情況</h2>
+<ul>
+<li><p>俞森豪</p>
+<ol type="1">
+<li>完成小组app程序开发</li>
+<li>进行涉众分析</li>
+<li>和甲方进行沟通</li>
+<li>发展用户,收集反馈信息</li>
+<li>完成过程建模中的DFD图,微规格说明,和数字字典</li>
+</ol></li>
+<li><p>杨铮</p>
+<ol type="1">
+<li>和甲方进行沟通</li>
+<li>统计分析调查问卷</li>
+<li>完成用例图</li>
+<li>制作ppt及视频报告，总结工作完成情况。</li>
+</ol></li>
+<li><p>王雨轩</p>
+<ol type="1">
+<li>作为甲方参与和乙方的面谈</li>
+<li>技术博客</li>
+<li>需求分析及设计UML静态动态图</li>
+</ol></li>
+<li><p>龙洁如</p>
+<ol type="1">
+<li>作为甲/乙方参加面谈</li>
+<li>数据建模</li>
+<li>攥写需求规格文档</li>
+</ol></li>
+<li><p>黄钰琪</p>
+<ol type="1">
+<li>硬数据采样：撰写调查问卷并收集结果</li>
+<li>作为甲方参与和乙方的面谈</li>
+<li>结构化需求分析：功能分解图，需求细化，优先级细分</li>
+<li>撰写需求规格文档</li>
+</ol></li>
+</ul>
+<h2 id="课程提醒系统需求规格说明文档">课程提醒系统需求规格说明文档</h2>
+<p><strong>目录</strong></p>
+<p>一、<strong>引言</strong>....................................................................................................................... 2</p>
+<p><strong>1</strong>.<strong>目的</strong>..................................................................................................................... 2</p>
+<p><strong>2</strong>.<strong>文档约定</strong>............................................................................................................. 2</p>
+<p><strong>3.</strong> <strong>产品的范围</strong>......................................................................................................... 2</p>
+<p><strong>4.</strong> <strong>参考文献</strong>............................................................................................................. 2</p>
+<p><strong>二、综合描述</strong>............................................................................................................... 2</p>
+<p><strong>1.</strong> <strong>产品的前景</strong>......................................................................................................... 2</p>
+<p><strong>2.</strong> <strong>产品的功能</strong>......................................................................................................... 2</p>
+<p><strong>3.</strong> <strong>用户类和特征</strong>..................................................................................................... 2</p>
+<p><strong>4.</strong> <strong>硬数据采样</strong>.........................................................................................................3</p>
+<p><strong>5.</strong> <strong>运行环境</strong>............................................................................................................. 4</p>
+<p><strong>三、需求分析过程</strong>....................................................................................................... 4</p>
+<p><strong>1.功能分解图......................................................................................................... 4</strong></p>
+<p><strong>2.上下文图............................................................................................................. 5</strong></p>
+<p><strong>3.0层图.................................................................................................................. 5</strong></p>
+<p><strong>4.一层图................................................................................................................. 5</strong></p>
+<p><strong>5.微规格说明......................................................................................................... 6</strong></p>
+<p><strong>6数据字典............................................................................................................. 6</strong></p>
+<p><strong>7.ERD</strong> <strong>建模</strong>.............................................................................................................7</p>
+<p><strong>8.用例图................................................................................................................. 8</strong></p>
+<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong>.......................................................................................................8</p>
+<p><strong>10.动态UML图..................................................................................................... 9</strong></p>
+<p><strong>四</strong>、<strong>系统特性</strong>............................................................................................................. 11</p>
+<p><strong>1</strong>.<strong>说明和优先级</strong>................................................................................................... 11</p>
+<p><strong>2</strong>.<strong>激励/</strong> <strong>响应序列</strong>................................................................................................. 11</p>
+<p><strong>3</strong>.<strong>功能需求</strong>........................................................................................................... 11</p>
+<p><strong>五</strong>、<strong>其它非功能需求</strong>................................................................................................. 12</p>
+<p><strong>1.</strong> <strong>性能需求</strong>......................................................................................................... 122</p>
+<p><strong>2.</strong> <strong>软件质量标准属性</strong>........................................................................................... 12</p>
+<p><strong>3.</strong> <strong>对外接口</strong>........................................................................................................... 12</p>
+<p><strong>4.</strong> <strong>约束</strong>................................................................................................................... 12</p>
+<p><strong>六</strong>、<strong>其它需求</strong>............................................................................................................. 12</p>
+<p><strong>一、引言</strong></p>
+<p><strong>1.</strong> <strong>目的</strong></p>
+<p>本篇需求规格说明文档的目的是对本产品——课程提醒系统进行定义。在本文档中，详尽说明了这个产品的软件需求。</p>
+<p><strong>2.</strong> <strong>文档约定</strong></p>
+<p>本项目小组按照IEEE 830标准编写本文档，并根据本项目的内容作出了一些合理的修改。本课程提醒系统项目所有需求都有其自身优先级，且高层需求的优先级可以被其所有细化的需求继承。</p>
+<p><strong>3.</strong> <strong>产品的范围</strong></p>
+<p>本课程提醒系统是应用于手机端的一款离线单机的应用软件，以广大在校大学生为本，致力于帮助广大在校大学生安排自己的学习任务，规划自己的学习生活。</p>
+<p><strong>4.</strong> <strong>参考文献</strong></p>
+<p>【1】软件需求规格说明（IEEE 830标准）</p>
+<p>【2】需求工程：软件建模与分析/骆斌主编；丁二玉编著.--2版.--北京：高等教育出版社，2015.2</p>
+<p><strong>二、综合描述</strong></p>
+<p><strong>1.</strong> <strong>产品前景</strong></p>
+<p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目可接受用户创建、导入修改自己的课程表和作业安排，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
+<p><strong>2.</strong> <strong>产品功能</strong></p>
+<table>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>在校学生</th>
+<th>1.可以创建、导入、修改自己的课程表和作业安排，包括课程、时间、教师、教室、对应作业等。 2.可以查看每周课表，独立查看待办提醒和课程提醒。</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>系统管理者</td>
+<td>1.对恶意评价及有关不良行为进行修改和删除 2.管理调整教师用户和学生用户权限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3.</strong> <strong>用户类和特征</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>涉众编号</th>
+<th>涉众名称</th>
+<th>涉众说明</th>
+<th>使用系统的方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>001</td>
+<td>普通学生</td>
+<td>学生是使用该系统导入获取课程信息的主体</td>
+<td>1. 设置可按周显示的课表 2. 设置并获取课程提醒信息 3. 创建作业待办</td>
+</tr>
+<tr class="even">
+<td>002</td>
+<td>系统开发人员</td>
+<td>系统开发人员是对系统进行开发和维护的人员</td>
+<td>1.开发课程提醒系统 2.对程序进行更新</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>涉众</th>
+<th>001普通学生</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>涉众代表</td>
+<td>普通用户代表特点</td>
+</tr>
+<tr class="even">
+<td>特点</td>
+<td>系统的主要使用者，在校大学生</td>
+</tr>
+<tr class="odd">
+<td>职责</td>
+<td>1.下载并使用该系统 2.导入并修改可按周查看的课表 3.获取课前提醒 4.添加可备注的待办/作业,可设定提醒时间</td>
+</tr>
+<tr class="even">
+<td>成功标准</td>
+<td>1.能及时获取课程提醒信息 2.课表显示周数,课程名称,时间,教师,教室.</td>
+</tr>
+<tr class="odd">
+<td>参与</td>
+<td>不参与系统建设</td>
+</tr>
+<tr class="even">
+<td>可交付工作</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>涉众</th>
+<th>002系统开发人员</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>涉众代表</td>
+<td>开发人员代表</td>
+</tr>
+<tr class="even">
+<td>特点</td>
+<td>系统的开发者</td>
+</tr>
+<tr class="odd">
+<td>职责</td>
+<td>1.开发课程提醒系统 2. 对系统使用中出现的问题进行维护和修复</td>
+</tr>
+<tr class="even">
+<td>成功标准</td>
+<td>课程提醒系统运行良好</td>
+</tr>
+<tr class="odd">
+<td>参与</td>
+<td>参与系统设计</td>
+</tr>
+<tr class="even">
+<td>可交付工作</td>
+<td>课程提醒系统</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.</strong> <strong>硬数据采样</strong></p>
+<p>本项目硬数据采样采用调查问卷方式，对受众的年级以及在课程提醒方面的习惯做了较为全面的调查，调查结果如下图所示：</p>
+<p><img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image002.jpg" alt="img"> <img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image004.jpg" alt="img"></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image006.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>5.</strong> <strong>运行环境</strong></p>
+<p>1）安卓版手机硬件环境要求</p>
+<p>CPU：双核2GHz及以上；</p>
+<p>机身内存：4G以上；</p>
+<p>屏幕分辨率：1920x1080及以上；</p>
+<p>操作系统：Android 4.0及以上版本。</p>
+<p>2）苹果版手机硬件环境要求（苹果相对来说比较好限定）</p>
+<p>iPhone机型：iPhone6及以上版本；</p>
+<p>机身内存：16G以上；</p>
+<p>操作系统：iOS 10.0及以上版本。</p>
+<p><strong>三、需求分析过程</strong></p>
+<p><strong>1.</strong> <strong>功能分解图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image008.jpg" alt="流程图1"><figcaption aria-hidden="true">流程图1</figcaption>
+</figure>
+<p><strong>2.</strong> <strong>上下文图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image010.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>3.</strong> <strong>0</strong> <strong>层图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image012.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>4.</strong> <strong>一层图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image014.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>5.</strong> <strong>微规格说明</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image016.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image018.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>6.</strong> <strong>数据字典</strong></p>
+<table>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 39%">
+<col style="width: 10%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>课程信息</th>
+<th>名称</th>
+<th>待办</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>别名</td>
+<td></td>
+<td>别名</td>
+<td>Daiban_work(in AddView.java and MyTask.java)</td>
+</tr>
+<tr class="even">
+<td>使用的地点和方法</td>
+<td>保存课程信息(input) 显示今日课程(output) 展示本周课程信息(output) 发送课程信息(input) 显示课程详细信息(output)</td>
+<td>使用的地点和方法</td>
+<td>存储待办(input) 显示待办(output) 删除待办(input) 查找待办(output)</td>
+</tr>
+<tr class="odd">
+<td>描述</td>
+<td>Classname = Text Zhouci = [”{1<sub>20}-{1</sub>20}周” or”{1~20}周” ] 例:1-8周| 12周 Kaishi =[第{1-13}节] Jieshu=[第{1-13}节] Teacher=text 教室 = text</td>
+<td>描述</td>
+<td>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min Inf= text Deadline=同Create_time Remind_time=同Create_time</td>
+</tr>
+<tr class="even">
+<td>格式</td>
+<td>SQLite database Information In table Class</td>
+<td>格式</td>
+<td>SQLite database Information In table daiban.db</td>
+</tr>
+</tbody>
+</table>
+<p><strong>7.</strong> <strong>ERD</strong> <strong>建模</strong></p>
+<p>1）简单情况下的ERD建模</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image020.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>2）根据硬表单的ERD建模</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image022.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>8.</strong> <strong>用例图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image024.jpg" alt="IMG_256"><figcaption aria-hidden="true">IMG_256</figcaption>
+</figure>
+<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image026.jpg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
+</figure>
+<p><strong>10.</strong> <strong>动态</strong> <strong>UML</strong> <strong>图</strong></p>
+<p>1）状态图</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image028.jpg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
+</figure>
+<p>2）活动图</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image030.jpg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
+</figure>
+<p><strong>四、系统特性</strong></p>
+<p>本课程提醒系统有两大主要特性：一、显示课表和待办；二、提醒上课和待办。还有其他特性：a.支持按周显示课表。b.根据截止时间从近到远显示待办。</p>
+<p><strong>特性一：显示课表和待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>普通的课表显示，课表中的课程会包括周数、课程名称、时间和地点。高优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>导入</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>1.1</td>
+<td>课表导入</td>
+<td>包括创建和导入两种方式</td>
+</tr>
+<tr class="odd">
+<td>1.2</td>
+<td>作业导入</td>
+<td>只允许在软件中新建</td>
+</tr>
+<tr class="even">
+<td>1.1.1</td>
+<td>导入课表</td>
+<td>指导入.xml文件</td>
+</tr>
+<tr class="odd">
+<td>1.1.2</td>
+<td>创建课表</td>
+<td>从软件中新建</td>
+</tr>
+<tr class="even">
+<td>1.2.1</td>
+<td>创建作业</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>显示</td>
+<td>包括课表和作业</td>
+</tr>
+<tr class="even">
+<td>2.1</td>
+<td>显示课表信息</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2.2</td>
+<td>显示作业</td>
+<td>包括截止时间和内容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性二：提醒上课和待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>提醒将要到来的事件。高优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>提醒</td>
+<td>对于课程和作业</td>
+</tr>
+<tr class="even">
+<td>3.1</td>
+<td>今日汇总</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3.2</td>
+<td>设置提醒时间和方式</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>3.3</td>
+<td>完成标记</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性三：支持按周显示课表</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>中优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>选择周数</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性四：根据截止时间从近到远显示待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>中优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td>tab显示待办</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>四、其他非功能需求</strong></p>
+<p><strong>1.</strong> <strong>性能需求</strong></p>
+<p>​ 系统应该能够带入10kB的.xml文件，储存10条待办。</p>
+<p><strong>2.</strong> <strong>质量属性</strong></p>
+<p>​ 出现意外闪退后可以及时保存数据。</p>
+<p><strong>3.</strong> <strong>对外接口</strong></p>
+<p><strong>4.</strong> <strong>约束</strong></p>
+<p>​ 系统要有Android和iOS两个版本。</p>
+<p><strong>五、其他需求</strong></p>
+<ol type="1">
+<li><p>默认标签为课程表</p></li>
+<li><p>分标签显示设置</p></li>
+<li><p>提醒方式和时间有默认值</p></li>
+</ol>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
 </search>
