@@ -1286,4 +1286,49 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>UMLpre-04</title>
+    <url>/2021/06/09/UMLpre-04/</url>
+    <content><![CDATA[<h1 id="分析与绘制各种uml图">分析与绘制各种UML图</h1>
+<h2 id="用例图">用例图</h2>
+<h2 id="静态图">静态图</h2>
+<h3 id="类图">类图</h3>
+<p>类图用于描述系统中所包含的类以及它们之间的相互关系，帮助人们简化对系统的理解，它是系统分析和设计阶段的重要产物，也是系统编码和测试的重要模型依据。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E9%9D%99%E6%80%81%E5%9B%BE_%E7%B1%BB%E5%9B%BE.svg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
+</figure>
+<h2 id="动态图">动态图</h2>
+<h3 id="状态图">状态图</h3>
+<p>状态图是系统分析的一种常用工具，它通过建立类对象的生存周期模型来描述对象随时间变化的动态行为。 一个状态图表示一个状态机，主要用于表现从一个状态到另一个状态的控制流。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E7%8A%B6%E6%80%81%E5%9B%BE.svg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
+</figure>
+<h3 id="活动图">活动图</h3>
+<p>活动图是uml的动态模型的一种图形，一般用来描述相关用例图。准确的活动图定义：活动图描述满足用例要求所要进行的活动以及活动间的约束关系，有利于识别并行活动。活动图是一种特殊的状态图，它对于系统的功能建模特别重要，强调对象间的控制流程。交互图强调的是对象到对象的控制流，而活动图则强调的是从活动到活动的控制流活动图是一种表述过程基理、业务过程以及工作流的技术。它可以用来对业务过程、工作流建模，也可以对用例实现甚至是程序实现来建模。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E6%B4%BB%E5%8A%A8%E5%9B%BE.svg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre-05</title>
+    <url>/2021/06/09/UMLpre-05/</url>
+    <content><![CDATA[<h1 id="app-changelog">APP changelog</h1>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">5.6</span></span><br><span class="line">4加入主页面,添加背景图及主页面<span class="type">UI</span></span><br><span class="line">4</span><br><span class="line"><span class="number">5.7</span></span><br><span class="line">4添加读取excel功能,内部建立数据库</span><br><span class="line">4</span><br><span class="line"><span class="number">5.8</span></span><br><span class="line">4完成外部导入课表功能</span><br><span class="line">4</span><br><span class="line"><span class="number">5.10</span></span><br><span class="line">4本周课程表页面框架搭建完成,实现读取数据库功能</span><br><span class="line">4</span><br><span class="line"><span class="number">5.11</span></span><br><span class="line">4完成初步的添加待办功能,仅实现了文字添加,未完成删除和排序</span><br><span class="line">4</span><br><span class="line"><span class="number">5.12</span></span><br><span class="line">4主页<span class="type">UI更新</span>,添加随机颜色,课表配色改良</span><br><span class="line">4</span><br><span class="line"><span class="number">5.13</span></span><br><span class="line">4主页课表排序功能完成,添加<span class="string">&quot;距离上课还有几分钟&quot;</span>信息</span><br><span class="line">4</span><br><span class="line"><span class="number">5.14</span></span><br><span class="line">4主页<span class="type">UI再次优化</span>,改换全局字体,将课程开始结束字条放右边方块,增强美观度</span><br><span class="line">4</span><br><span class="line"><span class="number">5.15</span></span><br><span class="line">4抛弃过去写的备忘录,完成了备忘录<span class="number">2</span>页面的基本编写,实现了待办数据库创建访问修改等操作</span><br><span class="line">4</span><br><span class="line"><span class="number">5.18</span></span><br><span class="line">4主页bug修正,显示<span class="number">10</span>节以上的课的时候不会出现显示错误,颜色判定更新,主页<span class="type">Ui升级</span>,提升机型适配能力</span><br><span class="line">4新增任务提交功能</span><br><span class="line">4任务排序优化</span><br><span class="line">4任务界面优化</span><br><span class="line">4</span><br><span class="line"><span class="number">5.19</span></span><br><span class="line">4实现了不完善的删除事件功能(删除要在退出 页面后才能成功)</span><br><span class="line">4</span><br><span class="line"><span class="number">5.21</span></span><br><span class="line">4添加事件界面<span class="type">UI超大幅优化</span>,增加大量框架和背景,新增添加事件弹窗,增强使用方便性</span><br><span class="line">4</span><br><span class="line"><span class="number">5.29</span></span><br><span class="line">4修复大量肉眼可见bug,完善待办删除功能,各界面新增各种动漫背景</span><br><span class="line">4</span><br><span class="line"><span class="number">5.30</span></span><br><span class="line">4新增课程提醒功能,现在课前<span class="number">15</span>分钟发送课程开始提醒</span><br><span class="line">4app图标修改</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
 </search>
