@@ -1224,7 +1224,7 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
     <title>记一次修复 kernel mode heap corruption 蓝屏</title>
     <url>/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/</url>
     <content><![CDATA[<blockquote>
-<p>驱动不会写就不要写！写不好也更不要写！！</p>
+<p>驱动不会写就不要写！写不好更不要写！！</p>
 </blockquote>
 <span id="more"></span>
 <p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
