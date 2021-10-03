@@ -22,21 +22,25 @@
     var CONFIG = {"hostname":"null.sakuya.world","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="课程提醒系统demo的repo在此：https:&#x2F;&#x2F;gitee.com&#x2F;i-dont-miss-it&#x2F;bitClassScheduleApp ChangeLog">
+  <meta name="description" content="前些日子，俺经常遇到游戏打一半，笔电直接 kernel mode heap corruption 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！ 一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UMLpre_03">
-<meta property="og:url" content="https://null.sakuya.world/2021/05/19/UMLpre-03/">
+<meta property="og:title" content="记一次修复 kernel mode heap corruption 蓝屏">
+<meta property="og:url" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/">
 <meta property="og:site_name" content="Mein Blog">
-<meta property="og:description" content="课程提醒系统demo的repo在此：https:&#x2F;&#x2F;gitee.com&#x2F;i-dont-miss-it&#x2F;bitClassScheduleApp ChangeLog">
+<meta property="og:description" content="前些日子，俺经常遇到游戏打一半，笔电直接 kernel mode heap corruption 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！ 一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-19T07:32:15.000Z">
-<meta property="article:modified_time" content="2021-05-19T07:32:15.000Z">
+<meta property="og:image" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=3&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=60-2-2&amp;rf=viewer_311.jpeg">
+<meta property="og:image" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.png">
+<meta property="og:image" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.jpeg">
+<meta property="og:image" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/image-20211004012505244.png">
+<meta property="article:published_time" content="2021-10-03T16:43:08.000Z">
+<meta property="article:modified_time" content="2021-10-03T16:43:08.000Z">
 <meta property="article:author" content="Rheinhauss">
-<meta property="article:tag" content="UML需求工程">
-<meta property="article:tag" content="作业">
+<meta property="article:tag" content="windows">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=3&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=60-2-2&amp;rf=viewer_311.jpeg">
 
-<link rel="canonical" href="https://null.sakuya.world/2021/05/19/UMLpre-03/">
+<link rel="canonical" href="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/">
 
 
 <script id="page-configurations">
@@ -49,7 +53,7 @@
   };
 </script>
 
-  <title>UMLpre_03 | Mein Blog</title>
+  <title>记一次修复 kernel mode heap corruption 蓝屏 | Mein Blog</title>
   
 
 
@@ -193,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://null.sakuya.world/2021/05/19/UMLpre-03/">
+    <link itemprop="mainEntityOfPage" href="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -206,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          UMLpre_03
+          记一次修复 kernel mode heap corruption 蓝屏
         </h1>
 
         <div class="post-meta">
@@ -216,16 +220,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-19 15" itemprop="dateCreated datePublished" datetime="2021-05-19T15:32:15+08:00">2021-05-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%BE%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">课程</span></a>
-                </span>
+              <time title="创建时间：2021-10-04 00" itemprop="dateCreated datePublished" datetime="2021-10-04T00:43:08+08:00">2021-10-04</time>
             </span>
 
           
@@ -239,9 +234,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>课程提醒系统demo的repo在此：https://gitee.com/i-dont-miss-it/bitClassScheduleApp</p>
-<h3 id="changelog">ChangeLog</h3>
-<p>（待完成…）</p>
+        <p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
+<p>一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用太多空间，所以我干脆直接关掉了内存dump，导致还得再等蓝屏复现……</p>
+<p>之后的一天晚上，熟悉的蓝屏又来了。重启之后，拿到dmp，给WinDbg加载好符号，让我康康到底是哪个驱动干的好事。</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=3&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=60-2-2&amp;rf=viewer_311.jpeg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>定睛一看，在一众NT函数调用中冒出来了一个 <em>PassGuard_x64</em> ，大概率就是你咯！</p>
+<p>用Everything一搜，果然找到了一个<em>.sys</em>文件与其同名，看数字签名是国内公司做的什么乱七八糟驱动。</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Google一下这个名字，确有其人，看来是网银之类的东西会装的输入控件。<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.jpeg" alt="img"></p>
+<p>我很清楚自己没有在这台PC上用过网银，唯一沾边的就是globalcash预付卡，很久以前按照网页要求安装了一个输入控件。于是去控制面板查看相关软件，发现 <em>PassGuard_x64.sys</em> 的创建时间与其安装时间对应上了，看来罪魁祸首就是它…给爷死！</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/image-20211004012505244.png" alt="image-20211004012505244"><figcaption aria-hidden="true">image-20211004012505244</figcaption>
+</figure>
+<p>但是，但是，但是，卸载程序并没有删除注册表相关条目，也没有取消注册相关驱动 <em>PassGuard_x64.sys</em> ，属于是十分_ _ 了，还得手动清除。全部搞定之后电脑终于清静了。继续使用半个月，没有再次发生这种蓝屏。完结撒花</p>
 
     </div>
 
@@ -257,7 +266,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://null.sakuya.world/2021/05/19/UMLpre-03/" title="UMLpre_03">https://null.sakuya.world/2021/05/19/UMLpre-03/</a>
+    <a href="https://null.sakuya.world/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/" title="记一次修复 kernel mode heap corruption 蓝屏">https://null.sakuya.world/2021/10/04/记一次修复kernel_mode_heap_corruption蓝屏/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -268,8 +277,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/UML%E9%9C%80%E6%B1%82%E5%B7%A5%E7%A8%8B/" rel="tag"># UML需求工程</a>
-              <a href="/tags/%E4%BD%9C%E4%B8%9A/" rel="tag"># 作业</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
           </div>
 
         
@@ -278,13 +286,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/19/UMLpre-02/" rel="prev" title="UMLpre_02">
-      <i class="fa fa-chevron-left"></i> UMLpre_02
+    <a href="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/" rel="prev" title="UMLpre-06-总结">
+      <i class="fa fa-chevron-left"></i> UMLpre-06-总结
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%B0%81%E5%8F%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/" rel="next" title="数字信封及数字签名">
-      数字信封及数字签名 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -343,7 +348,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#changelog"><span class="nav-number">1.</span> <span class="nav-text">ChangeLog</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
