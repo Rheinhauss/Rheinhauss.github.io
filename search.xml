@@ -79,23 +79,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Synthesizer-V-设置全局缩放的方法</title>
-    <url>/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>众所周知，Synth V Studio在默认的 <code>NotoSansCJKjp-Regular</code> 字体下，界面渲染十分难受，用户看不清字，特别是高分屏，眼睛都快瞎了（），令人无比想念可以在设置内调整界面和字体缩放的第一代Synth V。</p>
-<p>解决办法目前有俩：</p>
-<ol type="1">
-<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<strong><em>不过可能会有版权问题</em></strong>。`<code>Synth V Studio</code> 每次升级后都要重新覆盖字体。</li>
-<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。 <img src="/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/image-20210406152541899.png" alt="image-20210406152541899"></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Miscellaneous</category>
-      </categories>
-      <tags>
-        <tag>Synth V</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>UMLpre_01</title>
     <url>/2021/04/21/UMLpre-01/</url>
     <content><![CDATA[<h2 id="一.-项目前景和范围"><strong>一.</strong> <strong>项目前景和范围</strong></h2>
@@ -259,6 +242,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Synthesizer-V-设置全局缩放的方法</title>
+    <url>/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>众所周知，Synth V Studio在默认的 <code>NotoSansCJKjp-Regular</code> 字体下，界面渲染十分难受，用户看不清字，特别是高分屏，眼睛都快瞎了（），令人无比想念可以在设置内调整界面和字体缩放的第一代Synth V。</p>
+<p>解决办法目前有俩：</p>
+<ol type="1">
+<li>换字体。<code>Synth-V-Studio安装路径\fonts\</code>下替换<code>NotoSansCJKjp-Regular.otf</code>即可。个人推荐使用 <code>Microsoft Yahei Mono</code> （虽然是网友自行拼接<code>微软雅黑</code>和 <code>Consolas</code> 而成的 ），<strong><em>不过可能会有版权问题</em></strong>。`<code>Synth V Studio</code> 每次升级后都要重新覆盖字体。</li>
+<li>通过命令行加参数 <code>--with-scaling &lt;放大倍数&gt;</code> 的方式启动 <code>synthv-studio.exe</code> 。为方便起见可以将此保存成一个快捷方式。 <img src="/2021/04/06/Synthesizer-V-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E7%BC%A9%E6%94%BE%E7%9A%84%E6%96%B9%E6%B3%95/image-20210406152541899.png" alt="image-20210406152541899"></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Miscellaneous</category>
+      </categories>
+      <tags>
+        <tag>Synth V</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre_03</title>
+    <url>/2021/05/19/UMLpre-03/</url>
+    <content><![CDATA[<p>课程提醒系统demo的repo在此：https://gitee.com/i-dont-miss-it/bitClassScheduleApp</p>
+<h3 id="changelog">ChangeLog</h3>
+<p>（待完成…）</p>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UMLpre_02</title>
     <url>/2021/05/19/UMLpre-02/</url>
     <content><![CDATA[<p>这次主要是数据建模相关的结果。</p>
@@ -357,11 +372,517 @@
       </tags>
   </entry>
   <entry>
-    <title>UMLpre_03</title>
-    <url>/2021/05/19/UMLpre-03/</url>
-    <content><![CDATA[<p>课程提醒系统demo的repo在此：https://gitee.com/i-dont-miss-it/bitClassScheduleApp</p>
-<h3 id="changelog">ChangeLog</h3>
-<p>（待完成…）</p>
+    <title>UMLpre-04</title>
+    <url>/2021/06/09/UMLpre-04/</url>
+    <content><![CDATA[<h1 id="分析与绘制各种uml图">分析与绘制各种UML图</h1>
+<h2 id="用例图">用例图</h2>
+<figure>
+<img src="/2021/06/09/UMLpre-04/image-20210609142903048.png" alt="image-20210609142903048"><figcaption aria-hidden="true">image-20210609142903048</figcaption>
+</figure>
+<h2 id="静态图">静态图</h2>
+<h3 id="类图">类图</h3>
+<p>类图用于描述系统中所包含的类以及它们之间的相互关系，帮助人们简化对系统的理解，它是系统分析和设计阶段的重要产物，也是系统编码和测试的重要模型依据。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E9%9D%99%E6%80%81%E5%9B%BE_%E7%B1%BB%E5%9B%BE.svg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
+</figure>
+<h2 id="动态图">动态图</h2>
+<h3 id="状态图">状态图</h3>
+<p>状态图是系统分析的一种常用工具，它通过建立类对象的生存周期模型来描述对象随时间变化的动态行为。 一个状态图表示一个状态机，主要用于表现从一个状态到另一个状态的控制流。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E7%8A%B6%E6%80%81%E5%9B%BE.svg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
+</figure>
+<h3 id="活动图">活动图</h3>
+<p>活动图是uml的动态模型的一种图形，一般用来描述相关用例图。准确的活动图定义：活动图描述满足用例要求所要进行的活动以及活动间的约束关系，有利于识别并行活动。活动图是一种特殊的状态图，它对于系统的功能建模特别重要，强调对象间的控制流程。交互图强调的是对象到对象的控制流，而活动图则强调的是从活动到活动的控制流活动图是一种表述过程基理、业务过程以及工作流的技术。它可以用来对业务过程、工作流建模，也可以对用例实现甚至是程序实现来建模。</p>
+<figure>
+<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E6%B4%BB%E5%8A%A8%E5%9B%BE.svg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre-05</title>
+    <url>/2021/06/09/UMLpre-05/</url>
+    <content><![CDATA[<h1 id="app-changelog">APP changelog</h1>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">5.6</span></span><br><span class="line">    加入主页面,添加背景图及主页面<span class="type">UI</span></span><br><span class="line">    </span><br><span class="line"><span class="number">5.7</span></span><br><span class="line">    添加读取excel功能,内部建立数据库</span><br><span class="line">    </span><br><span class="line"><span class="number">5.8</span></span><br><span class="line">    完成外部导入课表功能</span><br><span class="line">    </span><br><span class="line"><span class="number">5.10</span></span><br><span class="line">    本周课程表页面框架搭建完成,实现读取数据库功能</span><br><span class="line">    </span><br><span class="line"><span class="number">5.11</span></span><br><span class="line">    完成初步的添加待办功能,仅实现了文字添加,未完成删除和排序</span><br><span class="line">    </span><br><span class="line"><span class="number">5.12</span></span><br><span class="line">    主页<span class="type">UI更新</span>,添加随机颜色,课表配色改良</span><br><span class="line">    </span><br><span class="line"><span class="number">5.13</span></span><br><span class="line">    主页课表排序功能完成,添加<span class="string">&quot;距离上课还有几分钟&quot;</span>信息</span><br><span class="line">    </span><br><span class="line"><span class="number">5.14</span></span><br><span class="line">    主页<span class="type">UI再次优化</span>,改换全局字体,将课程开始结束字条放右边方块,增强美观度</span><br><span class="line">    </span><br><span class="line"><span class="number">5.15</span></span><br><span class="line">    抛弃过去写的备忘录,完成了备忘录<span class="number">2</span>页面的基本编写,实现了待办数据库创建访问修改等操作</span><br><span class="line">    </span><br><span class="line"><span class="number">5.18</span></span><br><span class="line">    主页bug修正,显示<span class="number">10</span>节以上的课的时候不会出现显示错误,颜色判定更新,主页<span class="type">Ui升级</span>,提升机型适配能力</span><br><span class="line">    新增任务提交功能</span><br><span class="line">    任务排序优化</span><br><span class="line">    任务界面优化</span><br><span class="line">    </span><br><span class="line"><span class="number">5.19</span></span><br><span class="line">    实现了不完善的删除事件功能(删除要在退出 页面后才能成功)</span><br><span class="line">    </span><br><span class="line"><span class="number">5.21</span></span><br><span class="line">    添加事件界面<span class="type">UI超大幅优化</span>,增加大量框架和背景,新增添加事件弹窗,增强使用方便性</span><br><span class="line">    </span><br><span class="line"><span class="number">5.29</span></span><br><span class="line">    修复大量肉眼可见bug,完善待办删除功能,各界面新增各种动漫背景</span><br><span class="line">    </span><br><span class="line"><span class="number">5.30</span></span><br><span class="line">    新增课程提醒功能,现在课前<span class="number">15</span>分钟发送课程开始提醒</span><br><span class="line">    app图标修改</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>UML需求工程</tag>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UMLpre-06-总结</title>
+    <url>/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="总结">总结</h1>
+<h2 id="分工情況">分工情況</h2>
+<ul>
+<li><p>俞森豪</p>
+<ol type="1">
+<li>完成小组app程序开发</li>
+<li>进行涉众分析</li>
+<li>和甲方进行沟通</li>
+<li>发展用户,收集反馈信息</li>
+<li>完成过程建模中的DFD图,微规格说明,和数字字典</li>
+</ol></li>
+<li><p>杨铮</p>
+<ol type="1">
+<li>和甲方进行沟通</li>
+<li>统计分析调查问卷</li>
+<li>完成用例图</li>
+<li>制作ppt及视频报告，总结工作完成情况。</li>
+</ol></li>
+<li><p>王雨轩</p>
+<ol type="1">
+<li>作为甲方参与和乙方的面谈</li>
+<li>技术博客</li>
+<li>需求分析及设计UML静态动态图</li>
+</ol></li>
+<li><p>龙洁如</p>
+<ol type="1">
+<li>作为甲/乙方参加面谈</li>
+<li>数据建模</li>
+<li>攥写需求规格文档</li>
+</ol></li>
+<li><p>黄钰琪</p>
+<ol type="1">
+<li>硬数据采样：撰写调查问卷并收集结果</li>
+<li>作为甲方参与和乙方的面谈</li>
+<li>结构化需求分析：功能分解图，需求细化，优先级细分</li>
+<li>撰写需求规格文档</li>
+</ol></li>
+</ul>
+<h2 id="课程提醒系统需求规格说明文档">课程提醒系统需求规格说明文档</h2>
+<p><strong>目录</strong></p>
+<p>一、<strong>引言</strong>....................................................................................................................... 2</p>
+<p><strong>1</strong>.<strong>目的</strong>..................................................................................................................... 2</p>
+<p><strong>2</strong>.<strong>文档约定</strong>............................................................................................................. 2</p>
+<p><strong>3.</strong> <strong>产品的范围</strong>......................................................................................................... 2</p>
+<p><strong>4.</strong> <strong>参考文献</strong>............................................................................................................. 2</p>
+<p><strong>二、综合描述</strong>............................................................................................................... 2</p>
+<p><strong>1.</strong> <strong>产品的前景</strong>......................................................................................................... 2</p>
+<p><strong>2.</strong> <strong>产品的功能</strong>......................................................................................................... 2</p>
+<p><strong>3.</strong> <strong>用户类和特征</strong>..................................................................................................... 2</p>
+<p><strong>4.</strong> <strong>硬数据采样</strong>.........................................................................................................3</p>
+<p><strong>5.</strong> <strong>运行环境</strong>............................................................................................................. 4</p>
+<p><strong>三、需求分析过程</strong>....................................................................................................... 4</p>
+<p><strong>1.功能分解图......................................................................................................... 4</strong></p>
+<p><strong>2.上下文图............................................................................................................. 5</strong></p>
+<p><strong>3.0层图.................................................................................................................. 5</strong></p>
+<p><strong>4.一层图................................................................................................................. 5</strong></p>
+<p><strong>5.微规格说明......................................................................................................... 6</strong></p>
+<p><strong>6数据字典............................................................................................................. 6</strong></p>
+<p><strong>7.ERD</strong> <strong>建模</strong>.............................................................................................................7</p>
+<p><strong>8.用例图................................................................................................................. 8</strong></p>
+<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong>.......................................................................................................8</p>
+<p><strong>10.动态UML图..................................................................................................... 9</strong></p>
+<p><strong>四</strong>、<strong>系统特性</strong>............................................................................................................. 11</p>
+<p><strong>1</strong>.<strong>说明和优先级</strong>................................................................................................... 11</p>
+<p><strong>2</strong>.<strong>激励/</strong> <strong>响应序列</strong>................................................................................................. 11</p>
+<p><strong>3</strong>.<strong>功能需求</strong>........................................................................................................... 11</p>
+<p><strong>五</strong>、<strong>其它非功能需求</strong>................................................................................................. 12</p>
+<p><strong>1.</strong> <strong>性能需求</strong>......................................................................................................... 122</p>
+<p><strong>2.</strong> <strong>软件质量标准属性</strong>........................................................................................... 12</p>
+<p><strong>3.</strong> <strong>对外接口</strong>........................................................................................................... 12</p>
+<p><strong>4.</strong> <strong>约束</strong>................................................................................................................... 12</p>
+<p><strong>六</strong>、<strong>其它需求</strong>............................................................................................................. 12</p>
+<p><strong>一、引言</strong></p>
+<p><strong>1.</strong> <strong>目的</strong></p>
+<p>本篇需求规格说明文档的目的是对本产品——课程提醒系统进行定义。在本文档中，详尽说明了这个产品的软件需求。</p>
+<p><strong>2.</strong> <strong>文档约定</strong></p>
+<p>本项目小组按照IEEE 830标准编写本文档，并根据本项目的内容作出了一些合理的修改。本课程提醒系统项目所有需求都有其自身优先级，且高层需求的优先级可以被其所有细化的需求继承。</p>
+<p><strong>3.</strong> <strong>产品的范围</strong></p>
+<p>本课程提醒系统是应用于手机端的一款离线单机的应用软件，以广大在校大学生为本，致力于帮助广大在校大学生安排自己的学习任务，规划自己的学习生活。</p>
+<p><strong>4.</strong> <strong>参考文献</strong></p>
+<p>【1】软件需求规格说明（IEEE 830标准）</p>
+<p>【2】需求工程：软件建模与分析/骆斌主编；丁二玉编著.--2版.--北京：高等教育出版社，2015.2</p>
+<p><strong>二、综合描述</strong></p>
+<p><strong>1.</strong> <strong>产品前景</strong></p>
+<p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目可接受用户创建、导入修改自己的课程表和作业安排，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
+<p><strong>2.</strong> <strong>产品功能</strong></p>
+<table>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>在校学生</th>
+<th>1.可以创建、导入、修改自己的课程表和作业安排，包括课程、时间、教师、教室、对应作业等。 2.可以查看每周课表，独立查看待办提醒和课程提醒。</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>系统管理者</td>
+<td>1.对恶意评价及有关不良行为进行修改和删除 2.管理调整教师用户和学生用户权限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3.</strong> <strong>用户类和特征</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>涉众编号</th>
+<th>涉众名称</th>
+<th>涉众说明</th>
+<th>使用系统的方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>001</td>
+<td>普通学生</td>
+<td>学生是使用该系统导入获取课程信息的主体</td>
+<td>1. 设置可按周显示的课表 2. 设置并获取课程提醒信息 3. 创建作业待办</td>
+</tr>
+<tr class="even">
+<td>002</td>
+<td>系统开发人员</td>
+<td>系统开发人员是对系统进行开发和维护的人员</td>
+<td>1.开发课程提醒系统 2.对程序进行更新</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>涉众</th>
+<th>001普通学生</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>涉众代表</td>
+<td>普通用户代表特点</td>
+</tr>
+<tr class="even">
+<td>特点</td>
+<td>系统的主要使用者，在校大学生</td>
+</tr>
+<tr class="odd">
+<td>职责</td>
+<td>1.下载并使用该系统 2.导入并修改可按周查看的课表 3.获取课前提醒 4.添加可备注的待办/作业,可设定提醒时间</td>
+</tr>
+<tr class="even">
+<td>成功标准</td>
+<td>1.能及时获取课程提醒信息 2.课表显示周数,课程名称,时间,教师,教室.</td>
+</tr>
+<tr class="odd">
+<td>参与</td>
+<td>不参与系统建设</td>
+</tr>
+<tr class="even">
+<td>可交付工作</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>涉众</th>
+<th>002系统开发人员</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>涉众代表</td>
+<td>开发人员代表</td>
+</tr>
+<tr class="even">
+<td>特点</td>
+<td>系统的开发者</td>
+</tr>
+<tr class="odd">
+<td>职责</td>
+<td>1.开发课程提醒系统 2. 对系统使用中出现的问题进行维护和修复</td>
+</tr>
+<tr class="even">
+<td>成功标准</td>
+<td>课程提醒系统运行良好</td>
+</tr>
+<tr class="odd">
+<td>参与</td>
+<td>参与系统设计</td>
+</tr>
+<tr class="even">
+<td>可交付工作</td>
+<td>课程提醒系统</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.</strong> <strong>硬数据采样</strong></p>
+<p>本项目硬数据采样采用调查问卷方式，对受众的年级以及在课程提醒方面的习惯做了较为全面的调查，调查结果如下图所示：</p>
+<p><img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image002.jpg" alt="img"> <img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image004.jpg" alt="img"></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image006.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>5.</strong> <strong>运行环境</strong></p>
+<p>1）安卓版手机硬件环境要求</p>
+<p>CPU：双核2GHz及以上；</p>
+<p>机身内存：4G以上；</p>
+<p>屏幕分辨率：1920x1080及以上；</p>
+<p>操作系统：Android 4.0及以上版本。</p>
+<p>2）苹果版手机硬件环境要求（苹果相对来说比较好限定）</p>
+<p>iPhone机型：iPhone6及以上版本；</p>
+<p>机身内存：16G以上；</p>
+<p>操作系统：iOS 10.0及以上版本。</p>
+<p><strong>三、需求分析过程</strong></p>
+<p><strong>1.</strong> <strong>功能分解图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image008.jpg" alt="流程图1"><figcaption aria-hidden="true">流程图1</figcaption>
+</figure>
+<p><strong>2.</strong> <strong>上下文图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image010.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>3.</strong> <strong>0</strong> <strong>层图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image012.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>4.</strong> <strong>一层图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image014.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>5.</strong> <strong>微规格说明</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image016.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image018.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>6.</strong> <strong>数据字典</strong></p>
+<table>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 39%">
+<col style="width: 10%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>课程信息</th>
+<th>名称</th>
+<th>待办</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>别名</td>
+<td></td>
+<td>别名</td>
+<td>Daiban_work(in AddView.java and MyTask.java)</td>
+</tr>
+<tr class="even">
+<td>使用的地点和方法</td>
+<td>保存课程信息(input) 显示今日课程(output) 展示本周课程信息(output) 发送课程信息(input) 显示课程详细信息(output)</td>
+<td>使用的地点和方法</td>
+<td>存储待办(input) 显示待办(output) 删除待办(input) 查找待办(output)</td>
+</tr>
+<tr class="odd">
+<td>描述</td>
+<td>Classname = Text Zhouci = [”{1<sub>20}-{1</sub>20}周” or”{1~20}周” ] 例:1-8周| 12周 Kaishi =[第{1-13}节] Jieshu=[第{1-13}节] Teacher=text 教室 = text</td>
+<td>描述</td>
+<td>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min Inf= text Deadline=同Create_time Remind_time=同Create_time</td>
+</tr>
+<tr class="even">
+<td>格式</td>
+<td>SQLite database Information In table Class</td>
+<td>格式</td>
+<td>SQLite database Information In table daiban.db</td>
+</tr>
+</tbody>
+</table>
+<p><strong>7.</strong> <strong>ERD</strong> <strong>建模</strong></p>
+<p>1）简单情况下的ERD建模</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image020.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>2）根据硬表单的ERD建模</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image022.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>8.</strong> <strong>用例图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image024.jpg" alt="IMG_256"><figcaption aria-hidden="true">IMG_256</figcaption>
+</figure>
+<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong></p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image026.jpg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
+</figure>
+<p><strong>10.</strong> <strong>动态</strong> <strong>UML</strong> <strong>图</strong></p>
+<p>1）状态图</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image028.jpg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
+</figure>
+<p>2）活动图</p>
+<figure>
+<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image030.jpg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
+</figure>
+<p><strong>四、系统特性</strong></p>
+<p>本课程提醒系统有两大主要特性：一、显示课表和待办；二、提醒上课和待办。还有其他特性：a.支持按周显示课表。b.根据截止时间从近到远显示待办。</p>
+<p><strong>特性一：显示课表和待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>普通的课表显示，课表中的课程会包括周数、课程名称、时间和地点。高优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>导入</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>1.1</td>
+<td>课表导入</td>
+<td>包括创建和导入两种方式</td>
+</tr>
+<tr class="odd">
+<td>1.2</td>
+<td>作业导入</td>
+<td>只允许在软件中新建</td>
+</tr>
+<tr class="even">
+<td>1.1.1</td>
+<td>导入课表</td>
+<td>指导入.xml文件</td>
+</tr>
+<tr class="odd">
+<td>1.1.2</td>
+<td>创建课表</td>
+<td>从软件中新建</td>
+</tr>
+<tr class="even">
+<td>1.2.1</td>
+<td>创建作业</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>显示</td>
+<td>包括课表和作业</td>
+</tr>
+<tr class="even">
+<td>2.1</td>
+<td>显示课表信息</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2.2</td>
+<td>显示作业</td>
+<td>包括截止时间和内容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性二：提醒上课和待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>提醒将要到来的事件。高优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>提醒</td>
+<td>对于课程和作业</td>
+</tr>
+<tr class="even">
+<td>3.1</td>
+<td>今日汇总</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3.2</td>
+<td>设置提醒时间和方式</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>3.3</td>
+<td>完成标记</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性三：支持按周显示课表</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>中优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>选择周数</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>特性四：根据截止时间从近到远显示待办</strong></p>
+<p><strong>1.</strong> <strong>说明和优先级</strong></p>
+<p>中优先级。</p>
+<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
+<p><strong>3.</strong> <strong>功能需求</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>功能编号</th>
+<th>功能名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td>tab显示待办</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>四、其他非功能需求</strong></p>
+<p><strong>1.</strong> <strong>性能需求</strong></p>
+<p>​ 系统应该能够带入10kB的.xml文件，储存10条待办。</p>
+<p><strong>2.</strong> <strong>质量属性</strong></p>
+<p>​ 出现意外闪退后可以及时保存数据。</p>
+<p><strong>3.</strong> <strong>对外接口</strong></p>
+<p><strong>4.</strong> <strong>约束</strong></p>
+<p>​ 系统要有Android和iOS两个版本。</p>
+<p><strong>五、其他需求</strong></p>
+<ol type="1">
+<li><p>默认标签为课程表</p></li>
+<li><p>分标签显示设置</p></li>
+<li><p>提醒方式和时间有默认值</p></li>
+</ol>
 ]]></content>
       <categories>
         <category>课程</category>
@@ -629,6 +1150,55 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
       </tags>
   </entry>
   <entry>
+    <title>数学建模_电路布线问题</title>
+    <url>/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="电路布线问题">电路布线问题</h1>
+<p>一些记录</p>
+<h2 id="题面">题面</h2>
+<p>C 题 布线问题 有一个尺寸为12 cm × 12 cm 矩形电子线路板，上下左右的边沿均匀布满了 若干个端口，分别记为 A1<sub>A5，B1</sub>B5，C1<sub>C5，D1</sub>D5，如图 1 所示。</p>
+<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142205743.png" alt="image-20210531142205743" style="zoom:80%;"></p>
+<p>某种电子零部件需要把这些端口按照连接表（表 1）用导线相连，每根导线 都要粘贴在电子线路板上。如果导线无法按照下列不同要求布置，则可以分层布 置，即安排几个完全相同的电子线路板，这几个线路板的同名端口都有导线贯穿 而直接相连，且某根导线在某一层连接了特定的两个端口，这样就认为这两个端 口连接在了一起。</p>
+<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142236414.png" alt="image-20210531142236414" style="zoom:80%;"></p>
+<ol type="1">
+<li>如果导线可以直线相连，但导线不允许相交，则最少需要多少块相同的电 路板？</li>
+<li>如果导线可以直线相连，但任意一根导线与其他所有导线最多相交一次， 则最少需要多少块相同的电路板？</li>
+<li>如果从端口发出的导线以及进入端口的导线只能垂直于端口所在边沿， 导线在线路板中转弯时转弯半径不能小于 1 cm，且每次转弯只能转过 90 度的整 数倍。每根导线的交叉数和转弯数的和不大于 2，则最少需要多少块相同的电路 板？</li>
+<li>针对尺寸为18 cm × 18 cm 每边 8个端口均匀分布的电子线路板（图 2）， 以及连接表（表 2），重新求解问题 1~问题 3</li>
+</ol>
+<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142323027.png" alt="image-20210531142323027" style="zoom:80%;"></p>
+<h2 id="思路">思路</h2>
+<p>第一小问要求端口之间连线不能相交，首先易知直线连接方式是相交次数最少的（因为由拓扑学可知：该相交的总是要相交），所以当作直线处理就可以。</p>
+<p>可以这么设想：每根导线都有一个颜色，同一颜色代表在同一层，相交的导线不能在同一层（不能是一种颜色），问最少几种颜色可以给所有导线染色。因此转化成图论上的染色问题：有一个无向图G，图中顶点代表导线，顶点之间有边代表导线相交，问用最少几种颜色可以给G染色，使相邻的顶点颜色不同？从k=1种颜色开始尝试，失败则k++，若成功则当前k为答案。</p>
+<p>第二问思路类似，只不过染色要求变成：设某顶点V和与之相邻的顶点集V'，V'种至多有1个顶点与V颜色相同，体现在编程实现里就是剪枝函数的变化。</p>
+<h2 id="数据处理">数据处理</h2>
+<p>处理成图的形式</p>
+<h3 id="data01">DATA01</h3>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">13</span></span><br><span class="line"><span class="symbol">0 </span><span class="number">1</span></span><br><span class="line"><span class="symbol">0 </span><span class="number">2</span></span><br><span class="line"><span class="symbol">3 </span><span class="number">5</span></span><br><span class="line"><span class="symbol">3 </span><span class="number">6</span></span><br><span class="line"><span class="symbol">4 </span><span class="number">5</span></span><br><span class="line"><span class="symbol">4 </span><span class="number">6</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">8</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">7</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">7 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">8</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">7</span></span><br></pre></td></tr></table></figure>
+<h3 id="data02">DATA02</h3>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">16 </span><span class="number">57</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">3</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">4</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">5</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">2</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">11</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">13</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">11 </span> <span class="number">12</span></span><br><span class="line"><span class="symbol">11 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">12 </span> <span class="number">14</span></span><br><span class="line"><span class="symbol">13 </span> <span class="number">14</span></span><br><span class="line"><span class="symbol">13 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">14 </span> <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<h2 id="编程实现">编程实现</h2>
+<h3 id="q1">Q1</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> INF = __INT_MAX__; <span class="comment">//表示图中两个顶点无关联</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Graph</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> vertexNum; <span class="comment">//图的顶点数</span></span><br><span class="line">    <span class="keyword">int</span> arcNum;    <span class="comment">//图的边数</span></span><br><span class="line">    <span class="comment">// int *arc;      //指向图中顶点的关联关系数组</span></span><br><span class="line">    <span class="comment">// int *color;    //指向各顶点着色情况数组</span></span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; arc, color;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Graph g;       <span class="comment">//声明一个Graph类型的图g</span></span><br><span class="line">    <span class="built_in">creatGraph</span>(g); <span class="comment">//给图g定义顶点数、边数、生成顶点之间的关联关系</span></span><br><span class="line">    <span class="keyword">int</span> m = <span class="built_in">ColorGraph</span>(g);</span><br><span class="line">    cout &lt;&lt; endl &lt;&lt; m &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">    <span class="built_in">dispVertexColor</span>(g);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以下creatGraph()函数</span></span><br><span class="line"><span class="comment"> * 定义图的定点数、边数、</span></span><br><span class="line"><span class="comment"> * 图的邻接矩阵、顶点着色记录数组</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y, k, w;</span><br><span class="line">    cin &gt;&gt; g.vertexNum &gt;&gt; g.arcNum;</span><br><span class="line">    <span class="comment">// g.arc = (int *)malloc(sizeof(int) * g.vertexNum * g.vertexNum); //创建邻接矩阵</span></span><br><span class="line">    <span class="comment">// g.color = (int *)malloc(sizeof(int) * g.vertexNum); //创建顶点着色记录数组</span></span><br><span class="line">    vector&lt;int&gt; tmp1(g.vertexNum * g.vertexNum, INF), tmp2(g.vertexNum, 0);</span><br><span class="line">    g.arc = tmp1;</span><br><span class="line">    g.color = tmp2;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.arc[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; g.arcNum; k++) &#123; <span class="comment">//关联矩阵为一个对称矩阵</span></span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y <span class="comment">/* &gt;&gt; w */</span>;</span><br><span class="line">        g.arc[g.vertexNum * x + y] = <span class="number">1</span>;</span><br><span class="line">        g.arc[g.vertexNum * y + x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span> <span class="comment">//输出图g中各顶点的着色情况函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;[&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum - <span class="number">1</span>; i++)</span><br><span class="line">        cout &lt;&lt; g.color[i] &lt;&lt; <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">    cout &lt;&lt; g.color[g.vertexNum - <span class="number">1</span>] &lt;&lt; <span class="string">&quot;]\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span> <span class="comment">//给图的顶点着色，函数返回值为最小着色数的值。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>, m = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (k &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            g.color[k] = g.color[k] + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (g.color[k] &lt;= m) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">conflict</span>(g, k))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    g.color[k]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k == g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> m;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k &lt; g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                k = k + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                g.color[k--] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        k = <span class="number">0</span>;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    Graph &amp;g,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> k)</span> <span class="comment">//检测顶点k与其邻接点着色是否冲突，返回1为不冲突，返回0为冲突，此函数由ColorGraph()函数调用</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="q2">Q2</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> INF = __INT_MAX__; <span class="comment">//表示图中两个顶点无关联</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Graph</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> vertexNum; <span class="comment">//图的顶点数</span></span><br><span class="line">    <span class="keyword">int</span> arcNum;    <span class="comment">//图的边数</span></span><br><span class="line">    <span class="comment">// int *arc;      //指向图中顶点的关联关系数组</span></span><br><span class="line">    <span class="comment">// int *color;    //指向各顶点着色情况数组</span></span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; arc, color;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="keyword">bool</span> _conflict(Graph &amp;g, <span class="keyword">int</span> k);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Graph g;       <span class="comment">//声明一个Graph类型的图g</span></span><br><span class="line">    <span class="built_in">creatGraph</span>(g); <span class="comment">//给图g定义顶点数、边数、生成顶点之间的关联关系</span></span><br><span class="line">    <span class="keyword">int</span> m = <span class="built_in">ColorGraph</span>(g);</span><br><span class="line">    cout &lt;&lt; endl &lt;&lt; m &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">    <span class="built_in">dispVertexColor</span>(g);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以下creatGraph()函数</span></span><br><span class="line"><span class="comment"> * 定义图的定点数、边数、</span></span><br><span class="line"><span class="comment"> * 图的邻接矩阵、顶点着色记录数组</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y, k, w;</span><br><span class="line">    cin &gt;&gt; g.vertexNum &gt;&gt; g.arcNum;</span><br><span class="line">    <span class="comment">// g.arc = (int *)malloc(sizeof(int) * g.vertexNum * g.vertexNum); //创建邻接矩阵</span></span><br><span class="line">    <span class="comment">// g.color = (int *)malloc(sizeof(int) * g.vertexNum); //创建顶点着色记录数组</span></span><br><span class="line">    vector&lt;int&gt; tmp1(g.vertexNum * g.vertexNum, INF), tmp2(g.vertexNum, 0);</span><br><span class="line">    g.arc = tmp1;</span><br><span class="line">    g.color = tmp2;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.arc[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; g.arcNum; k++) &#123; <span class="comment">//关联矩阵为一个对称矩阵</span></span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y <span class="comment">/* &gt;&gt; w */</span>;</span><br><span class="line">        g.arc[g.vertexNum * x + y] = <span class="number">1</span>;</span><br><span class="line">        g.arc[g.vertexNum * y + x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span> <span class="comment">//输出图g中各顶点的着色情况函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;[&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum - <span class="number">1</span>; i++)</span><br><span class="line">        cout &lt;&lt; g.color[i] &lt;&lt; <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">    cout &lt;&lt; g.color[g.vertexNum - <span class="number">1</span>] &lt;&lt; <span class="string">&quot;]\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span> <span class="comment">//给图的顶点着色，函数返回值为最小着色数的值。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>, m = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (k &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            g.color[k] = g.color[k] + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (g.color[k] &lt;= m) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">conflict</span>(g, k))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    g.color[k]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k == g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> m;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k &lt; g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                k = k + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                g.color[k--] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        k = <span class="number">0</span>;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"><span class="comment">//设某顶点k和与之相邻的顶点集V&#x27;，V&#x27;种至多有1个顶点与k颜色相同</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k]) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">if</span>(!_conflict(g,i)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt &gt; <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> _conflict(Graph &amp;g, <span class="keyword">int</span> k)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k]) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt &gt; <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果">结果</h2>
+<figure>
+<img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/data01.png" alt="data01"><figcaption aria-hidden="true">data01</figcaption>
+</figure>
+<figure>
+<img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/data02.svg" alt="data02"><figcaption aria-hidden="true">data02</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>cpp</tag>
+        <tag>数学建模</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>梦志 2021.05.28</title>
     <url>/2021/05/28/%E6%A2%A6%E5%BF%97-2021-05-28/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again :(" data-whm="Oh, these decrypted content cannot be verified, but you can still have a look :D">
@@ -648,6 +1218,31 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
       </categories>
       <tags>
         <tag>梦志</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次修复 kernel mode heap corruption 蓝屏</title>
+    <url>/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/</url>
+    <content><![CDATA[<p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
+<p>一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用太多空间，所以我干脆直接关掉了内存dump，导致还得再等蓝屏复现……</p>
+<p>之后的一天晚上，熟悉的蓝屏又来了。重启之后，拿到dmp，给WinDbg加载好符号，让我康康到底是哪个驱动干的好事。</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=3&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=60-2-2&amp;rf=viewer_311.jpeg" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>定睛一看，在一众NT函数调用中冒出来了一个 <em>PassGuard_x64</em> ，大概率就是你咯！</p>
+<p>用Everything一搜，果然找到了一个<em>.sys</em>文件与其同名，看数字签名是国内公司做的什么乱七八糟驱动。</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Google一下这个名字，确有其人，看来是网银之类的东西会装的输入控件。<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.jpeg" alt="img"></p>
+<p>我很清楚自己没有在这台PC上用过网银，唯一沾边的就是globalcash预付卡，很久以前按照网页要求安装了一个输入控件。于是去控制面板查看相关软件，发现 <em>PassGuard_x64.sys</em> 的创建时间与其安装时间对应上了，看来罪魁祸首就是它…给爷死！</p>
+<figure>
+<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/image-20211004012505244.png" alt="image-20211004012505244"><figcaption aria-hidden="true">image-20211004012505244</figcaption>
+</figure>
+<p>但是，但是，但是，卸载程序并没有删除注册表相关条目，也没有取消注册相关驱动 <em>PassGuard_x64.sys</em> ，属于是十分_ _ 了，还得手动清除。全部搞定之后电脑终于清静了。继续使用半个月，没有再次发生这种蓝屏。完结撒花</p>
+]]></content>
+      <tags>
+        <tag>windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1235,601 +1830,6 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
         <tag>密码学</tag>
         <tag>讲课</tag>
         <tag>社团</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数学建模_电路布线问题</title>
-    <url>/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="电路布线问题">电路布线问题</h1>
-<p>一些记录</p>
-<h2 id="题面">题面</h2>
-<p>C 题 布线问题 有一个尺寸为12 cm × 12 cm 矩形电子线路板，上下左右的边沿均匀布满了 若干个端口，分别记为 A1<sub>A5，B1</sub>B5，C1<sub>C5，D1</sub>D5，如图 1 所示。</p>
-<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142205743.png" alt="image-20210531142205743" style="zoom:80%;"></p>
-<p>某种电子零部件需要把这些端口按照连接表（表 1）用导线相连，每根导线 都要粘贴在电子线路板上。如果导线无法按照下列不同要求布置，则可以分层布 置，即安排几个完全相同的电子线路板，这几个线路板的同名端口都有导线贯穿 而直接相连，且某根导线在某一层连接了特定的两个端口，这样就认为这两个端 口连接在了一起。</p>
-<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142236414.png" alt="image-20210531142236414" style="zoom:80%;"></p>
-<ol type="1">
-<li>如果导线可以直线相连，但导线不允许相交，则最少需要多少块相同的电 路板？</li>
-<li>如果导线可以直线相连，但任意一根导线与其他所有导线最多相交一次， 则最少需要多少块相同的电路板？</li>
-<li>如果从端口发出的导线以及进入端口的导线只能垂直于端口所在边沿， 导线在线路板中转弯时转弯半径不能小于 1 cm，且每次转弯只能转过 90 度的整 数倍。每根导线的交叉数和转弯数的和不大于 2，则最少需要多少块相同的电路 板？</li>
-<li>针对尺寸为18 cm × 18 cm 每边 8个端口均匀分布的电子线路板（图 2）， 以及连接表（表 2），重新求解问题 1~问题 3</li>
-</ol>
-<p><img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/image-20210531142323027.png" alt="image-20210531142323027" style="zoom:80%;"></p>
-<h2 id="思路">思路</h2>
-<p>第一小问要求端口之间连线不能相交，首先易知直线连接方式是相交次数最少的（因为由拓扑学可知：该相交的总是要相交），所以当作直线处理就可以。</p>
-<p>可以这么设想：每根导线都有一个颜色，同一颜色代表在同一层，相交的导线不能在同一层（不能是一种颜色），问最少几种颜色可以给所有导线染色。因此转化成图论上的染色问题：有一个无向图G，图中顶点代表导线，顶点之间有边代表导线相交，问用最少几种颜色可以给G染色，使相邻的顶点颜色不同？从k=1种颜色开始尝试，失败则k++，若成功则当前k为答案。</p>
-<p>第二问思路类似，只不过染色要求变成：设某顶点V和与之相邻的顶点集V'，V'种至多有1个顶点与V颜色相同，体现在编程实现里就是剪枝函数的变化。</p>
-<h2 id="数据处理">数据处理</h2>
-<p>处理成图的形式</p>
-<h3 id="data01">DATA01</h3>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">13</span></span><br><span class="line"><span class="symbol">0 </span><span class="number">1</span></span><br><span class="line"><span class="symbol">0 </span><span class="number">2</span></span><br><span class="line"><span class="symbol">3 </span><span class="number">5</span></span><br><span class="line"><span class="symbol">3 </span><span class="number">6</span></span><br><span class="line"><span class="symbol">4 </span><span class="number">5</span></span><br><span class="line"><span class="symbol">4 </span><span class="number">6</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">8</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">7</span></span><br><span class="line"><span class="symbol">5 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">7 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">8</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span><span class="number">7</span></span><br></pre></td></tr></table></figure>
-<h3 id="data02">DATA02</h3>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">16 </span><span class="number">57</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">3</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">4</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">5</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">0 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">2</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">1 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">2 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">3 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">6</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">4 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">5 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">7</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">6 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">13</span></span><br><span class="line"><span class="symbol">7 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">9</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">8 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">10</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">11</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">12</span></span><br><span class="line"><span class="symbol">9 </span>  <span class="number">15</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">11</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">13</span></span><br><span class="line"><span class="symbol">10 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">11 </span> <span class="number">12</span></span><br><span class="line"><span class="symbol">11 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">12 </span> <span class="number">14</span></span><br><span class="line"><span class="symbol">13 </span> <span class="number">14</span></span><br><span class="line"><span class="symbol">13 </span> <span class="number">15</span></span><br><span class="line"><span class="symbol">14 </span> <span class="number">15</span></span><br></pre></td></tr></table></figure>
-<h2 id="编程实现">编程实现</h2>
-<h3 id="q1">Q1</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> INF = __INT_MAX__; <span class="comment">//表示图中两个顶点无关联</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Graph</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> vertexNum; <span class="comment">//图的顶点数</span></span><br><span class="line">    <span class="keyword">int</span> arcNum;    <span class="comment">//图的边数</span></span><br><span class="line">    <span class="comment">// int *arc;      //指向图中顶点的关联关系数组</span></span><br><span class="line">    <span class="comment">// int *color;    //指向各顶点着色情况数组</span></span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; arc, color;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Graph g;       <span class="comment">//声明一个Graph类型的图g</span></span><br><span class="line">    <span class="built_in">creatGraph</span>(g); <span class="comment">//给图g定义顶点数、边数、生成顶点之间的关联关系</span></span><br><span class="line">    <span class="keyword">int</span> m = <span class="built_in">ColorGraph</span>(g);</span><br><span class="line">    cout &lt;&lt; endl &lt;&lt; m &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">    <span class="built_in">dispVertexColor</span>(g);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以下creatGraph()函数</span></span><br><span class="line"><span class="comment"> * 定义图的定点数、边数、</span></span><br><span class="line"><span class="comment"> * 图的邻接矩阵、顶点着色记录数组</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y, k, w;</span><br><span class="line">    cin &gt;&gt; g.vertexNum &gt;&gt; g.arcNum;</span><br><span class="line">    <span class="comment">// g.arc = (int *)malloc(sizeof(int) * g.vertexNum * g.vertexNum); //创建邻接矩阵</span></span><br><span class="line">    <span class="comment">// g.color = (int *)malloc(sizeof(int) * g.vertexNum); //创建顶点着色记录数组</span></span><br><span class="line">    vector&lt;int&gt; tmp1(g.vertexNum * g.vertexNum, INF), tmp2(g.vertexNum, 0);</span><br><span class="line">    g.arc = tmp1;</span><br><span class="line">    g.color = tmp2;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.arc[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; g.arcNum; k++) &#123; <span class="comment">//关联矩阵为一个对称矩阵</span></span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y <span class="comment">/* &gt;&gt; w */</span>;</span><br><span class="line">        g.arc[g.vertexNum * x + y] = <span class="number">1</span>;</span><br><span class="line">        g.arc[g.vertexNum * y + x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span> <span class="comment">//输出图g中各顶点的着色情况函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;[&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum - <span class="number">1</span>; i++)</span><br><span class="line">        cout &lt;&lt; g.color[i] &lt;&lt; <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">    cout &lt;&lt; g.color[g.vertexNum - <span class="number">1</span>] &lt;&lt; <span class="string">&quot;]\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span> <span class="comment">//给图的顶点着色，函数返回值为最小着色数的值。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>, m = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (k &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            g.color[k] = g.color[k] + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (g.color[k] &lt;= m) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">conflict</span>(g, k))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    g.color[k]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k == g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> m;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k &lt; g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                k = k + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                g.color[k--] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        k = <span class="number">0</span>;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    Graph &amp;g,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> k)</span> <span class="comment">//检测顶点k与其邻接点着色是否冲突，返回1为不冲突，返回0为冲突，此函数由ColorGraph()函数调用</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="q2">Q2</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> INF = __INT_MAX__; <span class="comment">//表示图中两个顶点无关联</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Graph</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> vertexNum; <span class="comment">//图的顶点数</span></span><br><span class="line">    <span class="keyword">int</span> arcNum;    <span class="comment">//图的边数</span></span><br><span class="line">    <span class="comment">// int *arc;      //指向图中顶点的关联关系数组</span></span><br><span class="line">    <span class="comment">// int *color;    //指向各顶点着色情况数组</span></span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; arc, color;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span></span>;</span><br><span class="line"><span class="keyword">bool</span> _conflict(Graph &amp;g, <span class="keyword">int</span> k);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Graph g;       <span class="comment">//声明一个Graph类型的图g</span></span><br><span class="line">    <span class="built_in">creatGraph</span>(g); <span class="comment">//给图g定义顶点数、边数、生成顶点之间的关联关系</span></span><br><span class="line">    <span class="keyword">int</span> m = <span class="built_in">ColorGraph</span>(g);</span><br><span class="line">    cout &lt;&lt; endl &lt;&lt; m &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">    <span class="built_in">dispVertexColor</span>(g);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以下creatGraph()函数</span></span><br><span class="line"><span class="comment"> * 定义图的定点数、边数、</span></span><br><span class="line"><span class="comment"> * 图的邻接矩阵、顶点着色记录数组</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatGraph</span><span class="params">(Graph &amp;g)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y, k, w;</span><br><span class="line">    cin &gt;&gt; g.vertexNum &gt;&gt; g.arcNum;</span><br><span class="line">    <span class="comment">// g.arc = (int *)malloc(sizeof(int) * g.vertexNum * g.vertexNum); //创建邻接矩阵</span></span><br><span class="line">    <span class="comment">// g.color = (int *)malloc(sizeof(int) * g.vertexNum); //创建顶点着色记录数组</span></span><br><span class="line">    vector&lt;int&gt; tmp1(g.vertexNum * g.vertexNum, INF), tmp2(g.vertexNum, 0);</span><br><span class="line">    g.arc = tmp1;</span><br><span class="line">    g.color = tmp2;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.arc[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; g.arcNum; k++) &#123; <span class="comment">//关联矩阵为一个对称矩阵</span></span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y <span class="comment">/* &gt;&gt; w */</span>;</span><br><span class="line">        g.arc[g.vertexNum * x + y] = <span class="number">1</span>;</span><br><span class="line">        g.arc[g.vertexNum * y + x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispVertexColor</span><span class="params">(Graph &amp;g)</span> <span class="comment">//输出图g中各顶点的着色情况函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;[&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum - <span class="number">1</span>; i++)</span><br><span class="line">        cout &lt;&lt; g.color[i] &lt;&lt; <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">    cout &lt;&lt; g.color[g.vertexNum - <span class="number">1</span>] &lt;&lt; <span class="string">&quot;]\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ColorGraph</span><span class="params">(Graph &amp;g)</span> <span class="comment">//给图的顶点着色，函数返回值为最小着色数的值。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>, m = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (g.vertexNum == <span class="number">1</span> &amp;&amp; g.arcNum == <span class="number">0</span>) &#123;</span><br><span class="line">        g.color[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (k &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            g.color[k] = g.color[k] + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (g.color[k] &lt;= m) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">conflict</span>(g, k))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    g.color[k]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k == g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> m;</span><br><span class="line">            <span class="keyword">if</span> (g.color[k] &lt;= m &amp;&amp; k &lt; g.vertexNum - <span class="number">1</span>)</span><br><span class="line">                k = k + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                g.color[k--] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        k = <span class="number">0</span>;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">conflict</span><span class="params">(Graph &amp;g, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"><span class="comment">//设某顶点k和与之相邻的顶点集V&#x27;，V&#x27;种至多有1个顶点与k颜色相同</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k]) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">if</span>(!_conflict(g,i)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt &gt; <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> _conflict(Graph &amp;g, <span class="keyword">int</span> k)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.vertexNum; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g.arc[g.vertexNum * k + i] != INF &amp;&amp; g.color[i] == g.color[k]) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt &gt; <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="结果">结果</h2>
-<figure>
-<img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/data01.png" alt="data01"><figcaption aria-hidden="true">data01</figcaption>
-</figure>
-<figure>
-<img src="/2021/05/31/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF%E9%97%AE%E9%A2%98/data02.svg" alt="data02"><figcaption aria-hidden="true">data02</figcaption>
-</figure>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>cpp</tag>
-        <tag>数学建模</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre-04</title>
-    <url>/2021/06/09/UMLpre-04/</url>
-    <content><![CDATA[<h1 id="分析与绘制各种uml图">分析与绘制各种UML图</h1>
-<h2 id="用例图">用例图</h2>
-<figure>
-<img src="/2021/06/09/UMLpre-04/image-20210609142903048.png" alt="image-20210609142903048"><figcaption aria-hidden="true">image-20210609142903048</figcaption>
-</figure>
-<h2 id="静态图">静态图</h2>
-<h3 id="类图">类图</h3>
-<p>类图用于描述系统中所包含的类以及它们之间的相互关系，帮助人们简化对系统的理解，它是系统分析和设计阶段的重要产物，也是系统编码和测试的重要模型依据。</p>
-<figure>
-<img src="/2021/06/09/UMLpre-04/%E9%9D%99%E6%80%81%E5%9B%BE_%E7%B1%BB%E5%9B%BE.svg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
-</figure>
-<h2 id="动态图">动态图</h2>
-<h3 id="状态图">状态图</h3>
-<p>状态图是系统分析的一种常用工具，它通过建立类对象的生存周期模型来描述对象随时间变化的动态行为。 一个状态图表示一个状态机，主要用于表现从一个状态到另一个状态的控制流。</p>
-<figure>
-<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E7%8A%B6%E6%80%81%E5%9B%BE.svg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
-</figure>
-<h3 id="活动图">活动图</h3>
-<p>活动图是uml的动态模型的一种图形，一般用来描述相关用例图。准确的活动图定义：活动图描述满足用例要求所要进行的活动以及活动间的约束关系，有利于识别并行活动。活动图是一种特殊的状态图，它对于系统的功能建模特别重要，强调对象间的控制流程。交互图强调的是对象到对象的控制流，而活动图则强调的是从活动到活动的控制流活动图是一种表述过程基理、业务过程以及工作流的技术。它可以用来对业务过程、工作流建模，也可以对用例实现甚至是程序实现来建模。</p>
-<figure>
-<img src="/2021/06/09/UMLpre-04/%E5%8A%A8%E6%80%81%E5%9B%BE_%E6%B4%BB%E5%8A%A8%E5%9B%BE.svg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
-</figure>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>UML需求工程</tag>
-        <tag>作业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre-05</title>
-    <url>/2021/06/09/UMLpre-05/</url>
-    <content><![CDATA[<h1 id="app-changelog">APP changelog</h1>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="number">5.6</span></span><br><span class="line">    加入主页面,添加背景图及主页面<span class="type">UI</span></span><br><span class="line">    </span><br><span class="line"><span class="number">5.7</span></span><br><span class="line">    添加读取excel功能,内部建立数据库</span><br><span class="line">    </span><br><span class="line"><span class="number">5.8</span></span><br><span class="line">    完成外部导入课表功能</span><br><span class="line">    </span><br><span class="line"><span class="number">5.10</span></span><br><span class="line">    本周课程表页面框架搭建完成,实现读取数据库功能</span><br><span class="line">    </span><br><span class="line"><span class="number">5.11</span></span><br><span class="line">    完成初步的添加待办功能,仅实现了文字添加,未完成删除和排序</span><br><span class="line">    </span><br><span class="line"><span class="number">5.12</span></span><br><span class="line">    主页<span class="type">UI更新</span>,添加随机颜色,课表配色改良</span><br><span class="line">    </span><br><span class="line"><span class="number">5.13</span></span><br><span class="line">    主页课表排序功能完成,添加<span class="string">&quot;距离上课还有几分钟&quot;</span>信息</span><br><span class="line">    </span><br><span class="line"><span class="number">5.14</span></span><br><span class="line">    主页<span class="type">UI再次优化</span>,改换全局字体,将课程开始结束字条放右边方块,增强美观度</span><br><span class="line">    </span><br><span class="line"><span class="number">5.15</span></span><br><span class="line">    抛弃过去写的备忘录,完成了备忘录<span class="number">2</span>页面的基本编写,实现了待办数据库创建访问修改等操作</span><br><span class="line">    </span><br><span class="line"><span class="number">5.18</span></span><br><span class="line">    主页bug修正,显示<span class="number">10</span>节以上的课的时候不会出现显示错误,颜色判定更新,主页<span class="type">Ui升级</span>,提升机型适配能力</span><br><span class="line">    新增任务提交功能</span><br><span class="line">    任务排序优化</span><br><span class="line">    任务界面优化</span><br><span class="line">    </span><br><span class="line"><span class="number">5.19</span></span><br><span class="line">    实现了不完善的删除事件功能(删除要在退出 页面后才能成功)</span><br><span class="line">    </span><br><span class="line"><span class="number">5.21</span></span><br><span class="line">    添加事件界面<span class="type">UI超大幅优化</span>,增加大量框架和背景,新增添加事件弹窗,增强使用方便性</span><br><span class="line">    </span><br><span class="line"><span class="number">5.29</span></span><br><span class="line">    修复大量肉眼可见bug,完善待办删除功能,各界面新增各种动漫背景</span><br><span class="line">    </span><br><span class="line"><span class="number">5.30</span></span><br><span class="line">    新增课程提醒功能,现在课前<span class="number">15</span>分钟发送课程开始提醒</span><br><span class="line">    app图标修改</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>UML需求工程</tag>
-        <tag>作业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>UMLpre-06-总结</title>
-    <url>/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="总结">总结</h1>
-<h2 id="分工情況">分工情況</h2>
-<ul>
-<li><p>俞森豪</p>
-<ol type="1">
-<li>完成小组app程序开发</li>
-<li>进行涉众分析</li>
-<li>和甲方进行沟通</li>
-<li>发展用户,收集反馈信息</li>
-<li>完成过程建模中的DFD图,微规格说明,和数字字典</li>
-</ol></li>
-<li><p>杨铮</p>
-<ol type="1">
-<li>和甲方进行沟通</li>
-<li>统计分析调查问卷</li>
-<li>完成用例图</li>
-<li>制作ppt及视频报告，总结工作完成情况。</li>
-</ol></li>
-<li><p>王雨轩</p>
-<ol type="1">
-<li>作为甲方参与和乙方的面谈</li>
-<li>技术博客</li>
-<li>需求分析及设计UML静态动态图</li>
-</ol></li>
-<li><p>龙洁如</p>
-<ol type="1">
-<li>作为甲/乙方参加面谈</li>
-<li>数据建模</li>
-<li>攥写需求规格文档</li>
-</ol></li>
-<li><p>黄钰琪</p>
-<ol type="1">
-<li>硬数据采样：撰写调查问卷并收集结果</li>
-<li>作为甲方参与和乙方的面谈</li>
-<li>结构化需求分析：功能分解图，需求细化，优先级细分</li>
-<li>撰写需求规格文档</li>
-</ol></li>
-</ul>
-<h2 id="课程提醒系统需求规格说明文档">课程提醒系统需求规格说明文档</h2>
-<p><strong>目录</strong></p>
-<p>一、<strong>引言</strong>....................................................................................................................... 2</p>
-<p><strong>1</strong>.<strong>目的</strong>..................................................................................................................... 2</p>
-<p><strong>2</strong>.<strong>文档约定</strong>............................................................................................................. 2</p>
-<p><strong>3.</strong> <strong>产品的范围</strong>......................................................................................................... 2</p>
-<p><strong>4.</strong> <strong>参考文献</strong>............................................................................................................. 2</p>
-<p><strong>二、综合描述</strong>............................................................................................................... 2</p>
-<p><strong>1.</strong> <strong>产品的前景</strong>......................................................................................................... 2</p>
-<p><strong>2.</strong> <strong>产品的功能</strong>......................................................................................................... 2</p>
-<p><strong>3.</strong> <strong>用户类和特征</strong>..................................................................................................... 2</p>
-<p><strong>4.</strong> <strong>硬数据采样</strong>.........................................................................................................3</p>
-<p><strong>5.</strong> <strong>运行环境</strong>............................................................................................................. 4</p>
-<p><strong>三、需求分析过程</strong>....................................................................................................... 4</p>
-<p><strong>1.功能分解图......................................................................................................... 4</strong></p>
-<p><strong>2.上下文图............................................................................................................. 5</strong></p>
-<p><strong>3.0层图.................................................................................................................. 5</strong></p>
-<p><strong>4.一层图................................................................................................................. 5</strong></p>
-<p><strong>5.微规格说明......................................................................................................... 6</strong></p>
-<p><strong>6数据字典............................................................................................................. 6</strong></p>
-<p><strong>7.ERD</strong> <strong>建模</strong>.............................................................................................................7</p>
-<p><strong>8.用例图................................................................................................................. 8</strong></p>
-<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong>.......................................................................................................8</p>
-<p><strong>10.动态UML图..................................................................................................... 9</strong></p>
-<p><strong>四</strong>、<strong>系统特性</strong>............................................................................................................. 11</p>
-<p><strong>1</strong>.<strong>说明和优先级</strong>................................................................................................... 11</p>
-<p><strong>2</strong>.<strong>激励/</strong> <strong>响应序列</strong>................................................................................................. 11</p>
-<p><strong>3</strong>.<strong>功能需求</strong>........................................................................................................... 11</p>
-<p><strong>五</strong>、<strong>其它非功能需求</strong>................................................................................................. 12</p>
-<p><strong>1.</strong> <strong>性能需求</strong>......................................................................................................... 122</p>
-<p><strong>2.</strong> <strong>软件质量标准属性</strong>........................................................................................... 12</p>
-<p><strong>3.</strong> <strong>对外接口</strong>........................................................................................................... 12</p>
-<p><strong>4.</strong> <strong>约束</strong>................................................................................................................... 12</p>
-<p><strong>六</strong>、<strong>其它需求</strong>............................................................................................................. 12</p>
-<p><strong>一、引言</strong></p>
-<p><strong>1.</strong> <strong>目的</strong></p>
-<p>本篇需求规格说明文档的目的是对本产品——课程提醒系统进行定义。在本文档中，详尽说明了这个产品的软件需求。</p>
-<p><strong>2.</strong> <strong>文档约定</strong></p>
-<p>本项目小组按照IEEE 830标准编写本文档，并根据本项目的内容作出了一些合理的修改。本课程提醒系统项目所有需求都有其自身优先级，且高层需求的优先级可以被其所有细化的需求继承。</p>
-<p><strong>3.</strong> <strong>产品的范围</strong></p>
-<p>本课程提醒系统是应用于手机端的一款离线单机的应用软件，以广大在校大学生为本，致力于帮助广大在校大学生安排自己的学习任务，规划自己的学习生活。</p>
-<p><strong>4.</strong> <strong>参考文献</strong></p>
-<p>【1】软件需求规格说明（IEEE 830标准）</p>
-<p>【2】需求工程：软件建模与分析/骆斌主编；丁二玉编著.--2版.--北京：高等教育出版社，2015.2</p>
-<p><strong>二、综合描述</strong></p>
-<p><strong>1.</strong> <strong>产品前景</strong></p>
-<p>本项目以实用功能为设计基础，注重实用方面的用户体验。针对在校生用户，每天面对繁多的课程和作业，本项目可接受用户创建、导入修改自己的课程表和作业安排，包括课程名称，上课时间地点任课老师，对应作业及截止时间提醒等，帮助用户安排学习日程，以达到提升用户学习效率的目的。</p>
-<p><strong>2.</strong> <strong>产品功能</strong></p>
-<table>
-<colgroup>
-<col style="width: 14%">
-<col style="width: 85%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>在校学生</th>
-<th>1.可以创建、导入、修改自己的课程表和作业安排，包括课程、时间、教师、教室、对应作业等。 2.可以查看每周课表，独立查看待办提醒和课程提醒。</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>系统管理者</td>
-<td>1.对恶意评价及有关不良行为进行修改和删除 2.管理调整教师用户和学生用户权限</td>
-</tr>
-</tbody>
-</table>
-<p><strong>3.</strong> <strong>用户类和特征</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>涉众编号</th>
-<th>涉众名称</th>
-<th>涉众说明</th>
-<th>使用系统的方式</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>001</td>
-<td>普通学生</td>
-<td>学生是使用该系统导入获取课程信息的主体</td>
-<td>1. 设置可按周显示的课表 2. 设置并获取课程提醒信息 3. 创建作业待办</td>
-</tr>
-<tr class="even">
-<td>002</td>
-<td>系统开发人员</td>
-<td>系统开发人员是对系统进行开发和维护的人员</td>
-<td>1.开发课程提醒系统 2.对程序进行更新</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr class="header">
-<th>涉众</th>
-<th>001普通学生</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>涉众代表</td>
-<td>普通用户代表特点</td>
-</tr>
-<tr class="even">
-<td>特点</td>
-<td>系统的主要使用者，在校大学生</td>
-</tr>
-<tr class="odd">
-<td>职责</td>
-<td>1.下载并使用该系统 2.导入并修改可按周查看的课表 3.获取课前提醒 4.添加可备注的待办/作业,可设定提醒时间</td>
-</tr>
-<tr class="even">
-<td>成功标准</td>
-<td>1.能及时获取课程提醒信息 2.课表显示周数,课程名称,时间,教师,教室.</td>
-</tr>
-<tr class="odd">
-<td>参与</td>
-<td>不参与系统建设</td>
-</tr>
-<tr class="even">
-<td>可交付工作</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr class="header">
-<th>涉众</th>
-<th>002系统开发人员</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>涉众代表</td>
-<td>开发人员代表</td>
-</tr>
-<tr class="even">
-<td>特点</td>
-<td>系统的开发者</td>
-</tr>
-<tr class="odd">
-<td>职责</td>
-<td>1.开发课程提醒系统 2. 对系统使用中出现的问题进行维护和修复</td>
-</tr>
-<tr class="even">
-<td>成功标准</td>
-<td>课程提醒系统运行良好</td>
-</tr>
-<tr class="odd">
-<td>参与</td>
-<td>参与系统设计</td>
-</tr>
-<tr class="even">
-<td>可交付工作</td>
-<td>课程提醒系统</td>
-</tr>
-</tbody>
-</table>
-<p><strong>4.</strong> <strong>硬数据采样</strong></p>
-<p>本项目硬数据采样采用调查问卷方式，对受众的年级以及在课程提醒方面的习惯做了较为全面的调查，调查结果如下图所示：</p>
-<p><img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image002.jpg" alt="img"> <img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image004.jpg" alt="img"></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image006.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>5.</strong> <strong>运行环境</strong></p>
-<p>1）安卓版手机硬件环境要求</p>
-<p>CPU：双核2GHz及以上；</p>
-<p>机身内存：4G以上；</p>
-<p>屏幕分辨率：1920x1080及以上；</p>
-<p>操作系统：Android 4.0及以上版本。</p>
-<p>2）苹果版手机硬件环境要求（苹果相对来说比较好限定）</p>
-<p>iPhone机型：iPhone6及以上版本；</p>
-<p>机身内存：16G以上；</p>
-<p>操作系统：iOS 10.0及以上版本。</p>
-<p><strong>三、需求分析过程</strong></p>
-<p><strong>1.</strong> <strong>功能分解图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image008.jpg" alt="流程图1"><figcaption aria-hidden="true">流程图1</figcaption>
-</figure>
-<p><strong>2.</strong> <strong>上下文图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image010.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>3.</strong> <strong>0</strong> <strong>层图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image012.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>4.</strong> <strong>一层图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image014.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>5.</strong> <strong>微规格说明</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image016.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image018.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>6.</strong> <strong>数据字典</strong></p>
-<table>
-<colgroup>
-<col style="width: 10%">
-<col style="width: 39%">
-<col style="width: 10%">
-<col style="width: 39%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>名称</th>
-<th>课程信息</th>
-<th>名称</th>
-<th>待办</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>别名</td>
-<td></td>
-<td>别名</td>
-<td>Daiban_work(in AddView.java and MyTask.java)</td>
-</tr>
-<tr class="even">
-<td>使用的地点和方法</td>
-<td>保存课程信息(input) 显示今日课程(output) 展示本周课程信息(output) 发送课程信息(input) 显示课程详细信息(output)</td>
-<td>使用的地点和方法</td>
-<td>存储待办(input) 显示待办(output) 删除待办(input) 查找待办(output)</td>
-</tr>
-<tr class="odd">
-<td>描述</td>
-<td>Classname = Text Zhouci = [”{1<sub>20}-{1</sub>20}周” or”{1~20}周” ] 例:1-8周| 12周 Kaishi =[第{1-13}节] Jieshu=[第{1-13}节] Teacher=text 教室 = text</td>
-<td>描述</td>
-<td>Created_time = [2021+]Year+[1-12]month+[1-31]date+[0-24]hour+[0-60]min Inf= text Deadline=同Create_time Remind_time=同Create_time</td>
-</tr>
-<tr class="even">
-<td>格式</td>
-<td>SQLite database Information In table Class</td>
-<td>格式</td>
-<td>SQLite database Information In table daiban.db</td>
-</tr>
-</tbody>
-</table>
-<p><strong>7.</strong> <strong>ERD</strong> <strong>建模</strong></p>
-<p>1）简单情况下的ERD建模</p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image020.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>2）根据硬表单的ERD建模</p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image022.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>8.</strong> <strong>用例图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image024.jpg" alt="IMG_256"><figcaption aria-hidden="true">IMG_256</figcaption>
-</figure>
-<p><strong>9.</strong> <strong>静态</strong> <strong>UML</strong> <strong>图</strong></p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image026.jpg" alt="静态图_类图"><figcaption aria-hidden="true">静态图_类图</figcaption>
-</figure>
-<p><strong>10.</strong> <strong>动态</strong> <strong>UML</strong> <strong>图</strong></p>
-<p>1）状态图</p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image028.jpg" alt="动态图_状态图"><figcaption aria-hidden="true">动态图_状态图</figcaption>
-</figure>
-<p>2）活动图</p>
-<figure>
-<img src="/2021/06/09/UMLpre-06-%E6%80%BB%E7%BB%93/clip_image030.jpg" alt="动态图_活动图"><figcaption aria-hidden="true">动态图_活动图</figcaption>
-</figure>
-<p><strong>四、系统特性</strong></p>
-<p>本课程提醒系统有两大主要特性：一、显示课表和待办；二、提醒上课和待办。还有其他特性：a.支持按周显示课表。b.根据截止时间从近到远显示待办。</p>
-<p><strong>特性一：显示课表和待办</strong></p>
-<p><strong>1.</strong> <strong>说明和优先级</strong></p>
-<p>普通的课表显示，课表中的课程会包括周数、课程名称、时间和地点。高优先级。</p>
-<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
-<p><strong>3.</strong> <strong>功能需求</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>功能编号</th>
-<th>功能名称</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>导入</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>1.1</td>
-<td>课表导入</td>
-<td>包括创建和导入两种方式</td>
-</tr>
-<tr class="odd">
-<td>1.2</td>
-<td>作业导入</td>
-<td>只允许在软件中新建</td>
-</tr>
-<tr class="even">
-<td>1.1.1</td>
-<td>导入课表</td>
-<td>指导入.xml文件</td>
-</tr>
-<tr class="odd">
-<td>1.1.2</td>
-<td>创建课表</td>
-<td>从软件中新建</td>
-</tr>
-<tr class="even">
-<td>1.2.1</td>
-<td>创建作业</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>显示</td>
-<td>包括课表和作业</td>
-</tr>
-<tr class="even">
-<td>2.1</td>
-<td>显示课表信息</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>2.2</td>
-<td>显示作业</td>
-<td>包括截止时间和内容</td>
-</tr>
-</tbody>
-</table>
-<p><strong>特性二：提醒上课和待办</strong></p>
-<p><strong>1.</strong> <strong>说明和优先级</strong></p>
-<p>提醒将要到来的事件。高优先级。</p>
-<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
-<p><strong>3.</strong> <strong>功能需求</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>功能编号</th>
-<th>功能名称</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>3</td>
-<td>提醒</td>
-<td>对于课程和作业</td>
-</tr>
-<tr class="even">
-<td>3.1</td>
-<td>今日汇总</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>3.2</td>
-<td>设置提醒时间和方式</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>3.3</td>
-<td>完成标记</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>特性三：支持按周显示课表</strong></p>
-<p><strong>1.</strong> <strong>说明和优先级</strong></p>
-<p>中优先级。</p>
-<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
-<p><strong>3.</strong> <strong>功能需求</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>功能编号</th>
-<th>功能名称</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>4</td>
-<td>选择周数</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>特性四：根据截止时间从近到远显示待办</strong></p>
-<p><strong>1.</strong> <strong>说明和优先级</strong></p>
-<p>中优先级。</p>
-<p><strong>2.</strong> <strong>激励</strong> <strong>/</strong> <strong>响应序列</strong></p>
-<p><strong>3.</strong> <strong>功能需求</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>功能编号</th>
-<th>功能名称</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>5</td>
-<td>tab显示待办</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>四、其他非功能需求</strong></p>
-<p><strong>1.</strong> <strong>性能需求</strong></p>
-<p>​ 系统应该能够带入10kB的.xml文件，储存10条待办。</p>
-<p><strong>2.</strong> <strong>质量属性</strong></p>
-<p>​ 出现意外闪退后可以及时保存数据。</p>
-<p><strong>3.</strong> <strong>对外接口</strong></p>
-<p><strong>4.</strong> <strong>约束</strong></p>
-<p>​ 系统要有Android和iOS两个版本。</p>
-<p><strong>五、其他需求</strong></p>
-<ol type="1">
-<li><p>默认标签为课程表</p></li>
-<li><p>分标签显示设置</p></li>
-<li><p>提醒方式和时间有默认值</p></li>
-</ol>
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>UML需求工程</tag>
-        <tag>作业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次修复 kernel mode heap corruption 蓝屏</title>
-    <url>/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/</url>
-    <content><![CDATA[<p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
-<p>一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用太多空间，所以我干脆直接关掉了内存dump，导致还得再等蓝屏复现……</p>
-<p>之后的一天晚上，熟悉的蓝屏又来了。重启之后，拿到dmp，给WinDbg加载好符号，让我康康到底是哪个驱动干的好事。</p>
-<figure>
-<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=3&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=60-2-2&amp;rf=viewer_311.jpeg" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>定睛一看，在一众NT函数调用中冒出来了一个 <em>PassGuard_x64</em> ，大概率就是你咯！</p>
-<p>用Everything一搜，果然找到了一个<em>.sys</em>文件与其同名，看数字签名是国内公司做的什么乱七八糟驱动。</p>
-<figure>
-<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>Google一下这个名字，确有其人，看来是网银之类的东西会装的输入控件。<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;tl=1&amp;vuin=2605758292&amp;tm=1633276800&amp;sce=50-1-1&amp;rf=viewer_311.jpeg" alt="img"></p>
-<p>我很清楚自己没有在这台PC上用过网银，唯一沾边的就是globalcash预付卡，很久以前按照网页要求安装了一个输入控件。于是去控制面板查看相关软件，发现 <em>PassGuard_x64.sys</em> 的创建时间与其安装时间对应上了，看来罪魁祸首就是它…给爷死！</p>
-<figure>
-<img src="/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/image-20211004012505244.png" alt="image-20211004012505244"><figcaption aria-hidden="true">image-20211004012505244</figcaption>
-</figure>
-<p>但是，但是，但是，卸载程序并没有删除注册表相关条目，也没有取消注册相关驱动 <em>PassGuard_x64.sys</em> ，属于是十分_ _ 了，还得手动清除。全部搞定之后电脑终于清静了。继续使用半个月，没有再次发生这种蓝屏。完结撒花</p>
-]]></content>
-      <tags>
-        <tag>windows</tag>
       </tags>
   </entry>
 </search>
