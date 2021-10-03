@@ -1223,7 +1223,11 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
   <entry>
     <title>记一次修复 kernel mode heap corruption 蓝屏</title>
     <url>/2021/10/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BF%AE%E5%A4%8Dkernel_mode_heap_corruption%E8%93%9D%E5%B1%8F/</url>
-    <content><![CDATA[<p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
+    <content><![CDATA[<blockquote>
+<p>驱动不会写就不要写！写不好也更不要写！！</p>
+</blockquote>
+<span id="more"></span>
+<p>前些日子，俺经常遇到游戏打一半，笔电直接 <em>kernel mode heap corruption</em> 蓝屏了的尴尬情况，愈演愈烈，最后竟然平均每天一次甚至一晚上连着3次！！！</p>
 <p>一开始我还以为是核心过热或者CPU降压超频导致的不稳定，直到之后关闭CPU降压、调低画面质量之后还是会出现这神必问题，掉了整整300分之后我受不了了，只好下一个WinDbg看看到底是啥出了问题。遗憾的是之前因为完整内存转储占用太多空间，所以我干脆直接关掉了内存dump，导致还得再等蓝屏复现……</p>
 <p>之后的一天晚上，熟悉的蓝屏又来了。重启之后，拿到dmp，给WinDbg加载好符号，让我康康到底是哪个驱动干的好事。</p>
 <figure>
