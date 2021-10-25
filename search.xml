@@ -1836,4 +1836,23 @@ n^{ed}&amp;=n^{ed-1}n=n^{k(q-1)}n=(n^{q-1})^kn\\
         <tag>社团</tag>
       </tags>
   </entry>
+  <entry>
+    <title>daily_useless_tip_1</title>
+    <url>/2021/10/25/daily-useless-tip-1/</url>
+    <content><![CDATA[<h1 id="每日没用小知识-1">每日没用小知识 1</h1>
+<blockquote>
+<p>正则表达式相关</p>
+</blockquote>
+<span id="more"></span>
+<p>正则表达式可以进行很多英文高级的模糊检索。例如，[a-h]表示a到h间所有字母。</p>
+<p>同样 GBK 编码的中文也可以这样利用正则表达式，比如在只知道一个字的读音而不知道怎么写的情况下，也可用正则表达式检索，因为 GBK 编码是按读音排序的。但是 UTF-8 不是按读音排序的，所以不利于用正则表达式检索（虽然正则表达式检索并未考虑中文中的多音字，但是由于中文的多音字数量不多，不少多音字还是同音不同调类型的多音字，所以大多数情况下正则表达式检索是可以接受的）。但是， Unicode 是按部首排序的，因此在只知道一个字的部首而不知道如何发音的情况下， UTF-8 可用正则表达式检索而 GBK 不行。</p>
+<p><em>source: https://zh.wikipedia.org/wiki/UTF-8</em></p>
+]]></content>
+      <categories>
+        <category>Miscellaneous</category>
+      </categories>
+      <tags>
+        <tag>每日小知识</tag>
+      </tags>
+  </entry>
 </search>
